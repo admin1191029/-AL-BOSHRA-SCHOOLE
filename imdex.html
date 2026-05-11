@@ -46,6 +46,20 @@
 // ══════════════════════════════════════════════════════════════
 // 🔥 FIREBASE CONFIG
 // ══════════════════════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════════════════
+// 📋 FIRESTORE SECURITY RULES (انسخها في Firebase Console)
+// ══════════════════════════════════════════════════════════════
+// rules_version = '2';
+// service cloud.firestore {
+//   match /databases/{database}/documents {
+//     // كل معلم يشوف ويعدل بياناته بس
+//     match /teachers/{userId}/{document=**} {
+//       allow read, write: if request.auth != null && request.auth.uid == userId;
+//     }
+//   }
+// }
+// ══════════════════════════════════════════════════════════════
 const FIREBASE_CONFIG = {
   apiKey:            "AIzaSyAw-yB4aOM2mhJj_SHqyZ48Vuk9l2vKDYc",
   authDomain:        "el-bousras.firebaseapp.com",
@@ -104,37 +118,79 @@ if (!_initFirebase()) {
   });
 }
 
-// ── Firestore helpers ─────────────────────────────────────────
-// كل معلم له document خاص: teachers/{uid}/classes/{classId}
-function _fbTeacherRef(uid){ return fbDb.collection('teachers').doc(uid); }
-function _fbClassRef(uid, classId){
-  return _fbTeacherRef(uid).collection('classes').doc(classId);
+// ══════════════════════════════════════════════════════════════
+// 🔥 FIRESTORE COMPLETE SYNC SYSTEM
+// بنية البيانات:
+//   teachers/{uid}/                          ← بيانات المعلم وإعداداته
+//   teachers/{uid}/classes/{classId}/        ← بيانات كل فصل
+//   teachers/{uid}/extras/lessonPrep         ← تحضير الحصة
+//   teachers/{uid}/extras/bag_{subId}        ← أنشطة حقيبة المادة
+//   teachers/{uid}/extras/books_{subId}      ← كتب حقيبة المادة
+// ══════════════════════════════════════════════════════════════
+
+// ── Firestore refs ──────────────────────────────────────────
+function _fbTeacherRef(uid)          { return fbDb.collection('teachers').doc(uid); }
+function _fbClassRef(uid, classId)   { return _fbTeacherRef(uid).collection('classes').doc(classId); }
+function _fbExtrasRef(uid, key)      { return _fbTeacherRef(uid).collection('extras').doc(key); }
+function _fbSettingsRef(uid)         { return _fbTeacherRef(uid).collection('extras').doc('settings'); }
+
+// ── Debounce helper ─────────────────────────────────────────
+const _fbDebounceTimers = {};
+function _fbDebounce(key, fn, delay=1500){
+  clearTimeout(_fbDebounceTimers[key]);
+  _fbDebounceTimers[key] = setTimeout(fn, delay);
 }
 
-// حفظ الفصل الحالي على Firestore
+// ── مؤشر حالة المزامنة ──────────────────────────────────────
+function _fbShowStatus(msg, color){
+  const el = document.getElementById('fbSyncStatus');
+  if(!el) return;
+  el.textContent = msg;
+  el.style.color = color || 'var(--mint)';
+  el.style.display = 'inline';
+}
+
+// ══════════════════════════════════════════════════════════════
+// SAVE — حفظ الفصل الحالي + بيانات المعلم
+// ══════════════════════════════════════════════════════════════
 async function fbSave(){
   if(!fbDb) return;
   const uid = fbAuth?.currentUser?.uid;
   if(!uid) return;
+  S._lastSaveTs = Date.now();
   if(S.changelog.length > 200) S.changelog = S.changelog.slice(-200);
-  const data = {
+
+  const classData = {
     teacher:S.teacher, students:S.students, attendance:S.attendance,
     evals:S.evals, notes:S.notes, subjects:S.subjects,
     behavior:S.behavior, goals:S.goals, grades:S.grades,
     planner:S.planner, meetings:S.meetings, seatLayout:S.seatLayout,
     changelog:S.changelog, theme:S.theme,
     gamesBank:S.gamesBank||null, _snapshots:S._snapshots||{},
-    resources:S.resources||[], updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    resources:S.resources||[],
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
   };
+
   try {
-    await _fbClassRef(uid, ACTIVE_CLASS_ID).set(data, {merge:true});
-    // احفظ قائمة الفصول على الـ teacher document
+    // حفظ بيانات الفصل
+    await _fbClassRef(uid, ACTIVE_CLASS_ID).set(classData, {merge:true});
+    // حفظ فهرس الفصول + الفصل النشط على document المعلم
     const classesMeta = getAllClasses();
-    await _fbTeacherRef(uid).set({ classes: classesMeta, activeClass: ACTIVE_CLASS_ID }, {merge:true});
-  } catch(e){ console.warn('fbSave error', e); }
+    await _fbTeacherRef(uid).set({
+      classes: classesMeta,
+      activeClass: ACTIVE_CLASS_ID,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, {merge:true});
+    _fbShowStatus('☁️ محفوظ', 'var(--mint)');
+  } catch(e){
+    console.warn('fbSave error', e);
+    _fbShowStatus('⚠️ خطأ في الحفظ', 'var(--gold)');
+  }
 }
 
-// تحميل الفصل الحالي من Firestore
+// ══════════════════════════════════════════════════════════════
+// LOAD — تحميل الفصل الحالي من Firestore
+// ══════════════════════════════════════════════════════════════
 async function fbLoad(uid, classId){
   if(!fbDb) return false;
   try {
@@ -163,7 +219,7 @@ async function fbLoad(uid, classId){
   } catch(e){ console.warn('fbLoad error', e); return false; }
 }
 
-// تحميل قائمة الفصول من Firestore
+// ── تحميل فهرس الفصول من Firestore ──────────────────────────
 async function fbLoadClasses(uid){
   if(!fbDb) return;
   try {
@@ -178,7 +234,134 @@ async function fbLoadClasses(uid){
   } catch(e){ console.warn('fbLoadClasses error', e); }
 }
 
-// مزامنة فورية — real-time listener للفصل الحالي
+// ══════════════════════════════════════════════════════════════
+// SETTINGS SYNC — إعدادات المعلم (المظهر، الـ cursor، الـ AI)
+// بتتحمل فور الدخول وبتتحفظ عند أي تغيير
+// ══════════════════════════════════════════════════════════════
+async function fbSaveSettings(){
+  if(!fbDb) return;
+  const uid = fbAuth?.currentUser?.uid;
+  if(!uid) return;
+  const PREF_KEYS = [
+    'bs_accent_color','bs_cursor_style','bs_dot_size','bs_cursor_size',
+    'bs_cursor_data','bs_ring_hidden','bs_ai_provider','bs_sfx'
+    // bs_ai_key و bs_gemini_key لا تُحفظ في السحابة لأمان المفتاح
+  ];
+  const settings = {};
+  PREF_KEYS.forEach(k=>{ const v=localStorage.getItem(k); if(v!==null) settings[k]=v; });
+  try {
+    await _fbSettingsRef(uid).set(settings, {merge:true});
+  } catch(e){ console.warn('fbSaveSettings error', e); }
+}
+
+async function fbLoadSettings(uid){
+  if(!fbDb) return;
+  try {
+    const snap = await _fbSettingsRef(uid).get();
+    if(!snap.exists) return;
+    const d = snap.data();
+    Object.entries(d).forEach(([k,v])=>{ if(v!==null && v!==undefined) localStorage.setItem(k, v); });
+  } catch(e){ console.warn('fbLoadSettings error', e); }
+}
+
+// ── wrapper لـ localStorage.setItem يضمن مزامنة الإعدادات ──
+const _PREF_KEYS_SET = new Set([
+  'bs_accent_color','bs_cursor_style','bs_dot_size','bs_cursor_size',
+  'bs_cursor_data','bs_ring_hidden','bs_ai_provider','bs_sfx'
+]);
+const _origLSSet = localStorage.setItem.bind(localStorage);
+localStorage.setItem = function(key, value){
+  _origLSSet(key, value);
+  if(_PREF_KEYS_SET.has(key)){
+    _fbDebounce('settings', ()=>fbSaveSettings(), 2000);
+  }
+};
+
+// ══════════════════════════════════════════════════════════════
+// LESSON PREP SYNC — تحضير الحصة
+// ══════════════════════════════════════════════════════════════
+async function fbSaveLessonPrep(data){
+  if(!fbDb) return;
+  const uid = fbAuth?.currentUser?.uid;
+  if(!uid) return;
+  try {
+    await _fbExtrasRef(uid, 'lessonPrep').set(
+      { ...data, updatedAt: firebase.firestore.FieldValue.serverTimestamp() },
+      {merge:false}
+    );
+  } catch(e){ console.warn('fbSaveLessonPrep error', e); }
+}
+
+async function fbLoadLessonPrep(uid){
+  if(!fbDb) return null;
+  try {
+    const snap = await _fbExtrasRef(uid, 'lessonPrep').get();
+    if(!snap.exists) return null;
+    const d = snap.data();
+    delete d.updatedAt;
+    return d;
+  } catch(e){ console.warn('fbLoadLessonPrep error', e); return null; }
+}
+
+async function fbClearLessonPrep(){
+  if(!fbDb) return;
+  const uid = fbAuth?.currentUser?.uid;
+  if(!uid) return;
+  try { await _fbExtrasRef(uid, 'lessonPrep').delete(); } catch(e){}
+}
+
+// ══════════════════════════════════════════════════════════════
+// BAG SYNC — حقيبة الأنشطة والكتب لكل مادة
+// ══════════════════════════════════════════════════════════════
+async function fbSaveBagActivities(subId, activities){
+  if(!fbDb) return;
+  const uid = fbAuth?.currentUser?.uid;
+  if(!uid) return;
+  try {
+    await _fbExtrasRef(uid, 'bag_act_'+subId).set(
+      { activities, updatedAt: firebase.firestore.FieldValue.serverTimestamp() },
+      {merge:false}
+    );
+  } catch(e){ console.warn('fbSaveBagActivities error', e); }
+}
+
+async function fbLoadBagActivities(subId){
+  if(!fbDb) return null;
+  const uid = fbAuth?.currentUser?.uid;
+  if(!uid) return null;
+  try {
+    const snap = await _fbExtrasRef(uid, 'bag_act_'+subId).get();
+    if(!snap.exists) return null;
+    return snap.data().activities || [];
+  } catch(e){ return null; }
+}
+
+async function fbSaveBagBooks(subId, manifest){
+  if(!fbDb) return;
+  const uid = fbAuth?.currentUser?.uid;
+  if(!uid) return;
+  try {
+    await _fbExtrasRef(uid, 'bag_books_'+subId).set(
+      { manifest, updatedAt: firebase.firestore.FieldValue.serverTimestamp() },
+      {merge:false}
+    );
+  } catch(e){ console.warn('fbSaveBagBooks error', e); }
+}
+
+async function fbLoadBagBooks(subId){
+  if(!fbDb) return null;
+  const uid = fbAuth?.currentUser?.uid;
+  if(!uid) return null;
+  try {
+    const snap = await _fbExtrasRef(uid, 'bag_books_'+subId).get();
+    if(!snap.exists) return null;
+    return snap.data().manifest || [];
+  } catch(e){ return null; }
+}
+
+// ══════════════════════════════════════════════════════════════
+// REAL-TIME LISTENER — مزامنة فورية بين الأجهزة
+// ══════════════════════════════════════════════════════════════
 let _fbUnsubscribe = null;
 function fbStartRealtime(uid){
   if(!fbDb) return;
@@ -186,11 +369,10 @@ function fbStartRealtime(uid){
   _fbUnsubscribe = _fbClassRef(uid, ACTIVE_CLASS_ID).onSnapshot(snap=>{
     if(!snap.exists) return;
     const d = snap.data();
-    // تحديث البيانات بدون إعادة رسم الواجهة لو التحديث من نفس الجهاز
     const localTs = S._lastSaveTs || 0;
     const remoteTs = d.updatedAt?.toMillis?.() || 0;
     if(remoteTs > localTs + 2000){
-      // تحديث جاء من جهاز تاني
+      // تحديث حقيقي من جهاز آخر
       if(d.students)   S.students   = d.students;
       if(d.attendance) S.attendance = d.attendance;
       if(d.notes)      S.notes      = d.notes;
@@ -201,20 +383,14 @@ function fbStartRealtime(uid){
       if(d.meetings)   S.meetings   = d.meetings;
       if(d.seatLayout) S.seatLayout = d.seatLayout;
       if(d.resources)  S.resources  = d.resources;
+      if(d.evals)      S.evals      = d.evals;
+      if(d.subjects&&d.subjects.length) S.subjects = d.subjects;
+      if(d.gamesBank)  S.gamesBank  = d.gamesBank;
       const cur = document.querySelector('.nav-btn.active')?.id?.replace('nav-','');
       if(cur) showPage(cur);
       toast('🔄 تم تحديث البيانات من جهاز آخر', 'info');
     }
   }, err => console.warn('realtime error', err));
-}
-
-// ── مؤشر حالة الاتصال ────────────────────────────────────────
-function _fbShowStatus(msg, color){
-  const el = document.getElementById('fbSyncStatus');
-  if(!el) return;
-  el.textContent = msg;
-  el.style.color = color || 'var(--mint)';
-  el.style.display = 'inline';
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
@@ -6798,6 +6974,15 @@ function saveClassMeta(meta){
   const idx = all.findIndex(c=>c.id===meta.id);
   if(idx>=0) all[idx]=meta; else all.push(meta);
   localStorage.setItem('bs_classes', JSON.stringify(all));
+  // مزامنة فهرس الفصول مع السحابة
+  if(typeof fbAuth !== 'undefined' && fbAuth && fbAuth.currentUser && typeof fbDb !== 'undefined' && fbDb){
+    _fbDebounce('classMeta', ()=>{
+      _fbTeacherRef(fbAuth.currentUser.uid).set(
+        { classes: all, updatedAt: firebase.firestore.FieldValue.serverTimestamp() },
+        {merge:true}
+      ).catch(e=>console.warn('saveClassMeta cloud error', e));
+    }, 1000);
+  }
 }
 
 const S = {
@@ -7384,25 +7569,31 @@ function downloadResourceFile(id) {
 function save() {
   if(S.changelog.length > 200) S.changelog = S.changelog.slice(-200);
   S._lastSaveTs = Date.now();
-  // ── Local backup (offline support) ───────────────────────
+
+  // ── 1. حفظ محلي فوري (يشتغل حتى بدون إنترنت) ────────────
   const key = getClassStorageKey();
-  localStorage.setItem(key, JSON.stringify({
-    user:S.user, teacher:S.teacher,
-    students:S.students, attendance:S.attendance,
-    evals:S.evals, notes:S.notes, subjects:S.subjects,
-    behavior:S.behavior, goals:S.goals, grades:S.grades,
-    planner:S.planner, meetings:S.meetings, seatLayout:S.seatLayout,
-    changelog:S.changelog, theme:S.theme, darkMode: S.theme === 'dark',
-    gamesBank:S.gamesBank||null, _snapshots:S._snapshots||{},
-    resources:S.resources||[]
-  }));
-  // ── Cloud sync ────────────────────────────────────────────
+  try {
+    localStorage.setItem(key, JSON.stringify({
+      user:S.user, teacher:S.teacher,
+      students:S.students, attendance:S.attendance,
+      evals:S.evals, notes:S.notes, subjects:S.subjects,
+      behavior:S.behavior, goals:S.goals, grades:S.grades,
+      planner:S.planner, meetings:S.meetings, seatLayout:S.seatLayout,
+      changelog:S.changelog, theme:S.theme, darkMode: S.theme === 'dark',
+      gamesBank:S.gamesBank||null, _snapshots:S._snapshots||{},
+      resources:S.resources||[]
+    }));
+  } catch(e){ console.warn('local save error', e); }
+
+  // ── 2. حفظ سحابي مؤجّل (debounced 1.5s) ──────────────────
+  // بيمنع flood of writes لما المستخدم يكتب بسرعة
   if(typeof fbAuth !== 'undefined' && fbAuth && fbAuth.currentUser){
-    fbSave().then(()=>{
-      _fbShowStatus('☁️ محفوظ', 'var(--mint)');
-    }).catch(()=>{
-      _fbShowStatus('⚠️ خطأ في المزامنة', 'var(--gold)');
-    });
+    _fbShowStatus('⏳ جاري الحفظ...', 'var(--muted2)');
+    _fbDebounce('mainSave', ()=>{
+      fbSave().catch(()=>{
+        _fbShowStatus('⚠️ خطأ في الحفظ', 'var(--gold)');
+      });
+    }, 1500);
   }
 }
 
@@ -7544,6 +7735,8 @@ function doLogin(provider){
       // تحميل البيانات من Firestore
       _fbShowStatus('⏳ جاري التحميل...', 'var(--sky3)');
       await fbLoadClasses(user.uid);
+      // تحميل الإعدادات الشخصية من السحابة
+      await fbLoadSettings(user.uid);
       const loaded = await fbLoad(user.uid, ACTIVE_CLASS_ID);
       if(!loaded){
         // أول مرة — حمّل من localStorage لو في بيانات قديمة
@@ -14982,6 +15175,10 @@ function lpSave(){
     objectives: document.getElementById('lpObjectives')?.value,
   };
   try { localStorage.setItem('bs_lesson_prep', JSON.stringify(data)); } catch(e){}
+  // ── حفظ سحابي لتحضير الحصة ──
+  if(typeof fbAuth !== 'undefined' && fbAuth && fbAuth.currentUser){
+    _fbDebounce('lessonPrep', ()=>fbSaveLessonPrep(data), 1500);
+  }
   toast('✅ تم حفظ بيانات الحصة','success');
   // Update skill display in header
   const sl = document.getElementById('cmSkillLive');
@@ -14993,20 +15190,31 @@ function lpClear(){
     const el = document.getElementById(id); if(el) el.value='';
   });
   try { localStorage.removeItem('bs_lesson_prep'); } catch(e){}
+  // ── مسح من السحابة ──
+  if(typeof fbAuth !== 'undefined' && fbAuth && fbAuth.currentUser){
+    fbClearLessonPrep().catch(()=>{});
+  }
   toast('تم المسح','success');
 }
 
-function lpLoad(){
-  try {
-    const d = JSON.parse(localStorage.getItem('bs_lesson_prep')||'{}');
-    if(d.date) document.getElementById('lpDate').value = d.date;
-    if(d.timeFrom) document.getElementById('lpTimeFrom').value = d.timeFrom;
-    if(d.timeTo) document.getElementById('lpTimeTo').value = d.timeTo;
-    if(d.subject) document.getElementById('lpSubject').value = d.subject;
-    if(d.topic) document.getElementById('lpTopic').value = d.topic;
-    if(d.skill) document.getElementById('lpSkill').value = d.skill;
-    if(d.objectives) document.getElementById('lpObjectives').value = d.objectives;
-  } catch(e){}
+async function lpLoad(){
+  let d = {};
+  // حاول تحميل من السحابة أولاً لو المعلم مسجّل دخول
+  if(typeof fbAuth !== 'undefined' && fbAuth && fbAuth.currentUser){
+    const cloud = await fbLoadLessonPrep(fbAuth.currentUser.uid).catch(()=>null);
+    if(cloud) { d = cloud; localStorage.setItem('bs_lesson_prep', JSON.stringify(cloud)); }
+  }
+  // fallback للـ localStorage
+  if(!d || !Object.keys(d).length){
+    try { d = JSON.parse(localStorage.getItem('bs_lesson_prep')||'{}'); } catch(e){}
+  }
+  if(d.date) { const el=document.getElementById('lpDate'); if(el) el.value=d.date; }
+  if(d.timeFrom) { const el=document.getElementById('lpTimeFrom'); if(el) el.value=d.timeFrom; }
+  if(d.timeTo) { const el=document.getElementById('lpTimeTo'); if(el) el.value=d.timeTo; }
+  if(d.subject) { const el=document.getElementById('lpSubject'); if(el) el.value=d.subject; }
+  if(d.topic) { const el=document.getElementById('lpTopic'); if(el) el.value=d.topic; }
+  if(d.skill) { const el=document.getElementById('lpSkill'); if(el) el.value=d.skill; }
+  if(d.objectives) { const el=document.getElementById('lpObjectives'); if(el) el.value=d.objectives; }
 }
 
 
@@ -15067,6 +15275,10 @@ function bagSaveBooksManifest(subId){
   const arr=BAG_BOOKS[subId]||[];
   const manifest=arr.map(({id,name,size})=>({id,name,size}));
   try{ localStorage.setItem('bs_bag_books_manifest_'+subId, JSON.stringify(manifest)); }catch(e){}
+  // ── حفظ سحابي ──
+  if(typeof fbAuth !== 'undefined' && fbAuth && fbAuth.currentUser){
+    _fbDebounce('bag_books_'+subId, ()=>fbSaveBagBooks(subId, manifest), 2000);
+  }
 }
 
 function bagRevokeSubjectBooks(subId){
@@ -15082,7 +15294,13 @@ async function bagRestoreBooksForSubject(subId){
   bagRevokeSubjectBooks(subId);
   let manifest=[];
   try{
-    const raw=localStorage.getItem('bs_bag_books_manifest_'+subId);
+    // حاول السحابة أولاً
+    let _booksCloud = null;
+    if(typeof fbAuth !== 'undefined' && fbAuth && fbAuth.currentUser){
+      _booksCloud = await fbLoadBagBooks(subId).catch(()=>null);
+      if(_booksCloud) localStorage.setItem('bs_bag_books_manifest_'+subId, JSON.stringify(_booksCloud));
+    }
+    const raw = _booksCloud ? JSON.stringify(_booksCloud) : localStorage.getItem('bs_bag_books_manifest_'+subId);
     if(raw) manifest=JSON.parse(raw);
   }catch(e){ manifest=[]; }
   if(!manifest.length){ BAG_BOOKS[subId]=[]; return; }
@@ -15275,15 +15493,25 @@ function bagRenderActivities(subId){
 
 function bagSaveActivities(subId){
   try{ localStorage.setItem('bs_bag_act_'+subId, JSON.stringify(BAG_ACTIVITIES[subId]||[])); }catch(e){}
+  // ── حفظ سحابي ──
+  if(typeof fbAuth !== 'undefined' && fbAuth && fbAuth.currentUser){
+    _fbDebounce('bag_act_'+subId, ()=>fbSaveBagActivities(subId, BAG_ACTIVITIES[subId]||[]), 2000);
+  }
 }
 
-function bagLoadAllActivities(){
-  S.subjects.forEach(sub=>{
+async function bagLoadAllActivities(){
+  for(const sub of S.subjects){
     try{
-      const d=JSON.parse(localStorage.getItem('bs_bag_act_'+sub.id)||'[]');
+      // حاول السحابة أولاً ثم localStorage
+      let _bagActCloud = null;
+      if(typeof fbAuth !== 'undefined' && fbAuth && fbAuth.currentUser){
+        _bagActCloud = await fbLoadBagActivities(sub.id).catch(()=>null);
+      }
+      const d = _bagActCloud || JSON.parse(localStorage.getItem('bs_bag_act_'+sub.id)||'[]');
+      if(_bagActCloud) localStorage.setItem('bs_bag_act_'+sub.id, JSON.stringify(_bagActCloud));
       BAG_ACTIVITIES[sub.id]=d;
     }catch(e){}
-  });
+  }
 }
 
 function closeClassroomMode(){
@@ -19375,6 +19603,9 @@ function _startApp() {
           }
           _fbShowStatus('⏳ جاري التحميل...', 'var(--sky3)');
           await fbLoadClasses(user.uid);
+          // تحميل الإعدادات (المظهر، الـ cursor، إلخ)
+          await fbLoadSettings(user.uid);
+          // تحميل بيانات الفصل
           const loaded = await fbLoad(user.uid, ACTIVE_CLASS_ID);
           if(!loaded) load(); // fallback to localStorage
           fbStartRealtime(user.uid);
