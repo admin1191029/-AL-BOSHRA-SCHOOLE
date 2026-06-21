@@ -67,7 +67,10 @@ async function authSubmit(){
       const name=(_authEl('authName').value||'').trim();
       if(!name){ authShowError('أدخل اسمك'); btn.disabled=false; btn.textContent=orig; return; }
       const cred=await fbAuth.createUserWithEmailAndPassword(email,pass);
-      if(cred.user && name){ await cred.user.updateProfile({ displayName:name }); }
+      if(cred.user && name){
+        await cred.user.updateProfile({ displayName:name });
+        _setTeacherFromName(name);
+      }
       try{ SFX.play('confetti'); }catch(e){}
     } else {
       await fbAuth.signInWithEmailAndPassword(email,pass);
@@ -143,6 +146,16 @@ function _applyAuthUser(user){
 
 function fullName(){
   return [S.teacher.n3,S.teacher.n1,S.teacher.n2].filter(Boolean).join(' ');
+}
+
+// تعيين اسم المعلم من اسم كامل (يُستخدم بعد إنشاء حساب جديد)
+function _setTeacherFromName(name){
+  const parts=String(name||'').trim().split(/\s+/);
+  S.teacher={ n1:parts[0]||'معلم', n2:parts.slice(1).join(' ')||'', n3:'', photo:(S.teacher&&S.teacher.photo)||'' };
+  if(S.user) S.user.name=name;
+  save();
+  const tb=document.getElementById('tbName'); if(tb) tb.textContent=S.teacher.n1;
+  const sb=document.getElementById('sbName'); if(sb) sb.textContent=fullName();
 }
 
 
