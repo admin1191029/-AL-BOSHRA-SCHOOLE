@@ -559,12 +559,11 @@ function initAbsenceReportCharts(){
 
 
 load();
-if(!checkLicense()){}
-else if(S.user){
-  document.getElementById('ln1').value=S.teacher.n1||'';
-  document.getElementById('ln2').value=S.teacher.n2||'';
-  document.getElementById('ln3').value=S.teacher.n3||'';
-  enterApp();
+if(!checkLicense()){
+  // شاشة الترخيص ظاهرة — انتظر تفعيل المفتاح
+} else {
+  // الترخيص سليم — دع Firebase يقرر حالة الدخول (دخول حقيقي بحساب)
+  initAuth();
 }
 
 // ══════════════════════════════════════════════

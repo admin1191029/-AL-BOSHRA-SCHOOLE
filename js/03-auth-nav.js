@@ -1,16 +1,144 @@
 // ══════════════════════════════════════════════
 // AUTH
 // ══════════════════════════════════════════════
-function doLogin(provider){
-  const n1=(document.getElementById('ln1').value||'').trim();
-  const n2=(document.getElementById('ln2').value||'').trim();
-  const n3=(document.getElementById('ln3').value||'').trim();
-  if(!n1){toast('الرجاء إدخال الاسم الأول','error');return;}
-  S.teacher={n1,n2,n3};
-  S.user={provider,name:fullName(),loginAt:Date.now()};
+// ── نظام الدخول الحقيقي عبر Firebase Authentication ──
+let AUTH_MODE = 'signin'; // 'signin' | 'signup'
+
+function _authEl(id){ return document.getElementById(id); }
+function authClearMsgs(){
+  const e=_authEl('authError'), i=_authEl('authInfo');
+  if(e){e.style.display='none';e.textContent='';}
+  if(i){i.style.display='none';i.textContent='';}
+}
+function authShowError(msg){
+  const e=_authEl('authError'); if(e){e.textContent=msg;e.style.display='block';}
+  const i=_authEl('authInfo'); if(i)i.style.display='none';
+}
+function authShowInfo(msg){
+  const i=_authEl('authInfo'); if(i){i.textContent=msg;i.style.display='block';}
+  const e=_authEl('authError'); if(e)e.style.display='none';
+}
+
+function authToggleMode(){
+  AUTH_MODE = (AUTH_MODE==='signin') ? 'signup' : 'signin';
+  const signup = AUTH_MODE==='signup';
+  _authEl('authNameGroup').style.display = signup ? 'block' : 'none';
+  _authEl('authTitle').textContent = signup ? 'إنشاء حساب جديد ✨' : 'أهلاً بك 👋';
+  _authEl('authSubtitle').textContent = signup ? 'سجّل بياناتك لإنشاء حسابك' : 'سجّل دخولك للبدء في متابعة طلابك';
+  _authEl('authSubmitBtn').textContent = signup ? 'إنشاء الحساب ←' : 'دخول ←';
+  _authEl('authToggleText').textContent = signup ? 'لديك حساب بالفعل؟' : 'ليس لديك حساب؟';
+  _authEl('authToggleLink').textContent = signup ? 'سجّل الدخول' : 'أنشئ حساباً جديداً';
+  _authEl('authForgot').style.display = signup ? 'none' : 'inline';
+  _authEl('authPassword').setAttribute('autocomplete', signup ? 'new-password' : 'current-password');
+  authClearMsgs();
+}
+
+function _authMapError(e){
+  const c = (e && e.code) || '';
+  const m = {
+    'auth/invalid-email':'البريد الإلكتروني غير صحيح',
+    'auth/user-disabled':'هذا الحساب موقوف',
+    'auth/user-not-found':'لا يوجد حساب بهذا البريد',
+    'auth/wrong-password':'كلمة المرور غير صحيحة',
+    'auth/invalid-credential':'البريد أو كلمة المرور غير صحيحة',
+    'auth/email-already-in-use':'هذا البريد مستخدم بالفعل — سجّل الدخول',
+    'auth/weak-password':'كلمة المرور ضعيفة (٦ أحرف على الأقل)',
+    'auth/too-many-requests':'محاولات كثيرة جداً — حاول لاحقاً',
+    'auth/network-request-failed':'تعذّر الاتصال بالإنترنت',
+    'auth/popup-closed-by-user':'تم إغلاق نافذة Google قبل إتمام الدخول',
+    'auth/popup-blocked':'المتصفح منع النافذة المنبثقة — اسمح بها وحاول ثانية',
+    'auth/operation-not-allowed':'طريقة الدخول هذه غير مُفعّلة في إعدادات المشروع',
+    'auth/configuration-not-found':'لم يتم تفعيل خدمة الدخول بعد في لوحة Firebase (Authentication)'
+  };
+  return m[c] || (e && e.message) || 'حدث خطأ — حاول مجدداً';
+}
+
+async function authSubmit(){
+  if(!fbReady){ authShowError('خدمة الدخول غير متاحة حالياً'); return; }
+  const email=(_authEl('authEmail').value||'').trim();
+  const pass=_authEl('authPassword').value||'';
+  const btn=_authEl('authSubmitBtn');
+  authClearMsgs();
+  if(!email){ authShowError('أدخل البريد الإلكتروني'); return; }
+  if(pass.length<6){ authShowError('كلمة المرور ٦ أحرف على الأقل'); return; }
+  const orig=btn.textContent; btn.disabled=true; btn.textContent='⏳ جاري...';
+  try{
+    if(AUTH_MODE==='signup'){
+      const name=(_authEl('authName').value||'').trim();
+      if(!name){ authShowError('أدخل اسمك'); btn.disabled=false; btn.textContent=orig; return; }
+      const cred=await fbAuth.createUserWithEmailAndPassword(email,pass);
+      if(cred.user && name){ await cred.user.updateProfile({ displayName:name }); }
+      try{ SFX.play('confetti'); }catch(e){}
+    } else {
+      await fbAuth.signInWithEmailAndPassword(email,pass);
+      try{ SFX.play('confetti'); }catch(e){}
+    }
+    // onAuthStateChanged سيتولّى الدخول للتطبيق
+  }catch(e){
+    authShowError(_authMapError(e));
+    try{ SFX.play('wrong'); }catch(_){}
+    btn.disabled=false; btn.textContent=orig;
+  }
+}
+
+async function authGoogle(){
+  if(!fbReady){ authShowError('خدمة الدخول غير متاحة حالياً'); return; }
+  authClearMsgs();
+  try{
+    const provider=new firebase.auth.GoogleAuthProvider();
+    await fbAuth.signInWithPopup(provider);
+    try{ SFX.play('confetti'); }catch(e){}
+  }catch(e){
+    authShowError(_authMapError(e));
+  }
+}
+
+async function authReset(){
+  if(!fbReady){ authShowError('الخدمة غير متاحة حالياً'); return; }
+  const email=(_authEl('authEmail').value||'').trim();
+  authClearMsgs();
+  if(!email){ authShowError('أدخل بريدك الإلكتروني أولاً لإرسال رابط الاستعادة'); return; }
+  try{
+    await fbAuth.sendPasswordResetEmail(email);
+    authShowInfo('📧 أرسلنا رابط استعادة كلمة المرور إلى بريدك');
+  }catch(e){
+    authShowError(_authMapError(e));
+  }
+}
+
+// ── مراقبة حالة الدخول — تقرر أي شاشة تظهر (تُستدعى من الإقلاع) ──
+function initAuth(){
+  if(!fbReady || !fbAuth){
+    document.getElementById('loginScreen').style.display='flex';
+    authShowError('تعذّر الاتصال بخدمة الدخول — تحقق من الإنترنت');
+    return;
+  }
+  fbAuth.onAuthStateChanged(function(user){
+    if(user){
+      _applyAuthUser(user);
+      document.getElementById('licenseScreen').style.display='none';
+      document.getElementById('loginScreen').style.display='none';
+      enterApp();
+    } else {
+      document.getElementById('app').style.display='none';
+      document.getElementById('loginScreen').style.display='flex';
+    }
+  });
+}
+
+function _applyAuthUser(user){
+  const dn=(user.displayName || (user.email||'').split('@')[0] || 'معلم').trim();
+  const parts=dn.split(/\s+/);
+  // احتفظ باسم سبق تعديله من الملف الشخصي إن وُجد
+  if(!S.teacher || !S.teacher.n1){
+    S.teacher={ n1:parts[0]||'معلم', n2:parts.slice(1).join(' ')||'', n3:'', photo:(S.teacher&&S.teacher.photo)||'' };
+  }
+  S.user={
+    provider:(user.providerData[0] && user.providerData[0].providerId) || 'password',
+    uid:user.uid, email:user.email||'', name:dn, loginAt:Date.now()
+  };
   save();
-  logChange('auth','تسجيل دخول',`${provider==='google'?'Google':'محلي'} — ${S.teacher.n1}`);
-  enterApp();
+  try{ logChange('auth','تسجيل دخول',`${S.user.provider==='google.com'?'Google':'بريد'} — ${S.teacher.n1}`); }catch(e){}
 }
 
 function fullName(){
@@ -100,12 +228,14 @@ function enterApp(){
 }
 
 function doLogout(){
-  if(!confirm('تسجيل الخروج؟ بياناتك محفوظة.')) return;
-  document.getElementById('app').style.display='none';
-  document.getElementById('loginScreen').style.display='flex';
-  document.getElementById('ln1').value=S.teacher.n1||'';
-  document.getElementById('ln2').value=S.teacher.n2||'';
-  document.getElementById('ln3').value=S.teacher.n3||'';
+  if(!confirm('تسجيل الخروج؟ بياناتك محفوظة على جهازك.')) return;
+  if(fbReady && fbAuth){
+    fbAuth.signOut().catch(function(e){ console.warn('signOut', e&&e.message); });
+    // onAuthStateChanged سيُظهر شاشة الدخول تلقائياً
+  } else {
+    document.getElementById('app').style.display='none';
+    document.getElementById('loginScreen').style.display='flex';
+  }
 }
 
 // ══════════════════════════════════════════════
