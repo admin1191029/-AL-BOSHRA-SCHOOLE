@@ -87,10 +87,12 @@ async function authSubmit(){
 async function authGoogle(){
   if(!fbReady){ authShowError('خدمة الدخول غير متاحة حالياً'); return; }
   authClearMsgs();
+  const provider=new firebase.auth.GoogleAuthProvider();
+  // نستخدم التحويل (redirect) بدل النافذة المنبثقة لتفادي حظر COOP في المتصفحات الحديثة
+  authShowInfo('⏳ جاري التحويل إلى Google لتسجيل الدخول...');
   try{
-    const provider=new firebase.auth.GoogleAuthProvider();
-    await fbAuth.signInWithPopup(provider);
-    try{ SFX.play('confetti'); }catch(e){}
+    await fbAuth.signInWithRedirect(provider);
+    // ستُحوَّل الصفحة إلى Google ثم تعود — onAuthStateChanged يُكمل الدخول
   }catch(e){
     authShowError(_authMapError(e));
   }
@@ -116,6 +118,12 @@ function initAuth(){
     authShowError('تعذّر الاتصال بخدمة الدخول — تحقق من الإنترنت');
     return;
   }
+  // أكمل نتيجة تحويل Google عند العودة (يُظهر أي خطأ؛ الدخول نفسه يتم عبر onAuthStateChanged)
+  fbAuth.getRedirectResult().then(function(res){
+    if(res && res.user){ try{ SFX.play('confetti'); }catch(e){} }
+  }).catch(function(e){
+    authShowError(_authMapError(e));
+  });
   fbAuth.onAuthStateChanged(function(user){
     if(user){
       _applyAuthUser(user);
