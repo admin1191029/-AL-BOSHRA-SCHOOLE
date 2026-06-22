@@ -238,6 +238,8 @@ function enterApp(){
     });
   }
   _setTeacherAvatars();
+  // مزامنة زر الصوت مع الحالة (مكتوم افتراضياً)
+  try{ const _sb=document.getElementById('sfxToggle'); if(_sb){ _sb.textContent=SFX._enabled?'🔊':'🔇'; _sb.style.opacity=SFX._enabled?'1':'0.4'; _sb.title=SFX._enabled?'صوت مفعّل':'صوت مكتوم'; } }catch(e){}
   document.getElementById('sbName').textContent=fullName();
   document.getElementById('nb-students').textContent=S.students.length;
   document.getElementById('nb-notes').textContent=S.notes.length;

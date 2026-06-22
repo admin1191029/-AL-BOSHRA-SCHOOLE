@@ -6,7 +6,7 @@
 // ══════════════════════════════════════════════
 const SFX = {
   _ctx: null,
-  _enabled: localStorage.getItem('bs_sfx') !== 'off',
+  _enabled: localStorage.getItem('bs_sfx') === 'on',
   _unlocked: false,
 
   ctx(){
