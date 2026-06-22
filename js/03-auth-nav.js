@@ -66,12 +66,14 @@ async function authSubmit(){
     if(AUTH_MODE==='signup'){
       const name=(_authEl('authName').value||'').trim();
       if(!name){ authShowError('أدخل اسمك'); btn.disabled=false; btn.textContent=orig; return; }
+      window.__pendingName=name;
       const cred=await fbAuth.createUserWithEmailAndPassword(email,pass);
       if(cred.user && name){
         await cred.user.updateProfile({ displayName:name });
         _setTeacherFromName(name);
       }
       try{ SFX.play('confetti'); }catch(e){}
+      routeUser(cred.user);
     } else {
       await fbAuth.signInWithEmailAndPassword(email,pass);
       try{ SFX.play('confetti'); }catch(e){}
@@ -119,22 +121,37 @@ function initAuth(){
     return;
   }
   // أكمل نتيجة تحويل Google عند العودة (يُظهر أي خطأ؛ الدخول نفسه يتم عبر onAuthStateChanged)
-  fbAuth.getRedirectResult().then(function(res){
-    if(res && res.user){ try{ SFX.play('confetti'); }catch(e){} }
-  }).catch(function(e){
+  fbAuth.getRedirectResult().catch(function(e){
     authShowError(_authMapError(e));
   });
   fbAuth.onAuthStateChanged(function(user){
     if(user){
-      _applyAuthUser(user);
-      document.getElementById('licenseScreen').style.display='none';
-      document.getElementById('loginScreen').style.display='none';
-      enterApp();
+      routeUser(user);
     } else {
+      __routed=false;
+      const ls=document.getElementById('licenseScreen'); if(ls) ls.style.display='none';
+      const ob=document.getElementById('onboardingScreen'); if(ob) ob.style.display='none';
       document.getElementById('app').style.display='none';
       document.getElementById('loginScreen').style.display='flex';
     }
   });
+}
+
+// يقرر وجهة المستخدم: المستخدم الجديد → صفحة الإعداد، والعائد → التطبيق مباشرةً
+let __routed=false;
+function routeUser(user){
+  if(__routed) return;
+  __routed=true;
+  _applyAuthUser(user);
+  const ls=document.getElementById('licenseScreen'); if(ls) ls.style.display='none';
+  document.getElementById('loginScreen').style.display='none';
+  let onboarded=false;
+  try{ onboarded = localStorage.getItem('bs_onboarded_'+user.uid)==='1'; }catch(e){}
+  if(onboarded){
+    enterApp();
+  } else {
+    startOnboarding();
+  }
 }
 
 function _applyAuthUser(user){
@@ -257,6 +274,47 @@ function doLogout(){
     document.getElementById('app').style.display='none';
     document.getElementById('loginScreen').style.display='flex';
   }
+}
+
+// ── صفحة الإعداد للمستخدم الجديد (Onboarding) ──
+function startOnboarding(){
+  const scr=document.getElementById('onboardingScreen');
+  if(!scr){ enterApp(); return; }
+  const nm = (window.__pendingName||'') || (fbAuth&&fbAuth.currentUser&&fbAuth.currentUser.displayName) || fullName() || '';
+  const nmEl=document.getElementById('obName'); if(nmEl) nmEl.value=nm;
+  obGoStep(1);
+  document.getElementById('app').style.display='none';
+  document.getElementById('loginScreen').style.display='none';
+  scr.style.display='flex';
+}
+function obGoStep(n){
+  [1,2].forEach(i=>{
+    const st=document.getElementById('obStep'+i); if(st) st.style.display=(i===n)?'block':'none';
+    const dot=document.getElementById('obDot'+i); if(dot) dot.className='ob-dot'+((i<=n)?' active':'');
+  });
+}
+function obNext(){
+  const name=(document.getElementById('obName').value||'').trim();
+  const e=document.getElementById('obErr1');
+  if(!name){ if(e){e.textContent='من فضلك أدخل اسمك';e.style.display='block';} return; }
+  if(e) e.style.display='none';
+  _setTeacherFromName(name);
+  obGoStep(2);
+}
+function obFinish(){
+  const cname=(document.getElementById('obClassName').value||'').trim();
+  const cgrade=(document.getElementById('obClassGrade').value||'').trim();
+  const e=document.getElementById('obErr2');
+  if(!cname){ if(e){e.textContent='أدخل اسم الفصل';e.style.display='block';} return; }
+  if(e) e.style.display='none';
+  const meta={ id:'class_default', name:cname, note:cgrade||'', createdAt:Date.now() };
+  try{ saveClassMeta(meta); }catch(err){}
+  ACTIVE_CLASS_ID='class_default';
+  try{ localStorage.setItem('bs_active_class','class_default'); }catch(err){}
+  try{ if(fbAuth&&fbAuth.currentUser) localStorage.setItem('bs_onboarded_'+fbAuth.currentUser.uid,'1'); }catch(err){}
+  window.__pendingName='';
+  document.getElementById('onboardingScreen').style.display='none';
+  enterApp();
 }
 
 // ══════════════════════════════════════════════

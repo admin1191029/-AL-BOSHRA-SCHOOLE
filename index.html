@@ -169,6 +169,55 @@
 </div>
 
 <!-- ══════════════════════════════════════════
+  ONBOARDING — إعداد المستخدم الجديد
+══════════════════════════════════════════ -->
+<div id="onboardingScreen" style="display:none;position:fixed;inset:0;z-index:1001;background:#eef2f8;align-items:center;justify-content:center;padding:20px;font-family:'Tajawal',sans-serif;overflow:auto;" dir="rtl">
+  <style>
+    #onboardingScreen .ob-input{width:100%;padding:12px 15px;background:#fbfcfe;border:1.5px solid #d8e0ec;border-radius:10px;color:#1b2942;font-family:'Tajawal',sans-serif;font-size:0.96rem;outline:none;margin-bottom:14px;box-sizing:border-box;}
+    #onboardingScreen .ob-input:focus{border-color:#2f6db0;background:#fff;box-shadow:0 0 0 3px rgba(47,109,176,0.12);}
+    #onboardingScreen .ob-label{display:block;font-size:0.84rem;font-weight:700;color:#41506a;margin-bottom:7px;}
+    #onboardingScreen .ob-btn{background:#16335c;color:#fff;border:none;border-radius:10px;padding:12px 22px;font-family:'Tajawal',sans-serif;font-size:0.96rem;font-weight:800;cursor:pointer;}
+    #onboardingScreen .ob-btn:hover{background:#1d447a;}
+    #onboardingScreen .ob-ghost{background:#fff;color:#41506a;border:1.5px solid #d8e0ec;border-radius:10px;padding:12px 20px;font-family:'Tajawal',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;}
+    #onboardingScreen .ob-dot{width:28px;height:5px;border-radius:99px;background:#d8e0ec;transition:background 0.2s;}
+    #onboardingScreen .ob-dot.active{background:#16335c;}
+  </style>
+  <div style="width:460px;max-width:96vw;background:#fff;border:1px solid #e4e9f1;border-radius:18px;box-shadow:0 24px 60px rgba(22,51,92,0.14);padding:38px 36px;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+      <div style="width:46px;height:46px;border-radius:12px;background:#16335c;display:flex;align-items:center;justify-content:center;font-size:22px;">🏫</div>
+      <div style="flex:1;">
+        <div style="font-size:0.78rem;color:#73839c;font-weight:600;">إعداد الحساب</div>
+        <div style="display:flex;gap:6px;margin-top:6px;">
+          <div class="ob-dot active" id="obDot1"></div>
+          <div class="ob-dot" id="obDot2"></div>
+        </div>
+      </div>
+    </div>
+    <div id="obStep1">
+      <h2 style="font-size:1.4rem;font-weight:800;color:#16335c;margin:0 0 6px;">أهلاً بك في منصة البشرى 👋</h2>
+      <p style="font-size:0.9rem;color:#73839c;margin:0 0 22px;line-height:1.7;">خلّينا نجهّز حسابك في خطوتين سريعتين. نبدأ باسمك:</p>
+      <label class="ob-label">اسم المعلم / المعلمة</label>
+      <input class="ob-input" id="obName" placeholder="مثال: أحمد محمد" />
+      <div id="obErr1" style="display:none;color:#dc2626;font-size:0.82rem;font-weight:700;margin:-6px 0 12px;"></div>
+      <button class="ob-btn" style="width:100%;" onclick="obNext()">التالي ←</button>
+    </div>
+    <div id="obStep2" style="display:none;">
+      <h2 style="font-size:1.4rem;font-weight:800;color:#16335c;margin:0 0 6px;">أنشئ أول فصل</h2>
+      <p style="font-size:0.9rem;color:#73839c;margin:0 0 22px;line-height:1.7;">تقدر تضيف فصول تانية في أي وقت من داخل التطبيق.</p>
+      <label class="ob-label">اسم الفصل</label>
+      <input class="ob-input" id="obClassName" placeholder="مثال: فصل ١/أ" />
+      <label class="ob-label">المرحلة الدراسية</label>
+      <input class="ob-input" id="obClassGrade" placeholder="مثال: الصف الأول الابتدائي" />
+      <div id="obErr2" style="display:none;color:#dc2626;font-size:0.82rem;font-weight:700;margin:-6px 0 12px;"></div>
+      <div style="display:flex;gap:10px;margin-top:4px;">
+        <button class="ob-ghost" onclick="obGoStep(1)">رجوع</button>
+        <button class="ob-btn" style="flex:1;" onclick="obFinish()">ابدأ الآن ←</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
   APP
 ══════════════════════════════════════════ -->
 <div id="app">
