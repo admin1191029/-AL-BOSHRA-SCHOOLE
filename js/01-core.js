@@ -643,6 +643,7 @@ function save() {
     gamesBank:S.gamesBank||null, _snapshots:S._snapshots||{},
     resources:S.resources||[]
   }));
+  if(typeof cloudSyncSave==='function') cloudSyncSave();
 }
 
 function load() {

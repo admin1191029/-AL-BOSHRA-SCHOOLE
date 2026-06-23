@@ -145,13 +145,27 @@ function routeUser(user){
   _applyAuthUser(user);
   const ls=document.getElementById('licenseScreen'); if(ls) ls.style.display='none';
   document.getElementById('loginScreen').style.display='none';
+  _routeWithCloud(user);
+}
+
+async function _routeWithCloud(user){
   let onboarded=false;
   try{ onboarded = localStorage.getItem('bs_onboarded_'+user.uid)==='1'; }catch(e){}
-  if(onboarded){
-    enterApp();
-  } else {
-    startOnboarding();
-  }
+  // اسحب بيانات الحساب من السحابة (إن وُجدت) قبل الدخول — offline-first
+  try{
+    if(typeof cloudPull==='function'){
+      const res = await cloudPull(user.uid);
+      if(res && res.hadCloud){
+        load();                 // أعد تحميل S من localStorage بعد التحديث من السحابة
+        onboarded = true;        // عنده بيانات سحابية ⇒ مُعدّ مسبقاً
+        try{ localStorage.setItem('bs_onboarded_'+user.uid,'1'); }catch(e){}
+      } else if(onboarded && typeof cloudPushAll==='function'){
+        cloudPushAll();          // ترحيل: بيانات محلية موجودة والسحابة فاضية ⇒ ارفعها
+      }
+    }
+  }catch(e){ console.warn('routeWithCloud', e&&e.message); }
+  if(onboarded){ enterApp(); }
+  else { startOnboarding(); }
 }
 
 function _applyAuthUser(user){
