@@ -90,13 +90,22 @@ async function authGoogle(){
   if(!fbReady){ authShowError('خدمة الدخول غير متاحة حالياً'); return; }
   authClearMsgs();
   const provider=new firebase.auth.GoogleAuthProvider();
-  // نستخدم التحويل (redirect) بدل النافذة المنبثقة لتفادي حظر COOP في المتصفحات الحديثة
-  authShowInfo('⏳ جاري التحويل إلى Google لتسجيل الدخول...');
+  // نجرّب النافذة المنبثقة أولاً ونوجّه المستخدم فور نجاحها (لا نعتمد على onAuthStateChanged وحده)
   try{
-    await fbAuth.signInWithRedirect(provider);
-    // ستُحوَّل الصفحة إلى Google ثم تعود — onAuthStateChanged يُكمل الدخول
+    const result = await fbAuth.signInWithPopup(provider);
+    if(result && result.user){ routeUser(result.user); }
   }catch(e){
-    authShowError(_authMapError(e));
+    const code = (e && e.code) || '';
+    const coop = e && /Cross-Origin-Opener-Policy/i.test(e.message||'');
+    // لو فشلت النافذة المنبثقة (حظر/COOP) ⇒ نتحوّل عبر redirect
+    if(coop || code==='auth/popup-blocked' || code==='auth/cancelled-popup-request' ||
+       code==='auth/popup-closed-by-user' || code==='auth/operation-not-supported-in-this-environment'){
+      authShowInfo('⏳ جاري التحويل إلى Google...');
+      try{ await fbAuth.signInWithRedirect(provider); }
+      catch(e2){ authShowError(_authMapError(e2)); }
+    } else {
+      authShowError(_authMapError(e));
+    }
   }
 }
 
@@ -120,8 +129,10 @@ function initAuth(){
     authShowError('تعذّر الاتصال بخدمة الدخول — تحقق من الإنترنت');
     return;
   }
-  // أكمل نتيجة تحويل Google عند العودة (يُظهر أي خطأ؛ الدخول نفسه يتم عبر onAuthStateChanged)
-  fbAuth.getRedirectResult().catch(function(e){
+  // أكمل نتيجة تحويل Google عند العودة — نوجّه المستخدم صراحةً (لا نعتمد على onAuthStateChanged وحده)
+  fbAuth.getRedirectResult().then(function(res){
+    if(res && res.user){ routeUser(res.user); }
+  }).catch(function(e){
     authShowError(_authMapError(e));
   });
   fbAuth.onAuthStateChanged(function(user){

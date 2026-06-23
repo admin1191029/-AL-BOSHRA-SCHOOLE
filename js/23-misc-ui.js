@@ -9,7 +9,7 @@
   // Generate floating particles
   const container = document.getElementById('wsParticles');
   if(container){
-    const colors = ['#1565c0','#42a5f5','#fbbf24','#10b981','#7c3aed','#f43f5e'];
+    const colors = ['#ffffff','#a9cdef','#6fa3da','#cfe0f5'];
     for(let i=0;i<28;i++){
       const p = document.createElement('div');
       p.className = 'ws-particle';
