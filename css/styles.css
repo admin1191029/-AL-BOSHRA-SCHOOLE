@@ -555,8 +555,8 @@ body:has(button:hover) #cursor { background: var(--gold); }
   cursor: none; display: inline-flex; align-items: center; gap: 7px;
   transition: all 0.18s; white-space: nowrap;
 }
-.btn-primary { background: linear-gradient(135deg, var(--ink2), var(--sky)); color: white; box-shadow: 0 4px 16px rgba(21,101,192,0.30); }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(21,101,192,0.40); }
+.btn-primary { background: #16335c; color: white; box-shadow: 0 4px 14px rgba(22,51,92,0.25); }
+.btn-primary:hover { background: #1d447a; transform: translateY(-2px); box-shadow: 0 8px 22px rgba(22,51,92,0.32); }
 .btn-gold { background: linear-gradient(135deg, #d97706, var(--gold)); color: white; box-shadow: 0 4px 16px rgba(245,158,11,0.30); }
 .btn-gold:hover { transform: translateY(-2px); }
 .btn-green { background: linear-gradient(135deg, #059669, var(--mint)); color: white; box-shadow: 0 4px 16px rgba(16,185,129,0.30); }
