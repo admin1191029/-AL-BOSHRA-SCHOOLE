@@ -192,6 +192,7 @@ document.addEventListener('keydown',e=>{
 // THEME (فاتح / ليلي / دافئ / معلمات)
 // ══════════════════════════════════════════════
 function applyTheme(){
+  S.theme = 'light'; // ثيم واحد مقفول (الثيمات الأخرى محفوظة لكن غير ظاهرة)
   document.body.classList.toggle('dark', S.theme === 'dark');
   document.body.classList.toggle('theme-neu', S.theme === 'sepia');
   document.body.classList.toggle('theme-rose', S.theme === 'rose');

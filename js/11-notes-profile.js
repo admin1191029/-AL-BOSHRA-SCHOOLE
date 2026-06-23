@@ -135,7 +135,7 @@ function renderProfile(){
     <!-- RIGHT: Settings + Help -->
     <div>
       <!-- Theme Color -->
-      <div class="card" style="padding:22px;margin-bottom:14px;">
+      <div class="card" style="padding:22px;margin-bottom:14px;display:none;">
         <div style="font-weight:800;color:var(--ink2);margin-bottom:14px;">🎨 لون الثيم</div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
           ${THEME_COLORS.map(tc=>`
@@ -149,7 +149,7 @@ function renderProfile(){
       </div>
 
       <!-- Cursor Style -->
-      <div class="card" style="padding:22px;margin-bottom:14px;">
+      <div class="card" style="padding:22px;margin-bottom:14px;display:none;">
         <div style="font-weight:800;color:var(--ink2);margin-bottom:14px;">🖱️ شكل المؤشر</div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
           ${[
