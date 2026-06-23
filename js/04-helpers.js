@@ -50,7 +50,7 @@ function studentMastery(sid){
 }
 
 function masteryColor(pct){ return pct>=70?'gold':pct>=40?'blue':'green'; }
-function masteryLabel(pct){ return pct>=70?'أتقن المهارة 🏆':pct>=40?'يتقدم بشكل جيد 📈':'في بداية رحلته 🌱'; }
+function masteryLabel(pct){ return pct>=70?'أتقن المهارة':pct>=40?'يتقدم بشكل جيد':'في بداية رحلته'; }
 
 // ── مؤشر التقدم الحقيقي ─────────────────────────────────────
 // يحسب كم مهارة أتقنها الطالب في آخر N يوم

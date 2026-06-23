@@ -42,36 +42,36 @@ function renderDash(){
 
   <div class="kpi-grid">
     <div class="kpi blue">
-      <div class="kpi-bg-icon">👥</div>
-      <span class="kpi-icon">👥</span>
+      <div class="kpi-bg-icon"><i class="ti ti-users"></i></div>
+      <span class="kpi-icon"><i class="ti ti-users"></i></span>
       <div class="kpi-val">${total}</div>
       <div class="kpi-label">إجمالي الطلاب</div>
-      <div class="kpi-trend trend-up">↗ الصف ا��أول الابتدائي</div>
+      <div class="kpi-trend trend-up">الصف الأول الابتدائي</div>
     </div>
     <div class="kpi green">
-      <div class="kpi-bg-icon">✅</div>
-      <span class="kpi-icon">✅</span>
+      <div class="kpi-bg-icon"><i class="ti ti-circle-check"></i></div>
+      <span class="kpi-icon"><i class="ti ti-circle-check"></i></span>
       <div class="kpi-val">${present}</div>
       <div class="kpi-label">حاضرون اليوم</div>
       <div class="kpi-trend ${present>absent?'trend-up':'trend-down'}">${total?Math.round((present/total)*100):0}% من الطلاب</div>
     </div>
     <div class="kpi red">
-      <div class="kpi-bg-icon">❌</div>
-      <span class="kpi-icon">❌</span>
+      <div class="kpi-bg-icon"><i class="ti ti-circle-x"></i></div>
+      <span class="kpi-icon"><i class="ti ti-circle-x"></i></span>
       <div class="kpi-val">${absent}</div>
       <div class="kpi-label">غائبون اليوم</div>
       <div class="kpi-trend trend-down">${excuse} بعذر</div>
     </div>
     <div class="kpi gold">
-      <div class="kpi-bg-icon">⭐</div>
-      <span class="kpi-icon">⭐</span>
+      <div class="kpi-bg-icon"><i class="ti ti-star"></i></div>
+      <span class="kpi-icon"><i class="ti ti-star"></i></span>
       <div class="kpi-val">${avgMastery}%</div>
       <div class="kpi-label">متوسط الإتقان</div>
       <div class="kpi-trend ${avgMastery>=60?'trend-up':'trend-down'}">${masteryLabel(avgMastery)}</div>
     </div>
     <div class="kpi plum">
-      <div class="kpi-bg-icon">📝</div>
-      <span class="kpi-icon">📝</span>
+      <div class="kpi-bg-icon"><i class="ti ti-note"></i></div>
+      <span class="kpi-icon"><i class="ti ti-note"></i></span>
       <div class="kpi-val">${S.notes.length}</div>
       <div class="kpi-label">الملاحظات</div>
       <div class="kpi-trend trend-up">إجمالي الملاحظات المسجلة</div>
@@ -80,13 +80,13 @@ function renderDash(){
 
   <div class="dash-charts-grid">
     <div class="card">
-      <div class="card-header"><h3>📈 توزيع المستويات</h3><span class="badge badge-blue">لغتي</span></div>
+      <div class="card-header"><h3><i class="ti ti-chart-pie"></i> توزيع المستويات</h3><span class="badge badge-blue">لغتي</span></div>
       <div class="card-body">
         <div class="chart-h chart-h-220"><canvas id="dashLevelChart"></canvas></div>
       </div>
     </div>
     <div class="card">
-      <div class="card-header"><h3>📅 حضور الأسبوع</h3></div>
+      <div class="card-header"><h3><i class="ti ti-calendar"></i> حضور الأسبوع</h3></div>
       <div class="card-body">
         <div class="chart-h chart-h-220"><canvas id="dashWeekChart"></canvas></div>
       </div>

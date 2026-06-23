@@ -390,7 +390,7 @@ function rebuildSubjectNav(){
   if(!el) return;
   el.innerHTML=S.subjects.map(sub=>`
     <button class="nav-btn dyn-nav-btn" data-sid="${sub.id}" onclick="showPage('${sub.id}')">
-      <span class="nav-icon">${sub.icon||'📚'}</span> ${sub.name}
+      <span class="nav-icon"><i class="ti ti-book"></i></span> ${sub.name}
     </button>
   `).join('');
 }
