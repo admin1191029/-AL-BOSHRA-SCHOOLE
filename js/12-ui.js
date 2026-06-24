@@ -10,7 +10,7 @@ function buildNotifs(){
   const hasAttToday = todayAtt && Object.keys(todayAtt).length>0;
   if(!hasAttToday && S.students.length>0){
     notifs.push({
-      icon:'📋', text:'لم يتم تسجيل الحضور اليوم بعد',
+      icon:'ti-clipboard-check', text:'لم يتم تسجيل الحضور اليوم بعد',
       sub:'اضغط لتسجيل الحضور الآن', color:'var(--ember)',
       action:()=>{ showPage('attend'); toggleNotif(); }
     });
@@ -26,7 +26,7 @@ function buildNotifs(){
   });
   if(weakStudents.length>0){
     notifs.push({
-      icon:'⚠️', text:`${weakStudents.length} ${weakStudents.length===1?'طالب':' طلاب'} إتقانهم أقل من 40%`,
+      icon:'ti-alert-triangle', text:`${weakStudents.length} ${weakStudents.length===1?'طالب':' طلاب'} إتقانهم أقل من 40%`,
       sub:weakStudents.slice(0,2).map(s=>s.name).join('، ')+(weakStudents.length>2?'...':''),
       color:'var(--gold)',
       action:()=>{ showPage('analytics'); toggleNotif(); }
@@ -41,7 +41,7 @@ function buildNotifs(){
   });
   if(frequentAbsent.length>0){
     notifs.push({
-      icon:'🚨', text:`${frequentAbsent.length} ${frequentAbsent.length===1?'طالب':' طلاب'} غابوا 3 أيام أو أكثر هذا الأسبوع`,
+      icon:'ti-alert-octagon', text:`${frequentAbsent.length} ${frequentAbsent.length===1?'طالب':' طلاب'} غابوا 3 أيام أو أكثر هذا الأسبوع`,
       sub:frequentAbsent.slice(0,2).map(s=>s.name).join('، ')+(frequentAbsent.length>2?'...':''),
       color:'var(--ember)',
       action:()=>{ showPage('reports'); toggleNotif(); }
@@ -52,7 +52,7 @@ function buildNotifs(){
   const unseenNotes=S.notes.filter(n=>!n.seen).length;
   if(unseenNotes>0){
     notifs.push({
-      icon:'📝', text:`${unseenNotes} ملاحظة جديدة لم تراجعها`,
+      icon:'ti-note', text:`${unseenNotes} ملاحظة جديدة لم تراجعها`,
       sub:'اضغط لعرض الملاحظات',color:'var(--plum)',
       action:()=>{ showPage('notes'); toggleNotif(); }
     });
@@ -65,7 +65,7 @@ function buildNotifs(){
   });
   if(expiredGoals.length>0){
     notifs.push({
-      icon:'🎯', text:`${expiredGoals.length} ${expiredGoals.length===1?'هدف انتهت':' أهداف انتهت'} مدتها`,
+      icon:'ti-target', text:`${expiredGoals.length} ${expiredGoals.length===1?'هدف انتهت':' أهداف انتهت'} مدتها`,
       sub:'اضغط لمراجعة الأهداف', color:'var(--ember)',
       action:()=>{ showPage('goals'); toggleNotif(); }
     });
@@ -79,7 +79,7 @@ function buildNotifs(){
   })||[];
   if(soon.length>0){
     notifs.push({
-      icon:'🤝', text:`${soon.length} ${soon.length===1?'لقاء':' لقاءات'} مع أولياء خلال 3 أيام`,
+      icon:'ti-messages', text:`${soon.length} ${soon.length===1?'لقاء':' لقاءات'} مع أولياء خلال 3 أيام`,
       sub:soon[0]?.title||'', color:'var(--sky)',
       action:()=>{ showPage('meetings'); toggleNotif(); }
     });
@@ -97,7 +97,7 @@ function buildNotifs(){
 
   list.innerHTML=notifs.map((n,i)=>`
     <div class="np-item" onclick="(${n.action.toString()})()" style="cursor:pointer;border-right:3px solid ${n.color};padding-right:13px;">
-      <div style="font-size:1.3rem;flex-shrink:0;">${n.icon}</div>
+      <div style="font-size:1.3rem;flex-shrink:0;"><i class="ti ${n.icon}"></i></div>
       <div style="flex:1;">
         <div class="np-text" style="font-weight:800;">${n.text}</div>
         ${n.sub?`<div class="np-time">${n.sub}</div>`:''}
@@ -152,7 +152,7 @@ function toast(msg,type=''){
   if(!wrap){ alert(msg); return; }
   const t=document.createElement('div');
   t.className='toast '+(type||'');
-  t.innerHTML=`<span>${type==='success'?'✅':type==='error'?'❌':type==='info'?'ℹ️':'💬'}</span> ${msg}`;
+  t.innerHTML=`<span><i class="ti ${type==='success'?'ti-circle-check':type==='error'?'ti-circle-x':type==='info'?'ti-info-circle':'ti-message'}"></i></span> ${msg}`;
   wrap.appendChild(t);
   setTimeout(()=>{t.style.animation='toastOut 0.3s ease forwards';setTimeout(()=>t.remove(),350);},2800);
 }
@@ -228,21 +228,21 @@ function cycleTheme(){
 const CMD_ITEMS=[
   {icon:'🏠',title:'لوحة التحكم',sub:'الصفحة الرئيسية',action:()=>showPage('dash'),shortcut:'Alt+1'},
   {icon:'👥',title:'الطلاب',sub:'إدارة الطلاب وإضافتهم',action:()=>showPage('students'),shortcut:'Alt+2'},
-  {icon:'📋',title:'الحضور',sub:'تسجيل الحضور اليومي',action:()=>showPage('attend'),shortcut:'Alt+3'},
+  {icon:'ti-clipboard-check',title:'الحضور',sub:'تسجيل الحضور اليومي',action:()=>showPage('attend'),shortcut:'Alt+3'},
   {icon:'📊',title:'التقارير',sub:'توليد ومشاركة التقارير',action:()=>showPage('reports'),shortcut:'Alt+5'},
   {icon:'📒',title:'دفتر الدرجات',sub:'إدخال وتتبع الدرجات',action:()=>showPage('gradebook')},
   {icon:'🪑',title:'خريطة المقاعد',sub:'ترتيب جلوس الطلاب',action:()=>showPage('seatmap')},
   {icon:'⭐',title:'تقييم السلوك',sub:'نجوم السلوك والمشاركة',action:()=>showPage('behavior')},
-  {icon:'🎯',title:'الأهداف والخطط',sub:'أهداف تعليمية فردية IEP',action:()=>showPage('goals')},
+  {icon:'ti-target',title:'الأهداف والخطط',sub:'أهداف تعليمية فردية IEP',action:()=>showPage('goals')},
   {icon:'📅',title:'المخطط الأسبوعي',sub:'تخطيط الحصص والأنشطة',action:()=>showPage('planner')},
-  {icon:'🤝',title:'لقاءات الأولياء',sub:'تسجيل محادثات أولياء الأمور',action:()=>showPage('meetings')},
+  {icon:'ti-messages',title:'لقاءات الأولياء',sub:'تسجيل محادثات أولياء الأمور',action:()=>showPage('meetings')},
   {icon:'🤖',title:'الرؤى الذكية',sub:'تحليل وتوصيات تلقائية',action:()=>showPage('insights')},
   {icon:'📈',title:'التحليلات',sub:'إحصائيات وبيانات متقدمة',action:()=>showPage('analytics')},
   {icon:'📚',title:'إدارة المواد',sub:'إضافة وتعديل المواد والمهارات',action:()=>showPage('curriculum')},
   {icon:'⚙️',title:'الملف الشخصي',sub:'إعدادات المعلم',action:()=>showPage('profile')},
   {icon:'➕',title:'إضافة طالب جديد',sub:'',action:()=>{showPage('students');openAddModal();}},
-  {icon:'📝',title:'إضافة ملاحظة',sub:'',action:()=>openNoteFor(null)},
-  {icon:'🎯',title:'إضافة هدف',sub:'',action:()=>openGoalFor(null)},
+  {icon:'ti-note',title:'إضافة ملاحظة',sub:'',action:()=>openNoteFor(null)},
+  {icon:'ti-target',title:'إضافة هدف',sub:'',action:()=>openGoalFor(null)},
   {icon:'🎨',title:'تبديل المظهر',sub:'فاتح ← ليلي ← دافئ ← معلمات',action:cycleTheme},
 ];
 
