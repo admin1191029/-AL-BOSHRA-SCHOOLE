@@ -177,24 +177,24 @@ function renderAttend(){
     <div><div class="ph-title"><i class="ti ti-clipboard-check"></i> كشف الحضور اليومي</div><div class="ph-sub">${fmtDate(attendDate)}</div></div>
     <div class="ph-actions">
       <input type="date" value="${attendDate}" onchange="attendDate=this.value;showPage('attend')" style="padding:9px 14px;border:1.5px solid var(--border2);border-radius:var(--r-sm);font-family:'Tajawal',sans-serif;font-size:0.90rem;outline:none;cursor:none;">
-      <button class="btn btn-green btn-sm" onclick="markAllAtt('p')">✅ تحضير الكل</button>
-      <button class="btn btn-red btn-sm" onclick="markAllAtt('a')">❌ غياب الكل</button>
-      <button class="btn btn-gold btn-sm" onclick="exportAttendancePDF()">📄 PDF</button>
-      <button class="btn btn-primary btn-sm" onclick="exportReportForAdmin()" style="background:linear-gradient(135deg,#059669,#10b981);">📤 إرسال للإدارة</button>
+      <button class="btn btn-green btn-sm" onclick="markAllAtt('p')"><i class="ti ti-check"></i> تحضير الكل</button>
+      <button class="btn btn-red btn-sm" onclick="markAllAtt('a')"><i class="ti ti-x"></i> غياب الكل</button>
+      <button class="btn btn-gold btn-sm" onclick="exportAttendancePDF()"><i class="ti ti-file-text"></i> PDF</button>
+      <button class="btn btn-primary btn-sm" onclick="exportReportForAdmin()" style="background:linear-gradient(135deg,#059669,#10b981);"><i class="ti ti-send"></i> إرسال للإدارة</button>
     </div>
   </div>
 
   <div class="kpi-grid" style="grid-template-columns:repeat(5,1fr);margin-bottom:18px;">
-    <div class="kpi blue"><span class="kpi-icon" style="font-size:20px;">👥</span><div class="kpi-val" style="font-size:1.6rem;">${S.students.length}</div><div class="kpi-label">الكل</div></div>
-    <div class="kpi green"><span class="kpi-icon" style="font-size:20px;">✅</span><div class="kpi-val" style="font-size:1.6rem;">${p}</div><div class="kpi-label">حاضر</div></div>
-    <div class="kpi red"><span class="kpi-icon" style="font-size:20px;">❌</span><div class="kpi-val" style="font-size:1.6rem;">${a}</div><div class="kpi-label">غائب</div></div>
-    <div class="kpi gold"><span class="kpi-icon" style="font-size:20px;">📋</span><div class="kpi-val" style="font-size:1.6rem;">${e}</div><div class="kpi-label">بعذر</div></div>
-    <div class="kpi plum"><span class="kpi-icon" style="font-size:20px;">❓</span><div class="kpi-val" style="font-size:1.6rem;">${un}</div><div class="kpi-label">غير مسجل</div></div>
+    <div class="kpi blue"><span class="kpi-icon" style="font-size:20px;"><i class="ti ti-users"></i></span><div class="kpi-val" style="font-size:1.6rem;">${S.students.length}</div><div class="kpi-label">الكل</div></div>
+    <div class="kpi green"><span class="kpi-icon" style="font-size:20px;"><i class="ti ti-circle-check"></i></span><div class="kpi-val" style="font-size:1.6rem;">${p}</div><div class="kpi-label">حاضر</div></div>
+    <div class="kpi red"><span class="kpi-icon" style="font-size:20px;"><i class="ti ti-circle-x"></i></span><div class="kpi-val" style="font-size:1.6rem;">${a}</div><div class="kpi-label">غائب</div></div>
+    <div class="kpi gold"><span class="kpi-icon" style="font-size:20px;"><i class="ti ti-clipboard-text"></i></span><div class="kpi-val" style="font-size:1.6rem;">${e}</div><div class="kpi-label">بعذر</div></div>
+    <div class="kpi plum"><span class="kpi-icon" style="font-size:20px;"><i class="ti ti-help-circle"></i></span><div class="kpi-val" style="font-size:1.6rem;">${un}</div><div class="kpi-label">غير مسجل</div></div>
   </div>
 
-  ${S.students.length===0?`<div class="empty"><div class="empty-emoji">📋</div><h3>لا يوجد طلاب</h3><p>أضف طلاباً أولاً من قسم الطلاب</p></div>`:`
+  ${S.students.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-clipboard-check"></i></div><h3>لا يوجد طلاب</h3><p>أضف طلاباً أولاً من قسم الطلاب</p></div>`:`
   <div class="card" style="margin-bottom:20px;">
-    <div class="card-header"><h3>📋 كشف الحضور</h3>
+    <div class="card-header"><h3><i class="ti ti-clipboard-check"></i> كشف الحضور</h3>
       <div style="display:flex;align-items:center;gap:8px;">
         <div class="prog-wrap" style="width:120px;"><div class="prog-bar ${p/S.students.length>=0.8?'green':'gold'}" style="width:${S.students.length?Math.round((p/S.students.length)*100):0}%"></div></div>
         <span class="badge badge-${p/S.students.length>=0.8?'green':'gold'}">${S.students.length?Math.round((p/S.students.length)*100):0}% حضور</span>
@@ -215,9 +215,9 @@ function renderAttend(){
             </td>
             <td>
               <div style="display:flex;gap:7px;">
-                <button class="att-chip att-p ${cur==='p'?'sel':''}" onclick="setAtt('${s.id}','p')">✅ حاضر</button>
-                <button class="att-chip att-a ${cur==='a'?'sel':''}" onclick="setAtt('${s.id}','a')">❌ غائب</button>
-                <button class="att-chip att-ex ${cur==='e'?'sel':''}" onclick="setAtt('${s.id}','e')">📋 بعذر</button>
+                <button class="att-chip att-p ${cur==='p'?'sel':''}" onclick="setAtt('${s.id}','p')"><i class="ti ti-check"></i> حاضر</button>
+                <button class="att-chip att-a ${cur==='a'?'sel':''}" onclick="setAtt('${s.id}','a')"><i class="ti ti-x"></i> غائب</button>
+                <button class="att-chip att-ex ${cur==='e'?'sel':''}" onclick="setAtt('${s.id}','e')"><i class="ti ti-clipboard-text"></i> بعذر</button>
               </div>
             </td>
             <td><button class="btn btn-ghost btn-xs" onclick="openNoteFor('${s.id}')">+ ملاحظة</button></td>
@@ -229,7 +229,7 @@ function renderAttend(){
 
   ${histDates.length>0?`
   <div class="card">
-    <div class="card-header"><h3>📅 سجل الحضور السابق</h3></div>
+    <div class="card-header"><h3><i class="ti ti-calendar"></i> سجل الحضور السابق</h3></div>
     <div class="card-body">
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;">
         ${histDates.map(d=>{
