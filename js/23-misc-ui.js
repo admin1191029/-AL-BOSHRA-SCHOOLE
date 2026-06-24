@@ -119,11 +119,11 @@ function openStudentCards(){
     @media print{body{background:white;padding:16px;} .no-print{display:none!important;}}
   </style></head><body>
   <div class="print-header no-print">
-    <h1>🎓 بطاقات الطلاب — ${S.teacher.n1||'المعلم'}</h1>
+    <h1><i class="ti ti-school"></i> بطاقات الطلاب — ${S.teacher.n1||'المعلم'}</h1>
     <p>${S.students.length} طالب • ${new Date().toLocaleDateString('ar-EG')}</p>
   </div>
   <div style="text-align:center;margin-bottom:24px;" class="no-print">
-    <button onclick="window.print()" style="padding:12px 32px;background:#1565c0;color:white;border:none;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;">🖨️ طباعة البطاقات</button>
+    <button onclick="window.print()" style="padding:12px 32px;background:#1565c0;color:white;border:none;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;"><i class="ti ti-printer"></i> طباعة البطاقات</button>
   </div>
   <div class="cards-grid">${cards}</div>
   </body></html>`);

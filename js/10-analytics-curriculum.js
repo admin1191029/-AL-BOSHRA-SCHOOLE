@@ -94,13 +94,13 @@ function renderCurriculum(){
     <div><div class="ph-title"><i class="ti ti-books"></i> إدارة المواد الدراسية والمهارات</div>
     <div class="ph-sub">أضف مواد جديدة، وعدّل خانات التقييم ومهاراتها بحرية كامل��</div></div>
     <div class="ph-actions">
-      <button class="btn btn-primary" onclick="addSubject()">➕ إضافة مادة جديدة</button>
+      <button class="btn btn-primary" onclick="addSubject()"><i class="ti ti-plus"></i> إضافة مادة جديدة</button>
       <button class="btn btn-ghost" onclick="resetCurriculum()">↺ استعادة الافتراضي</button>
     </div>
   </div>
 
   <div class="note-card" style="margin-bottom:20px;">
-    <span class="note-icon">💡</span>
+    <span class="note-icon"><i class="ti ti-bulb"></i></span>
     <div>يمكنك إضافة أي عدد من المواد والخانات والمهارات. ستظهر المواد تلقائياً في القائمة الجانبية وفي صفحات التقييم والتقارير.</div>
   </div>
 
@@ -124,7 +124,7 @@ function renderCurriculumSubjects(){
         </div>
         <div style="display:flex;gap:8px;">
           <button class="btn btn-xs" style="background:rgba(255,255,255,0.15);color:white;" onclick="editSubject('${sub.id}')"><i class="ti ti-edit"></i> تعديل</button>
-          <button class="btn btn-xs" style="background:rgba(255,255,255,0.15);color:white;" onclick="addSection('${sub.id}')">➕ خانة</button>
+          <button class="btn btn-xs" style="background:rgba(255,255,255,0.15);color:white;" onclick="addSection('${sub.id}')"><i class="ti ti-plus"></i> خانة</button>
           <button class="btn btn-xs" style="background:rgba(239,68,68,0.25);color:#fca5a5;" onclick="deleteSubject('${sub.id}')"><i class="ti ti-trash"></i></button>
         </div>
       </div>
@@ -165,7 +165,7 @@ function renderSectionCard(subId, sec, secIdx){
     </div>
     <div style="padding:8px 12px;border-top:1px dashed var(--border);display:flex;gap:7px;">
       <input type="text" id="newSkill_${sec.id}" placeholder="اسم المهارة الجديدة..." style="flex:1;padding:8px 12px;border:1.5px solid var(--border2);border-radius:9px;font-family:'Tajawal',sans-serif;font-size:0.85rem;outline:none;text-align:right;" onkeydown="if(event.key==='Enter')addSkill('${subId}','${sec.id}')" />
-      <button class="btn btn-green btn-sm" onclick="addSkill('${subId}','${sec.id}')">➕ إضافة</button>
+      <button class="btn btn-green btn-sm" onclick="addSkill('${subId}','${sec.id}')"><i class="ti ti-plus"></i> إضافة</button>
     </div>
   </div>`;
 }

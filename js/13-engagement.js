@@ -116,7 +116,7 @@ function renderSeatMap(){
     <div><div class="ph-title"><i class="ti ti-armchair"></i> خريطة مقاعد الفصل</div>
     <div class="ph-sub">اضغط على أي مقعد لتغيير الطالب · الألوان تعكس حضور اليوم</div></div>
     <div class="ph-actions">
-      <button class="btn btn-primary" onclick="autoArrangeSeatMap()">🔀 ترتيب تلقائي</button>
+      <button class="btn btn-primary" onclick="autoArrangeSeatMap()"><i class="ti ti-arrows-shuffle"></i> ترتيب تلقائي</button>
       <button class="btn btn-ghost" onclick="clearSeatMap()"><i class="ti ti-trash"></i> مسح الكل</button>
     </div>
   </div>
@@ -140,7 +140,7 @@ function renderSeatMap(){
       const m=s?studentMastery(s.id):null;
       const attClass=att==='p'?'present':att==='a'?'absent':'';
       if(!s) return `<div class="seat-cell empty" onclick="assignSeat(${r},${c})">
-        <div style="font-size:22px;opacity:0.25">🪑</div>
+        <div style="font-size:22px;opacity:0.25"><i class="ti ti-armchair"></i></div>
         <div style="font-size:0.68rem;color:var(--muted2)">فارغ</div>
       </div>`;
       return `<div class="seat-cell ${attClass}" onclick="assignSeat(${r},${c})" title="${s.name}">
@@ -206,7 +206,7 @@ function renderBehavior(){
     <div><div class="ph-title"><i class="ti ti-star"></i> تقييم السلوك والمشاركة</div>
     <div class="ph-sub">التاريخ: ${fmtDate(td)} · اضغط النجوم وحدد الصفات</div></div>
     <div class="ph-actions">
-      <button class="btn btn-gold" onclick="printBehaviorReport()">📄 تقرير سلوكي</button>
+      <button class="btn btn-gold" onclick="printBehaviorReport()"><i class="ti ti-file-text"></i> تقرير سلوكي</button>
     </div>
   </div>
   <div class="beh-grid">
@@ -312,10 +312,10 @@ function _printBehaviorReportWithTemplate(tpl){
   td{padding:8px 12px;border-bottom:1px solid ${isKids?'#fde68a':'#e2e8f8'};font-size:.9em}
   ${extraStyle}
   </style></head><body>
-  <div class="no-print"><button class="pbtn" onclick="window.print()">🖨️ طباعة</button></div>
+  <div class="no-print"><button class="pbtn" onclick="window.print()"><i class="ti ti-printer"></i> طباعة</button></div>
   ${isKids
-    ? `<div class="kids-header"><h1>⭐ تقرير سلوك الطلاب 🌟</h1><p>مدارس البشرى الأهلية · المعلم: ${fullName()} · ${fmtDate(td)}</p></div>`
-    : `<h1>⭐ تقرير سلوك الطلاب</h1><p>مدارس البشرى الأهلية · المعلم: ${fullName()} · ${fmtDate(td)}</p>`
+    ? `<div class="kids-header"><h1><i class="ti ti-star"></i> تقرير سلوك الطلاب 🌟</h1><p>مدارس البشرى الأهلية · المعلم: ${fullName()} · ${fmtDate(td)}</p></div>`
+    : `<h1><i class="ti ti-star"></i> تقرير سلوك الطلاب</h1><p>مدارس البشرى الأهلية · المعلم: ${fullName()} · ${fmtDate(td)}</p>`
   }
   <table><thead><tr><th>#</th><th>الطالب</th><th>النجوم</th><th>الصفات الملاحظة</th></tr></thead>
   <tbody>${rows}</tbody></table>
@@ -354,13 +354,13 @@ function _printBehaviorReportWithTemplate(tpl){
   .sig-lbl{font-size:.68em;color:#94a3b8;font-weight:700;}.sig-val{font-size:.82em;font-weight:900;color:#1e3a5f;}
 </style></head><body>
 <div class="np">
-  <button class="pb" onclick="window.print()">🖨️ طباعة</button>
+  <button class="pb" onclick="window.print()"><i class="ti ti-printer"></i> طباعة</button>
   <button class="pb2" onclick="window.close()">✕ إغلاق</button>
 </div>
 <div class="hdr">
   <div class="hdr-left">
     <img src="${SCHOOL_LOGO}" class="hdr-logo"/>
-    <div><div class="hdr-title">⭐ تقرير سلوك الطلاب</div><div class="hdr-sub">مدارس البشرى الأهلية · ${fmtDate(td)}</div></div>
+    <div><div class="hdr-title"><i class="ti ti-star"></i> تقرير سلوك الطلاب</div><div class="hdr-sub">مدارس البشرى الأهلية · ${fmtDate(td)}</div></div>
   </div>
   <div class="t-card">
     ${tPhoto?`<img src="${tPhoto}" class="t-photo" style="width:38px;height:38px;border-radius:50%;object-fit:cover;"/>`:`<div class="t-photo">${tName.charAt(0)||'م'}</div>`}
@@ -397,7 +397,7 @@ function renderGoals(){
     <div><div class="ph-title"><i class="ti ti-target"></i> الأهداف والخطط التعليمية الفردية</div>
     <div class="ph-sub">${pending} هدف قيد التنفيذ · ${done} مكتمل</div></div>
     <div class="ph-actions">
-      <button class="btn btn-primary" onclick="openGoalFor(null)">➕ هد�� جديد</button>
+      <button class="btn btn-primary" onclick="openGoalFor(null)"><i class="ti ti-plus"></i> هد�� جديد</button>
     </div>
   </div>
   ${S.students.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-target"></i></div><h3>لا يوجد طلاب</h3></div>`:`
@@ -411,7 +411,7 @@ function renderGoals(){
             <div class="avatar av-40" style="${avatarStyle(s.id)};color:white">${s.name.charAt(0)}</div>
             <div><div style="font-weight:800;color:var(--ink2)">${s.name}</div><div style="font-size:0.75rem;color:var(--muted)">لا توجد أهداف بعد</div></div>
           </div>
-          <button class="btn btn-ghost btn-sm" style="width:100%" onclick="openGoalFor('${s.id}')">➕ إضافة هدف</button>
+          <button class="btn btn-ghost btn-sm" style="width:100%" onclick="openGoalFor('${s.id}')"><i class="ti ti-plus"></i> إضافة هدف</button>
         </div>`;
       return `
         <div class="card" style="padding:18px;">
@@ -419,7 +419,7 @@ function renderGoals(){
             <div class="avatar av-40" style="${avatarStyle(s.id)};color:white">${s.name.charAt(0)}</div>
             <div style="flex:1"><div style="font-weight:800;color:var(--ink2)">${s.name}</div>
             <div style="font-size:0.75rem;color:var(--muted)">${studentGoals.filter(g=>!g.done).length} هدف متبقٍ · ${studentGoals.filter(g=>g.done).length} مكتمل</div></div>
-            <button class="btn btn-xs btn-primary" onclick="openGoalFor('${s.id}')">➕</button>
+            <button class="btn btn-xs btn-primary" onclick="openGoalFor('${s.id}')"><i class="ti ti-plus"></i></button>
           </div>
           ${studentGoals.slice(0,4).map(g=>{
             const daysLeft=g.deadline?Math.ceil((new Date(g.deadline)-new Date())/86400000):null;
@@ -430,7 +430,7 @@ function renderGoals(){
                 <div class="goal-text ${g.done?'done':''}">${g.text}</div>
                 <div class="goal-meta">
                   ${g.deadline?`<span class="goal-deadline ${deadlineClass}">${daysLeft<0?'⚠️ متأخر':daysLeft===0?'⏰ اليوم':daysLeft<=3?`⚡ ${daysLeft} أيام`:g.deadline}</span>`:''}
-                  ${g.strategy?`<span style="margin-right:8px">📌 ${g.strategy.substring(0,30)}...</span>`:''}
+                  ${g.strategy?`<span style="margin-right:8px"><i class="ti ti-pin"></i> ${g.strategy.substring(0,30)}...</span>`:''}
                 </div>
               </div>
               <button class="btn btn-xs btn-red" onclick="deleteGoal('${g.id}')">×</button>
@@ -502,8 +502,8 @@ function renderGradeBook(){
     <div><div class="ph-title"><i class="ti ti-notebook"></i> دفتر الدرجات</div>
     <div class="ph-sub">تتبع درجات الطلاب في الاختبارات والواجبات</div></div>
     <div class="ph-actions">
-      <button class="btn btn-gold" onclick="addGradeColumn()">➕ اختبار / واجب</button>
-      <button class="btn btn-primary" onclick="printGradeBook()">🖨️ طباعة</button>
+      <button class="btn btn-gold" onclick="addGradeColumn()"><i class="ti ti-plus"></i> اختبار / واجب</button>
+      <button class="btn btn-primary" onclick="printGradeBook()"><i class="ti ti-printer"></i> طباعة</button>
     </div>
   </div>
   <div class="card">
@@ -610,14 +610,14 @@ function _printGradeBookWithTemplate(tpl){
   td{padding:9px 12px;border-bottom:2px solid rgba(251,191,36,0.2);font-size:.9em}
   .footer{margin-top:14px;text-align:center;font-size:0.78em;color:#94a3b8}
   </style></head><body>
-  <div class="np"><button class="pb" onclick="window.print()">🖨️ طباعة</button></div>
+  <div class="np"><button class="pb" onclick="window.print()"><i class="ti ti-printer"></i> طباعة</button></div>
   <div class="hdr">
     <div class="stars">📒⭐🎉</div>
     <div><div class="hdr-title">دفتر الدرجات — مدارس البشرى الأهلية</div>
     <div class="hdr-sub">المعلم: ${fullName()} · ${today()} · 🌟 عظيم يا أبطال!</div></div>
   </div>
   <table><thead><tr>${cols}</tr></thead><tbody>${rows}</tbody></table>
-  <div class="footer">🏫 مدارس البشرى الأهلية · بالتوفيق للجميع 🌟</div>
+  <div class="footer"><i class="ti ti-building"></i> مدارس البشرى الأهلية · بالتوفيق للجميع 🌟</div>
   </body></html>`
   : `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
@@ -627,8 +627,8 @@ function _printGradeBookWithTemplate(tpl){
   table{width:100%;border-collapse:collapse}th{background:#1e3a5f;color:white;padding:8px 10px;text-align:right;font-size:.82em}
   td{padding:7px 10px;border-bottom:1px solid #e2e8f8;font-size:.88em}
   </style></head><body>
-  <div class="np"><button class="pb" onclick="window.print()">🖨️ طباعة</button></div>
-  <h1>📒 دفتر الدرجات — مدارس البشرى الأهلية</h1>
+  <div class="np"><button class="pb" onclick="window.print()"><i class="ti ti-printer"></i> طباعة</button></div>
+  <h1><i class="ti ti-notebook"></i> دفتر الدرجات — مدارس البشرى الأهلية</h1>
   <p>المعلم: ${fullName()} · ${today()}</p>
   <table><thead><tr>${cols}</tr></thead><tbody>${rows}</tbody></table>
   </body></html>`;
@@ -674,7 +674,7 @@ function renderPlanner(){
           return `<div class="planner-period" onclick="openPeriodEdit(${di},${pi})">
             <div class="pp-time">${PERIOD_TIMES[pi]}</div>
             ${cell.content?`<div class="pp-content">${cell.content}</div>`:`<div class="pp-empty">${p}</div>`}
-            ${cell.notes?`<div style="font-size:0.68rem;color:var(--muted);margin-top:2px">📝 ${cell.notes.substring(0,30)}</div>`:''}
+            ${cell.notes?`<div style="font-size:0.68rem;color:var(--muted);margin-top:2px"><i class="ti ti-note"></i> ${cell.notes.substring(0,30)}</div>`:''}
           </div>`;
         }).join('')}
       </div>`;
@@ -720,7 +720,7 @@ function renderMeetings(){
     <div><div class="ph-title"><i class="ti ti-messages"></i> سجل لقاءات أولياء الأمور</div>
     <div class="ph-sub">${S.meetings.length} لقاء مسجّل</div></div>
     <div class="ph-actions">
-      <button class="btn btn-primary" onclick="openMeetingFor(null)">➕ تسجيل لقاء</button>
+      <button class="btn btn-primary" onclick="openMeetingFor(null)"><i class="ti ti-plus"></i> تسجيل لقاء</button>
     </div>
   </div>
   ${S.meetings.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-messages"></i></div><h3>لا توجد لقاءات مسجلة بعد</h3><p>ابدأ بتسجيل أول لقاء مع ولي أمر</p></div>`:`
@@ -739,7 +739,7 @@ function renderMeetings(){
           <button class="btn btn-xs btn-red" onclick="deleteMeeting('${m.id}')"><i class="ti ti-trash"></i></button>
         </div>
         <div class="meeting-body">${m.notes}</div>
-        ${m.action?`<div class="meeting-footer"><span class="badge badge-green">✅ إجراء: ${m.action}</span></div>`:''}
+        ${m.action?`<div class="meeting-footer"><span class="badge badge-green"><i class="ti ti-circle-check"></i> إجراء: ${m.action}</span></div>`:''}
       </div>`;
     }).join('')}
   </div>`}`;

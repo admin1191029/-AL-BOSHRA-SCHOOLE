@@ -67,7 +67,7 @@ function _genStudentPDFWithTemplate(sid, tpl){
     const typeMap={general:'عام',academic:'أكاديمي',behavior:'سلوكي',parent:'تواصل ولي'};
     const prioMap={normal:'عادي',important:'⭐ مهم',urgent:'⚡ عاجل'};
     notesHtml=`<div class="page-break">
-      <div class="section-hdr" style="background:#7c3aed">📝 ملاحظات المعلم</div>
+      <div class="section-hdr" style="background:#7c3aed"><i class="ti ti-note"></i> ملاحظات المعلم</div>
       <table class="skill-tbl">
         <thead><tr><th>التاريخ</th><th>النوع</th><th>الأولوية</th><th>الملاحظة</th></tr></thead>
         <tbody>${stuNotes.map(n=>`<tr>
@@ -150,7 +150,7 @@ function _genStudentPDFWithTemplate(sid, tpl){
 
   <!-- Print actions -->
   <div class="print-actions">
-    <button class="print-btn primary" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+    <button class="print-btn primary" onclick="window.print()"><i class="ti ti-printer"></i> طباعة / حفظ PDF</button>
     <button class="print-btn secondary" onclick="window.close()">✕ إغلاق</button>
   </div>
 
@@ -161,7 +161,7 @@ function _genStudentPDFWithTemplate(sid, tpl){
     <div style="display:flex;align-items:center;gap:16px;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.12);">
       <img src="${SCHOOL_LOGO}" style="width:90px;height:90px;object-fit:contain;background:white;border-radius:16px;padding:8px;flex-shrink:0;box-shadow:0 4px 18px rgba(0,0,0,0.35);" />
       <div style="flex:1;">
-        <div style="display:inline-block;background:rgba(245,158,11,0.22);border:1px solid rgba(245,158,11,0.45);color:#fbbf24;padding:3px 14px;border-radius:99px;font-size:0.72em;font-weight:800;margin-bottom:6px;">📋 تقرير رسمي</div>
+        <div style="display:inline-block;background:rgba(245,158,11,0.22);border:1px solid rgba(245,158,11,0.45);color:#fbbf24;padding:3px 14px;border-radius:99px;font-size:0.72em;font-weight:800;margin-bottom:6px;"><i class="ti ti-clipboard-check"></i> تقرير رسمي</div>
         <div style="font-size:1.6em;font-weight:900;color:white;line-height:1.2;">مدارس البشرى الأهلية</div>
         <div style="font-size:0.85em;color:rgba(255,255,255,0.60);margin-top:4px;">كشف متابعة طالب — الصف الأول الابتدائي &nbsp;·&nbsp; ${fmtDate(today())}</div>
       </div>
@@ -225,7 +225,7 @@ function _genStudentPDFWithTemplate(sid, tpl){
   </div>
 
   <!-- Summary table -->
-  <div class="section-hdr" style="background:#1e3a5f;margin-top:4px">📊 ملخص التقييم</div>
+  <div class="section-hdr" style="background:#1e3a5f;margin-top:4px"><i class="ti ti-chart-bar"></i> ملخص التقييم</div>
   <table class="summary-tbl">
     <thead><tr><th>المادة / الخانة</th><th style="width:90px;text-align:center">المُتقن</th><th style="width:70px;text-align:center">النسبة</th><th style="width:100px;text-align:center">المستوى</th></tr></thead>
     <tbody>${summaryRows}</tbody>
@@ -314,15 +314,15 @@ function _genStudentPDFWithTemplate(sid, tpl){
 <body>
 <div class="page">
   <div class="no-print">
-    <button class="k-btn primary" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+    <button class="k-btn primary" onclick="window.print()"><i class="ti ti-printer"></i> طباعة / حفظ PDF</button>
     <button class="k-btn secondary" onclick="window.close()">✕ إغلاق</button>
   </div>
 
   <!-- Header -->
   <div class="k-header">
-    <div class="k-badge">📋 تقرير متابعة الطالب</div>
-    <div class="k-school">🏫 مدارس البشرى الأهلية</div>
-    <div class="k-date">📅 ${fmtDate(today())} · الصف الأول الابتدائي</div>
+    <div class="k-badge"><i class="ti ti-clipboard-check"></i> تقرير متابعة الطالب</div>
+    <div class="k-school"><i class="ti ti-building"></i> مدارس البشرى الأهلية</div>
+    <div class="k-date"><i class="ti ti-calendar"></i> ${fmtDate(today())} · الصف الأول الابتدائي</div>
   </div>
 
   <!-- Student -->
@@ -451,7 +451,7 @@ function _genStudentPDFWithTemplate(sid, tpl){
     @page{size:A4;margin:10mm}
   </style></head><body>
   <div class="no-print">
-    <button class="pb" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+    <button class="pb" onclick="window.print()"><i class="ti ti-printer"></i> طباعة / حفظ PDF</button>
     <button class="pb" style="background:#f1f5f9;color:#1e3a5f;" onclick="window.close()">✕ إغلاق</button>
   </div>
 
@@ -490,7 +490,7 @@ function _genStudentPDFWithTemplate(sid, tpl){
 
   <!-- Body -->
   <div class="body">
-    <div class="section-title">📊 ملخص المهارات</div>
+    <div class="section-title"><i class="ti ti-chart-bar"></i> ملخص المهارات</div>
     <div class="card">
       <table>
         <thead><tr><th>المادة والخانة</th><th style="text-align:center;width:80px">مُتقَن</th><th style="text-align:center;width:70px">النسبة</th><th style="text-align:center;width:90px">المستوى</th></tr></thead>
@@ -498,7 +498,7 @@ function _genStudentPDFWithTemplate(sid, tpl){
       </table>
     </div>
 
-    <div class="section-title">📋 تفاصيل المهارات</div>
+    <div class="section-title"><i class="ti ti-clipboard-check"></i> تفاصيل المهارات</div>
     ${S.subjects.map(sub=>sub.sections.map(sec=>{
       const secEv=(ev[s.id]?.[sub.id]||{})[sec.id]||{};
       const rows=sec.skills.map((sk,i)=>{
@@ -526,7 +526,7 @@ function _genStudentPDFWithTemplate(sid, tpl){
       </div>
     </div>
 
-    <div class="footer">🏫 مدارس البشرى الأهلية · جميع الحقوق محفوظة · ${today()}</div>
+    <div class="footer"><i class="ti ti-building"></i> مدارس البشرى الأهلية · جميع الحقوق محفوظة · ${today()}</div>
   </div>
 </body></html>`;
 

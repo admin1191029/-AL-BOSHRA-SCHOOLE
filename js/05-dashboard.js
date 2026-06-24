@@ -145,13 +145,13 @@ function renderDash(){
 
   <!-- Quick actions strip -->
   <div class="quick-actions-strip">
-    <div class="quick-actions-title">⚡ إجراءات سريعة</div>
+    <div class="quick-actions-title"><i class="ti ti-bolt"></i> إجراءات سريعة</div>
     <div class="quick-actions-btns">
-      <button class="btn btn-primary btn-sm" onclick="showPage('attend')">📋 سجّل الحضور</button>
-      <button class="btn btn-plum btn-sm" onclick="startQuickEval(S.subjects[0]?.id,S.subjects[0]?.sections[0]?.id)">⚡ تقييم سريع</button>
-      <button class="btn btn-green btn-sm" onclick="showPage('behavior')">⭐ تقييم السلوك</button>
-      <button class="btn btn-gold btn-sm" onclick="showPage('planner')">📅 خطة اليوم</button>
-      <button class="btn btn-ghost btn-sm" onclick="showPage('insights')">🤖 الرؤى الذكية</button>
+      <button class="btn btn-primary btn-sm" onclick="showPage('attend')"><i class="ti ti-clipboard-check"></i> سجّل الحضور</button>
+      <button class="btn btn-plum btn-sm" onclick="startQuickEval(S.subjects[0]?.id,S.subjects[0]?.sections[0]?.id)"><i class="ti ti-bolt"></i> تقييم سريع</button>
+      <button class="btn btn-green btn-sm" onclick="showPage('behavior')"><i class="ti ti-star"></i> تقييم السلوك</button>
+      <button class="btn btn-gold btn-sm" onclick="showPage('planner')"><i class="ti ti-calendar"></i> خطة اليوم</button>
+      <button class="btn btn-ghost btn-sm" onclick="showPage('insights')"><i class="ti ti-bulb"></i> الرؤى الذكية</button>
     </div>
   </div>
 
@@ -320,7 +320,7 @@ function renderCombinedView() {
     <button class="cv-filter-btn ${_cvActiveFilter==='tools'?'active':''}" onclick="_cvSetFilter('tools',this)">الأدوات</button>
     <button class="cv-filter-btn ${_cvActiveFilter==='comm'?'active':''}" onclick="_cvSetFilter('comm',this)">التواصل</button>
     <div class="cv-search">
-      <span style="color:var(--muted2);font-size:14px;">🔍</span>
+      <span style="color:var(--muted2);font-size:14px;"><i class="ti ti-search"></i></span>
       <input type="text" placeholder="ابحث عن قسم..." value="${_cvSearch}" oninput="_cvSearchCards(this.value)">
     </div>
   </div>

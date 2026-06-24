@@ -103,24 +103,24 @@ function renderResources() {
   Object.keys(RES_TYPES).forEach(t=>{ byType[t]=(S.resources.filter(r=>r.type===t).length); });
 
   return `
-<div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">☁️ مكتبة الموارد</span></div>
+<div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active"><i class="ti ti-cloud"></i> مكتبة الموارد</span></div>
 <div class="ph">
   <div>
     <div class="ph-title"><i class="ti ti-cloud"></i> مكتبة الموارد السحابية</div>
     <div class="ph-sub">${total} مورد مضاف — روابط، فيديوهات، أوراق عمل</div>
   </div>
   <div class="ph-actions">
-    <button class="btn btn-primary" onclick="openAddResource()">➕ إضافة مورد</button>
+    <button class="btn btn-primary" onclick="openAddResource()"><i class="ti ti-plus"></i> إضافة مورد</button>
   </div>
 </div>
 
 <!-- KPIs -->
 <div class="kpi-grid" style="grid-template-columns:repeat(auto-fill,minmax(130px,1fr));margin-bottom:16px;">
   <div class="kpi blue"><span class="kpi-icon">📦</span><div class="kpi-val">${total}</div><div class="kpi-label">إجمالي الموارد</div></div>
-  <div class="kpi blue"><span class="kpi-icon">🔗</span><div class="kpi-val">${byType.link||0}</div><div class="kpi-label">روابط</div></div>
-  <div class="kpi red"><span class="kpi-icon">🎬</span><div class="kpi-val">${byType.video||0}</div><div class="kpi-label">فيديوهات</div></div>
-  <div class="kpi gold"><span class="kpi-icon">📄</span><div class="kpi-val">${byType.worksheet||0}</div><div class="kpi-label">أوراق عمل</div></div>
-  <div class="kpi green"><span class="kpi-icon">🖼️</span><div class="kpi-val">${byType.image||0}</div><div class="kpi-label">صور</div></div>
+  <div class="kpi blue"><span class="kpi-icon"><i class="ti ti-link"></i></span><div class="kpi-val">${byType.link||0}</div><div class="kpi-label">روابط</div></div>
+  <div class="kpi red"><span class="kpi-icon"><i class="ti ti-movie"></i></span><div class="kpi-val">${byType.video||0}</div><div class="kpi-label">فيديوهات</div></div>
+  <div class="kpi gold"><span class="kpi-icon"><i class="ti ti-file-text"></i></span><div class="kpi-val">${byType.worksheet||0}</div><div class="kpi-label">أوراق عمل</div></div>
+  <div class="kpi green"><span class="kpi-icon"><i class="ti ti-photo"></i></span><div class="kpi-val">${byType.image||0}</div><div class="kpi-label">صور</div></div>
 </div>
 
 <!-- فلاتر -->
@@ -129,7 +129,7 @@ function renderResources() {
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
       <!-- بحث -->
       <div class="search-box" style="flex:1;min-width:180px;">
-        <span class="search-icon">🔍</span>
+        <span class="search-icon"><i class="ti ti-search"></i></span>
         <input placeholder="بحث في الموارد..." value="${window._resSearch||''}"
           oninput="window._resSearch=this.value;showPage('resources')"
           style="width:100%;border:none;background:none;outline:none;font-family:'Tajawal',sans-serif;font-size:0.88rem;" />
@@ -155,7 +155,7 @@ ${items.length===0?`
   <div class="empty-emoji"><i class="ti ti-cloud"></i></div>
   <h3>${total===0?'المكتبة فارغة':'لا توجد نتائج'}</h3>
   <p>${total===0?'أضف روابط وفيديوهات وأوراق عمل لتنظيمها هنا':'جرب تغيير الفلتر أو البحث'}</p>
-  ${total===0?`<button class="btn btn-primary" style="margin-top:12px;" onclick="openAddResource()">➕ إضافة أول مورد</button>`:''}
+  ${total===0?`<button class="btn btn-primary" style="margin-top:12px;" onclick="openAddResource()"><i class="ti ti-plus"></i> إضافة أول مورد</button>`:''}
 </div>`:
 `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">
   ${items.map(r=>{
@@ -268,7 +268,7 @@ function openAddResource(id) {
 </div>
 <div class="modal-footer">
   <button class="btn btn-ghost" onclick="closeM('mbRes')">إلغاء</button>
-  <button class="btn btn-primary" onclick="saveResource()">✅ ${r?'حفظ التعديل':'إضافة المورد'}</button>
+  <button class="btn btn-primary" onclick="saveResource()"><i class="ti ti-circle-check"></i> ${r?'حفظ التعديل':'إضافة المورد'}</button>
 </div>`;
 
   let mb = document.getElementById('mbRes');
@@ -500,7 +500,7 @@ function openResourceFile(id) {
         <div class="header">
           <div class="title">📕 ${r.title}</div>
           <div class="actions">
-            <button class="btn btn-dl" onclick="downloadFile()">⬇️ تحميل</button>
+            <button class="btn btn-dl" onclick="downloadFile()"><i class="ti ti-download"></i> تحميل</button>
             <button class="btn btn-close" onclick="window.close()">✕ إغلاق</button>
           </div>
         </div>
@@ -539,9 +539,9 @@ function openResourceFile(id) {
       </head>
       <body>
         <div class="header">
-          <div class="title">🎬 ${r.title}</div>
+          <div class="title"><i class="ti ti-movie"></i> ${r.title}</div>
           <div class="actions">
-            <button class="btn btn-dl" onclick="downloadFile()">⬇️ تحميل</button>
+            <button class="btn btn-dl" onclick="downloadFile()"><i class="ti ti-download"></i> تحميل</button>
             <button class="btn btn-close" onclick="window.close()">✕ إغلاق</button>
           </div>
         </div>
@@ -585,9 +585,9 @@ function openResourceFile(id) {
       </head>
       <body>
         <div class="header">
-          <div class="title">🖼️ ${r.title}</div>
+          <div class="title"><i class="ti ti-photo"></i> ${r.title}</div>
           <div class="actions">
-            <button class="btn btn-dl" onclick="downloadFile()">⬇️ تحميل</button>
+            <button class="btn btn-dl" onclick="downloadFile()"><i class="ti ti-download"></i> تحميل</button>
             <button class="btn btn-close" onclick="window.close()">✕ إغلاق</button>
           </div>
         </div>

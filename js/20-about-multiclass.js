@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════
 function renderAbout(){
   return `
-  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">💙 حول التطبيق</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active"><i class="ti ti-info-circle"></i> حول التطبيق</span></div>
 
   <!-- شعار المدرسة -->
   <div style="text-align:center;padding:32px 20px 20px;">
@@ -16,7 +16,7 @@ function renderAbout(){
   <!-- بطاقة التطبيق -->
   <div class="card" style="max-width:560px;margin:0 auto 18px;">
     <div class="card-header" style="text-align:center;padding:20px;">
-      <div style="font-size:2.4rem;margin-bottom:8px;">🎓</div>
+      <div style="font-size:2.4rem;margin-bottom:8px;"><i class="ti ti-school"></i></div>
       <div style="font-size:1.2rem;font-weight:900;color:var(--ink2);">منصة المعلم الذكية</div>
       <div style="font-size:0.82rem;color:var(--muted);margin-top:4px;">نظام متابعة الطلاب وإدارة الفصل</div>
     </div>

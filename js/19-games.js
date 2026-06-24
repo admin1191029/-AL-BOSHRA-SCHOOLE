@@ -156,7 +156,7 @@ function cmBuildQuiz(qs){
         ${!g.quizRevealed ? `<button class="cg-remove-btn" onclick="cmQuizRemoveChoice(${i})" title="احذف هذا الخيار">✕</button>` : ''}
       </div>`;
     }).join('')}
-  </div>` : `<button class="cm-btn cm-btn-primary" style="margin:16px auto 0;display:block" onclick="cmQuizRevealOpen()">🔍 عرض الإجابة</button>`;
+  </div>` : `<button class="cm-btn cm-btn-primary" style="margin:16px auto 0;display:block" onclick="cmQuizRevealOpen()"><i class="ti ti-search"></i> عرض الإجابة</button>`;
 
   // شريط تقدم الجولة
   const progressDots = Array.from({length:N},(_,i)=>{
@@ -169,26 +169,26 @@ function cmBuildQuiz(qs){
     <div style="display:flex;align-items:center;gap:10px;">
       <div style="font-size:0.84rem;color:rgba(255,255,255,0.45);font-weight:700">السؤال ${qPos+1} من ${N}</div>
       <div style="display:flex;gap:5px;align-items:center;">${progressDots}</div>
-      <div style="font-size:0.84rem;font-weight:900;color:var(--mint)">✅ ${g.quizScore||0}</div>
+      <div style="font-size:0.84rem;font-weight:900;color:var(--mint)"><i class="ti ti-circle-check"></i> ${g.quizScore||0}</div>
     </div>
     <div style="display:flex;gap:7px;flex-wrap:wrap;">
       ${q.choices && !g.quizRevealed ? `
         <button class="cm-btn ${used50?'cg-used':'cm-btn-ghost'}" style="padding:6px 14px;font-size:0.82rem;${used50?'opacity:0.4;pointer-events:none;':''}" onclick="cmQuiz50()">🚨 50/50</button>` : ''}
-      <button class="cm-btn cm-btn-ghost" style="padding:6px 14px;font-size:0.80rem" onclick="cmQuizShuffle()">🔀 خلط</button>
+      <button class="cm-btn cm-btn-ghost" style="padding:6px 14px;font-size:0.80rem" onclick="cmQuizShuffle()"><i class="ti ti-arrows-shuffle"></i> خلط</button>
     </div>
   </div>
   <div class="cg-question-card">
-    <div class="cg-question-num">🎯 من سيربح المليون</div>
+    <div class="cg-question-num"><i class="ti ti-target"></i> من سيربح المليون</div>
     <div class="cg-question-text">${q.q}</div>
     ${choicesHTML}
   </div>
   ${q.choices && g.quizRevealed ? `
     <div class="cg-result">
-      <div class="cg-result-emoji">🎉</div>
+      <div class="cg-result-emoji"><i class="ti ti-confetti"></i></div>
       <div class="cg-result-title">الإجابة الصحيحة</div>
       <div class="cg-result-sub" style="font-size:1.2rem;color:var(--mint);font-weight:800;margin-top:4px;">${q.choices[q.ans]}</div>
       ${qPos < N-1 ? `<button class="cm-btn cm-btn-primary" style="margin-top:14px;padding:10px 28px;font-size:1rem" onclick="cmQuizNext()">السؤال التالي ←</button>` 
-                   : `<button class="cm-btn cm-btn-primary" style="margin-top:14px;padding:10px 28px;font-size:1rem;background:linear-gradient(135deg,var(--gold),var(--ember))" onclick="cmQuizShowFinale()">🏆 عرض النتائج</button>`}
+                   : `<button class="cm-btn cm-btn-primary" style="margin-top:14px;padding:10px 28px;font-size:1rem;background:linear-gradient(135deg,var(--gold),var(--ember))" onclick="cmQuizShowFinale()"><i class="ti ti-trophy"></i> عرض النتائج</button>`}
     </div>` : ''}
   `;
 }
@@ -384,7 +384,7 @@ function cmBuildHot(qs){
       ${photoEl}
       <div class="cg-chair-student">${s.name}</div>
       ${r.type==='yes'
-        ? `<div style="font-size:2.5rem;font-weight:900;color:var(--mint);text-align:center;animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1)">✅ أجاب صح! 🌟</div>
+        ? `<div style="font-size:2.5rem;font-weight:900;color:var(--mint);text-align:center;animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1)"><i class="ti ti-circle-check"></i> أجاب صح! 🌟</div>
            <div style="font-size:0.88rem;color:rgba(255,255,255,0.40);margin-top:4px;">يكمل في الكرسي — سؤال جديد</div>`
         : r.type==='no'
           ? `<div style="font-size:2rem;font-weight:900;color:var(--gold);text-align:center;">لا بأس 💪</div>
@@ -410,9 +410,9 @@ function cmBuildHot(qs){
     <div class="cg-chair-student">${s.name}</div>
     <div class="cg-chair-question">${q.q}</div>
     <div class="cg-chair-btns">
-      <button class="cg-chair-btn yes"  onclick="cmHotAnswer(true)">✅ أجاب</button>
+      <button class="cg-chair-btn yes"  onclick="cmHotAnswer(true)"><i class="ti ti-circle-check"></i> أجاب</button>
       <button class="cg-chair-btn pass" onclick="cmHotAnswer(null)">⏭ مرّر</button>
-      <button class="cg-chair-btn no"   onclick="cmHotAnswer(false)">❌ لم يجب</button>
+      <button class="cg-chair-btn no"   onclick="cmHotAnswer(false)"><i class="ti ti-circle-x"></i> لم يجب</button>
     </div>
     <div style="display:flex;gap:10px;margin-top:8px;">
       <button class="cm-btn cm-btn-ghost" style="font-size:0.80rem" onclick="cmHotNextQ()">سؤال جديد 🎲</button>
@@ -482,10 +482,10 @@ function cmBuildRace(qs){
   const g = CM.games;
   const q = qs[g.quizIdx % qs.length]; // reuse quizIdx for race
   return `
-  <div style="font-size:0.78rem;color:rgba(255,255,255,0.35);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">⏱️ سباق الإجابات — من يرفع يده أولاً يفوز</div>
+  <div style="font-size:0.78rem;color:rgba(255,255,255,0.35);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px"><i class="ti ti-clock"></i> سباق الإجابات — من يرفع يده أولاً يفوز</div>
   <div class="cg-race-question">${q.q}</div>
   <div style="display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap;">
-    <button class="cm-btn cm-btn-primary" onclick="cmRaceReveal()">🔍 عرض الإجابة</button>
+    <button class="cm-btn cm-btn-primary" onclick="cmRaceReveal()"><i class="ti ti-search"></i> عرض الإجابة</button>
     <button class="cm-btn cm-btn-ghost" onclick="cmRaceNext()">سؤال جديد →</button>
     <div id="cgRaceAnswer" style="font-size:1rem;font-weight:800;color:var(--mint);display:none;padding:8px 16px;background:rgba(16,185,129,0.10);border-radius:10px;border:1px solid rgba(16,185,129,0.25);">${q.ans||''}</div>
   </div>
@@ -504,7 +504,7 @@ function cmBuildRace(qs){
     }).join('')}
   </div>
   <div style="margin-top:12px;">
-    <button class="cm-btn cm-btn-ghost" style="font-size:0.78rem" onclick="cmRaceReset()">🔄 تصفير النقاط</button>
+    <button class="cm-btn cm-btn-ghost" style="font-size:0.78rem" onclick="cmRaceReset()"><i class="ti ti-refresh"></i> تصفير النقاط</button>
   </div>`;
 }
 
@@ -544,13 +544,13 @@ function cmBuildWord(qs){
   return `
   <div style="font-size:0.78rem;color:rgba(255,255,255,0.35);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px">🔤 أكمل الكلمة — الكلمة ${(g.wordIdx%qs.length)+1} / ${qs.length}</div>
   <div class="cg-word-display">${displayed}</div>
-  <div class="cg-word-hint">💡 تلميح: ${q.hint||'—'}</div>
-  <div class="cg-word-reveal ${g.wordRevealed?'show':''}" id="cgWordReveal">✅ الكلمة: ${q.word}</div>
+  <div class="cg-word-hint"><i class="ti ti-bulb"></i> تلميح: ${q.hint||'—'}</div>
+  <div class="cg-word-reveal ${g.wordRevealed?'show':''}" id="cgWordReveal"><i class="ti ti-circle-check"></i> الكلمة: ${q.word}</div>
   <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;">
-    <button class="cm-btn cm-btn-primary" onclick="cmWordReveal()">🔍 أظهر الكلمة</button>
+    <button class="cm-btn cm-btn-primary" onclick="cmWordReveal()"><i class="ti ti-search"></i> أظهر الكلمة</button>
     <button class="cm-btn cm-btn-ghost" onclick="cmWordNext()">كلمة جديدة →</button>
     <button class="cm-btn cm-btn-ghost" onclick="cmWordPrev()">← السابقة</button>
-    <button class="cm-btn cm-btn-ghost" onclick="cmWordShuffle()">🔀 خلط</button>
+    <button class="cm-btn cm-btn-ghost" onclick="cmWordShuffle()"><i class="ti ti-arrows-shuffle"></i> خلط</button>
   </div>`;
 }
 
@@ -602,19 +602,19 @@ function cmBuildVersus(qs){
 
   <!-- السؤال -->
   <div class="cg-question-card" style="text-align:center;">
-    <div class="cg-question-num">🏆 فصلي ضد فصلي — من يجاوب أسرع؟</div>
+    <div class="cg-question-num"><i class="ti ti-trophy"></i> فصلي ضد فصلي — من يجاوب أسرع؟</div>
     <div class="cg-question-text">${q.q}</div>
     ${g.versusRevealed
       ? `<div style="margin-top:14px;padding:14px 24px;background:rgba(16,185,129,0.12);border:1.5px solid rgba(16,185,129,0.30);border-radius:12px;font-size:1.5rem;font-weight:900;color:var(--mint);">${q.ans}</div>`
-      : `<button class="cm-btn cm-btn-primary" style="margin:14px auto 0;display:block;font-size:0.92rem;padding:10px 28px" onclick="cmVersusReveal()">🔍 الإجابة</button>`
+      : `<button class="cm-btn cm-btn-primary" style="margin:14px auto 0;display:block;font-size:0.92rem;padding:10px 28px" onclick="cmVersusReveal()"><i class="ti ti-search"></i> الإجابة</button>`
     }
   </div>
 
   <!-- أدوات -->
   <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center;">
     <button class="cm-btn cm-btn-ghost" style="font-size:0.82rem" onclick="cmVersusNext()">سؤال جديد ←</button>
-    <button class="cm-btn cm-btn-ghost" style="font-size:0.82rem" onclick="cmVersusShuffle()">🔀 خلط</button>
-    <button class="cm-btn cm-btn-ghost" style="font-size:0.78rem;opacity:0.55" onclick="cmVersusReset()">🔄 تصفير</button>
+    <button class="cm-btn cm-btn-ghost" style="font-size:0.82rem" onclick="cmVersusShuffle()"><i class="ti ti-arrows-shuffle"></i> خلط</button>
+    <button class="cm-btn cm-btn-ghost" style="font-size:0.78rem;opacity:0.55" onclick="cmVersusReset()"><i class="ti ti-refresh"></i> تصفير</button>
     <button class="cm-btn cm-btn-ghost" style="font-size:0.78rem;opacity:0.55" onclick="cmVersusRename()"><i class="ti ti-edit"></i> أسماء الفرق</button>
   </div>`;
 }
@@ -688,12 +688,12 @@ function cmBuildOpposite(qs){
   <!-- أزرار -->
   <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
     ${!g.oppositeRevealed
-      ? `<button class="cm-btn cm-btn-primary" style="font-size:1rem;padding:12px 32px" onclick="cmOppositeReveal()">🔍 عرض العكس</button>`
-      : `<button class="cm-btn cm-btn-primary" style="font-size:1rem;padding:12px 32px;background:linear-gradient(135deg,var(--mint),var(--sky))" onclick="cmOppositeCorrect()">✅ صح — التالي</button>
+      ? `<button class="cm-btn cm-btn-primary" style="font-size:1rem;padding:12px 32px" onclick="cmOppositeReveal()"><i class="ti ti-search"></i> عرض العكس</button>`
+      : `<button class="cm-btn cm-btn-primary" style="font-size:1rem;padding:12px 32px;background:linear-gradient(135deg,var(--mint),var(--sky))" onclick="cmOppositeCorrect()"><i class="ti ti-circle-check"></i> صح — التالي</button>
          <button class="cm-btn cm-btn-ghost"   style="font-size:1rem;padding:12px 28px" onclick="cmOppositeSkip()">⏭ تخطى</button>`
     }
-    <button class="cm-btn cm-btn-ghost" style="font-size:0.80rem" onclick="cmOppositeShuffle()">🔀 خلط</button>
-    <button class="cm-btn cm-btn-ghost" style="font-size:0.78rem;opacity:0.55" onclick="cmOppositeReset()">🔄 من البداية</button>
+    <button class="cm-btn cm-btn-ghost" style="font-size:0.80rem" onclick="cmOppositeShuffle()"><i class="ti ti-arrows-shuffle"></i> خلط</button>
+    <button class="cm-btn cm-btn-ghost" style="font-size:0.78rem;opacity:0.55" onclick="cmOppositeReset()"><i class="ti ti-refresh"></i> من البداية</button>
   </div>
 
   <!-- عداد السلسلة -->
@@ -742,7 +742,7 @@ function cmOppositeReset(){
 function cmBuildImgQuiz(qs){
   if(!qs.length) return `
   <div style="text-align:center;padding:40px 20px;">
-    <div style="font-size:3.5rem;margin-bottom:16px">🖼️</div>
+    <div style="font-size:3.5rem;margin-bottom:16px"><i class="ti ti-photo"></i></div>
     <div style="font-size:1.3rem;font-weight:800;color:rgba(255,255,255,0.50);margin-bottom:8px">لا توجد صور بعد</div>
     <div style="font-size:0.88rem;color:rgba(255,255,255,0.25);margin-bottom:20px">أضف صوراً من صفحة "🎮 بنك الأسئلة"</div>
     <button class="cm-btn cm-btn-ghost" style="font-size:0.90rem" onclick="closeClassroomMode();showPage('games_bank')">
@@ -762,7 +762,7 @@ function cmBuildImgQuiz(qs){
     <div style="display:flex;gap:8px;">
       <button class="cm-btn cm-btn-ghost" style="padding:6px 14px;font-size:0.80rem" onclick="cmImgQuizPrev()">← السابق</button>
       <button class="cm-btn cm-btn-ghost" style="padding:6px 14px;font-size:0.80rem" onclick="cmImgQuizNext()">التالي ←</button>
-      <button class="cm-btn cm-btn-ghost" style="padding:6px 14px;font-size:0.80rem" onclick="cmImgQuizShuffle()">🔀 خلط</button>
+      <button class="cm-btn cm-btn-ghost" style="padding:6px 14px;font-size:0.80rem" onclick="cmImgQuizShuffle()"><i class="ti ti-arrows-shuffle"></i> خلط</button>
     </div>
   </div>
 
@@ -861,28 +861,28 @@ function renderGamesBank(){
           <select id="gba_quiz_ans" style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.86rem;outline:none;background:var(--card);color:var(--ink);">
             <option value="0">أ</option><option value="1">ب</option><option value="2">ج</option><option value="3">د</option>
           </select>
-          <button class="btn btn-primary btn-sm" onclick="gbAddQuiz()">➕ إضافة</button>
+          <button class="btn btn-primary btn-sm" onclick="gbAddQuiz()"><i class="ti ti-plus"></i> إضافة</button>
         </div>
       </div>`
     },
     { id:'hot', icon:'💣', name:'الكرسي الساخن', desc:'أسئلة مفتوحة — أجب أو مرّر', qs:allQ.hot,
       addForm:`<div style="display:flex;gap:8px;align-items:center;">
         <input id="gba_hot_q" class="fg input" placeholder="السؤال المفتوح..." style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.90rem;outline:none;background:var(--card);color:var(--ink);text-align:right;">
-        <button class="btn btn-primary btn-sm" onclick="gbAddHot()">➕ إضافة</button>
+        <button class="btn btn-primary btn-sm" onclick="gbAddHot()"><i class="ti ti-plus"></i> إضافة</button>
       </div>`
     },
     { id:'race', icon:'⏱️', name:'سباق الإجابات', desc:'سؤال بإجابة واحدة — أسرع يفوز', qs:allQ.race,
       addForm:`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
         <input id="gba_race_q" placeholder="السؤال..." style="flex:2;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.90rem;outline:none;background:var(--card);color:var(--ink);text-align:right;">
         <input id="gba_race_a" placeholder="الإجابة..." style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.90rem;outline:none;background:var(--card);color:var(--ink);text-align:right;">
-        <button class="btn btn-primary btn-sm" onclick="gbAddRace()">➕ إضافة</button>
+        <button class="btn btn-primary btn-sm" onclick="gbAddRace()"><i class="ti ti-plus"></i> إضافة</button>
       </div>`
     },
     { id:'word', icon:'🔤', name:'أكمل الكلمة', desc:'كلمة بحروف مخفية', qs:allQ.word,
       addForm:`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
         <input id="gba_word_w" placeholder="الكلمة..." style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.90rem;outline:none;background:var(--card);color:var(--ink);text-align:right;">
         <input id="gba_word_h" placeholder="التلميح..." style="flex:2;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.90rem;outline:none;background:var(--card);color:var(--ink);text-align:right;">
-        <button class="btn btn-primary btn-sm" onclick="gbAddWord()">➕ إضافة</button>
+        <button class="btn btn-primary btn-sm" onclick="gbAddWord()"><i class="ti ti-plus"></i> إضافة</button>
       </div>`
     },
     { id:'imgquiz', icon:'🔍', name:'ما هذا؟', desc:'صورة + تخمين الإجابة', qs:allQ.imgquiz,
@@ -896,7 +896,7 @@ function renderGamesBank(){
             🖼️ اختر صورة (PNG/JPG)
             <input type="file" id="gba_iq_img" accept="image/*" style="display:none" onchange="gbPreviewImgQuiz(this)">
           </label>
-          <button class="btn btn-primary btn-sm" onclick="gbAddImgQuiz()">➕ إضافة</button>
+          <button class="btn btn-primary btn-sm" onclick="gbAddImgQuiz()"><i class="ti ti-plus"></i> إضافة</button>
         </div>
         <div id="gba_iq_preview" style="display:none;margin-top:4px;">
           <img id="gba_iq_preview_img" style="max-height:120px;border-radius:10px;border:1px solid var(--border);object-fit:contain;" />
@@ -907,25 +907,25 @@ function renderGamesBank(){
       addForm:`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
         <input id="gba_vs_q" placeholder="السؤال..." style="flex:2;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.90rem;outline:none;background:var(--card);color:var(--ink);text-align:right;">
         <input id="gba_vs_a" placeholder="الإجابة..." style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.90rem;outline:none;background:var(--card);color:var(--ink);text-align:right;">
-        <button class="btn btn-primary btn-sm" onclick="gbAddVersus()">➕ إضافة</button>
+        <button class="btn btn-primary btn-sm" onclick="gbAddVersus()"><i class="ti ti-plus"></i> إضافة</button>
       </div>`
     },
     { id:'opposite', icon:'<i class="ti ti-edit"></i>', name:'كلمة وعكسها', desc:'سلسلة كلمة وضدها', qs:allQ.opposite,
       addForm:`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
         <input id="gba_op_w" placeholder="الكلمة..." style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.90rem;outline:none;background:var(--card);color:var(--ink);text-align:right;">
         <input id="gba_op_o" placeholder="العكس..." style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.90rem;outline:none;background:var(--card);color:var(--ink);text-align:right;">
-        <button class="btn btn-primary btn-sm" onclick="gbAddOpposite()">➕ إضافة</button>
+        <button class="btn btn-primary btn-sm" onclick="gbAddOpposite()"><i class="ti ti-plus"></i> إضافة</button>
       </div>`
     },
   ];
 
   return `
-  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">🎮 بنك الأسئلة</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active"><i class="ti ti-device-gamepad-2"></i> بنك الأسئلة</span></div>
   <div class="ph">
     <div><div class="ph-title"><i class="ti ti-device-gamepad-2"></i> بنك الأسئلة والألعاب</div>
     <div class="ph-sub">أضف أسئلتك الخاصة — تظهر تلقائياً في وضع ا��حصة</div></div>
     <div class="ph-actions">
-      <button class="btn btn-primary" onclick="showPage('classroom_mode')">🖥️ وضع الحصة</button>
+      <button class="btn btn-primary" onclick="showPage('classroom_mode')"><i class="ti ti-device-desktop"></i> وضع الحصة</button>
     </div>
   </div>
   ${games.map(g=>`
@@ -954,18 +954,18 @@ function gbRenderItem(type, q, i){
     text=q.q;
     extra=`<div class="gb-q-choices">${(q.choices||[]).map((c,ci)=>`<span class="gb-q-choice ${ci===q.ans?'correct':''}">${letters[ci]} ${c}</span>`).join('')}</div>`;
   } else if(type==='hot'){ text=q.q; }
-  else if(type==='race'){ text=q.q; extra=`<div style="font-size:0.76rem;color:var(--mint);font-weight:700;margin-top:3px;">✅ ${q.ans||'—'}</div>`; }
-  else if(type==='word'){ text=q.word; extra=`<div style="font-size:0.76rem;color:var(--muted);margin-top:2px;">💡 ${q.hint||''}</div>`; }
+  else if(type==='race'){ text=q.q; extra=`<div style="font-size:0.76rem;color:var(--mint);font-weight:700;margin-top:3px;"><i class="ti ti-circle-check"></i> ${q.ans||'—'}</div>`; }
+  else if(type==='word'){ text=q.word; extra=`<div style="font-size:0.76rem;color:var(--muted);margin-top:2px;"><i class="ti ti-bulb"></i> ${q.hint||''}</div>`; }
   else if(type==='imgquiz'){
     text=q.answer||'—';
     extra=`<div style="display:flex;align-items:center;gap:10px;margin-top:4px;">
       <img src="${q.img}" style="width:48px;height:48px;object-fit:cover;border-radius:8px;border:1px solid var(--border);flex-shrink:0;" />
-      ${q.hint?`<span style="font-size:0.76rem;color:var(--muted)">💡 ${q.hint}</span>`:''}
+      ${q.hint?`<span style="font-size:0.76rem;color:var(--muted)"><i class="ti ti-bulb"></i> ${q.hint}</span>`:''}
     </div>`;
   }
   else if(type==='versus'){
     text=q.q;
-    extra=`<div style="font-size:0.76rem;color:var(--mint);font-weight:700;margin-top:3px;">✅ ${q.ans||'—'}</div>`;
+    extra=`<div style="font-size:0.76rem;color:var(--mint);font-weight:700;margin-top:3px;"><i class="ti ti-circle-check"></i> ${q.ans||'—'}</div>`;
   }
   else if(type==='opposite'){
     text=q.word;
@@ -1045,7 +1045,7 @@ function gbOpenEdit(type, i){
           </div>`).join('')}
       </div>
       <input type="hidden" id="gbe_ans" value="${q.ans||0}">
-      <div style="font-size:0.76rem;color:var(--muted)">💡 اضغط على الخيار لتعيينه كإجابة صحيحة</div>`;
+      <div style="font-size:0.76rem;color:var(--muted)"><i class="ti ti-bulb"></i> اضغط على الخيار لتعيينه كإجابة صحيحة</div>`;
   } else if(type==='hot'){
     inner = `<div class="fg" style="margin:0"><label>السؤال</label>${inp('gbe_q', q.q)}</div>`;
   } else if(type==='race'){
@@ -1079,7 +1079,7 @@ function gbOpenEdit(type, i){
 
   form.innerHTML = inner + `
     <div style="display:flex;gap:8px;">
-      <button class="btn btn-primary btn-sm" onclick="gbSaveEdit('${type}',${i},${isCustom})">💾 حفظ</button>
+      <button class="btn btn-primary btn-sm" onclick="gbSaveEdit('${type}',${i},${isCustom})"><i class="ti ti-device-floppy"></i> حفظ</button>
       <button class="btn btn-ghost btn-sm" onclick="gbCancelEdit()">إلغاء</button>
     </div>`;
   item.after(form);

@@ -88,7 +88,7 @@ function buildNotifs(){
   // لو مفيش تنبيهات
   if(!notifs.length){
     list.innerHTML=`<div style="padding:28px;text-align:center;color:var(--muted);">
-      <div style="font-size:2rem;margin-bottom:8px;">✅</div>
+      <div style="font-size:2rem;margin-bottom:8px;"><i class="ti ti-circle-check"></i></div>
       <div style="font-size:0.88rem;">كل شيء على ما يرام!</div>
     </div>`;
     document.getElementById('notifCount').style.display='none';
@@ -117,7 +117,7 @@ function toggleNotif(e){
 function clearNotifs(){
   document.getElementById('notifCount').style.display='none';
   document.getElementById('notifList').innerHTML=`<div style="padding:28px;text-align:center;color:var(--muted);">
-    <div style="font-size:2rem;margin-bottom:8px;">✅</div>
+    <div style="font-size:2rem;margin-bottom:8px;"><i class="ti ti-circle-check"></i></div>
     <div style="font-size:0.88rem;">كل شيء على ما يرام!</div>
   </div>`;
   document.getElementById('notifPanel').classList.remove('open');

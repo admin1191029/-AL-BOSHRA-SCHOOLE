@@ -279,7 +279,7 @@ function _exportAttendancePDFWithTemplate(tpl){
 
   const rows=S.students.map((s,i)=>{
     const v=att[s.id];
-    const statusAr=v==='p'?'<span style="color:#059669;font-weight:800">✅ حاضر</span>':v==='a'?'<span style="color:#dc2626;font-weight:800">❌ غائب</span>':v==='e'?'<span style="color:#d97706;font-weight:800">📋 بعذر</span>':'<span style="color:#94a3b8">—</span>';
+    const statusAr=v==='p'?'<span style="color:#059669;font-weight:800"><i class="ti ti-circle-check"></i> حاضر</span>':v==='a'?'<span style="color:#dc2626;font-weight:800"><i class="ti ti-circle-x"></i> غائب</span>':v==='e'?'<span style="color:#d97706;font-weight:800"><i class="ti ti-clipboard-check"></i> بعذر</span>':'<span style="color:#94a3b8">—</span>';
     return `<tr style="background:${i%2?'#f8faff':'#fff'}">
       <td style="text-align:center;font-weight:800;color:#1e3a5f">${i+1}</td>
       <td>
@@ -327,18 +327,18 @@ function _exportAttendancePDFWithTemplate(tpl){
 </head>
 <body style="padding:12px">
 <div class="no-print">
-  <button class="pbtn primary" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+  <button class="pbtn primary" onclick="window.print()"><i class="ti ti-printer"></i> طباعة / حفظ PDF</button>
   <button class="pbtn secondary" onclick="window.close()">✕ إغلاق</button>
 </div>
 <div class="header">
-  <h1>📋 كشف الحضور اليومي</h1>
+  <h1><i class="ti ti-clipboard-check"></i> كشف الحضور اليومي</h1>
   <div class="meta">مدارس البشرى الأهلية · الصف الأول الابتدائي · المعلم: ${fullName()} · ${fmtDate(attendDate)}</div>
 </div>
 <div class="stats">
   <div class="stat"><div class="sv">${S.students.length}</div><div class="sl">إجمالي</div></div>
-  <div class="stat"><div class="sv" style="color:#059669">${p}</div><div class="sl">✅ حاضر</div></div>
-  <div class="stat"><div class="sv" style="color:#dc2626">${a}</div><div class="sl">❌ غائب</div></div>
-  <div class="stat"><div class="sv" style="color:#d97706">${e}</div><div class="sl">📋 بعذر</div></div>
+  <div class="stat"><div class="sv" style="color:#059669">${p}</div><div class="sl"><i class="ti ti-circle-check"></i> حاضر</div></div>
+  <div class="stat"><div class="sv" style="color:#dc2626">${a}</div><div class="sl"><i class="ti ti-circle-x"></i> غائب</div></div>
+  <div class="stat"><div class="sv" style="color:#d97706">${e}</div><div class="sl"><i class="ti ti-clipboard-check"></i> بعذر</div></div>
   <div class="stat"><div class="sv" style="color:#1565c0">${S.students.length?Math.round((p/S.students.length)*100):0}%</div><div class="sl">نسبة الحضور</div></div>
 </div>
 <table>
@@ -385,13 +385,13 @@ function _exportAttendancePDFWithTemplate(tpl){
   .sig-lbl{font-size:.68em;color:#94a3b8;font-weight:700;} .sig-val{font-size:.82em;font-weight:900;color:#1e3a5f;}
 </style></head><body style="padding:12px">
 <div class="np">
-  <button class="pb" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+  <button class="pb" onclick="window.print()"><i class="ti ti-printer"></i> طباعة / حفظ PDF</button>
   <button class="pb2" onclick="window.close()">✕ إغلاق</button>
 </div>
 <div class="hdr">
   <div class="hdr-left">
     <img src="${SCHOOL_LOGO}" class="hdr-logo"/>
-    <div><div class="hdr-title">📋 كشف الحضور اليومي</div><div class="hdr-sub">مدارس البشرى الأهلية · ${fmtDate(attendDate)}</div></div>
+    <div><div class="hdr-title"><i class="ti ti-clipboard-check"></i> كشف الحضور اليومي</div><div class="hdr-sub">مدارس البشرى الأهلية · ${fmtDate(attendDate)}</div></div>
   </div>
   <div class="t-card">
     ${tPhoto?`<img src="${tPhoto}" class="t-photo" style="width:38px;height:38px;border-radius:50%;object-fit:cover;"/>`:`<div class="t-photo">${tName.charAt(0)||'م'}</div>`}
@@ -400,9 +400,9 @@ function _exportAttendancePDFWithTemplate(tpl){
 </div>
 <div class="stats">
   <div class="stat"><div class="sv">${S.students.length}</div><div class="sl">إجمالي</div></div>
-  <div class="stat"><div class="sv" style="color:#059669">${p}</div><div class="sl">✅ حاضر</div></div>
-  <div class="stat"><div class="sv" style="color:#dc2626">${a}</div><div class="sl">❌ غائب</div></div>
-  <div class="stat"><div class="sv" style="color:#d97706">${e}</div><div class="sl">📋 بعذر</div></div>
+  <div class="stat"><div class="sv" style="color:#059669">${p}</div><div class="sl"><i class="ti ti-circle-check"></i> حاضر</div></div>
+  <div class="stat"><div class="sv" style="color:#dc2626">${a}</div><div class="sl"><i class="ti ti-circle-x"></i> غائب</div></div>
+  <div class="stat"><div class="sv" style="color:#d97706">${e}</div><div class="sl"><i class="ti ti-clipboard-check"></i> بعذر</div></div>
   <div class="stat"><div class="sv" style="color:#1565c0">${S.students.length?Math.round((p/S.students.length)*100):0}%</div><div class="sl">نسبة الحضور</div></div>
 </div>
 <table>
