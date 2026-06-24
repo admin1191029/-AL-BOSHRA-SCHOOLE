@@ -7,7 +7,7 @@ function renderStudents(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">الطلاب</span></div>
   <div class="ph">
-    <div><div class="ph-title">👥 إدارة الطلاب</div><div class="ph-sub">${S.students.length} طالب مسجّل · الصف الأول الابتدائي</div></div>
+    <div><div class="ph-title"><i class="ti ti-users"></i> إدارة الطلاب</div><div class="ph-sub">${S.students.length} طالب مسجّل · الصف الأول الابتدائي</div></div>
     <div class="ph-actions">
       <div class="search-box"><span class="search-icon">🔍</span><input placeholder="بحث عن طالب..." value="${stuSearch}" oninput="stuSearch=this.value;showPage('students')" /></div>
       <button class="btn btn-ghost btn-sm" onclick="stuView=stuView==='table'?'cards':'table';showPage('students')">${stuView==='table'?'🃏 بطاقات':'📋 جدول'}</button>
@@ -74,12 +74,12 @@ function renderStudentTable(list){
         <td><span class="badge ${att==='p'?'badge-green':att==='a'?'badge-red':att==='e'?'badge-gold':'badge-gray'}">${att==='p'?'✅ حاضر':att==='a'?'❌ غائب':att==='e'?'📋 بعذر':'—'}</span></td>
         <td>
           <div style="display:flex;gap:6px;">
-            <button class="btn btn-primary btn-xs" onclick="openEval('${s.id}')">✏️ تقييم</button>
+            <button class="btn btn-primary btn-xs" onclick="openEval('${s.id}')"><i class="ti ti-edit"></i> تقييم</button>
             <button class="btn btn-green btn-xs" onclick="openChart('${s.id}')">📊</button>
             <button class="btn btn-ghost btn-xs" onclick="openNoteFor('${s.id}')">📝</button>
             <button class="btn btn-plum btn-xs" onclick="openGoalFor('${s.id}')">🎯</button>
             <button class="btn btn-gold btn-xs" onclick="openMeetingFor('${s.id}')">🤝</button>
-            <button class="btn btn-red btn-xs" onclick="delStudent('${s.id}')">🗑️</button>
+            <button class="btn btn-red btn-xs" onclick="delStudent('${s.id}')"><i class="ti ti-trash"></i></button>
           </div>
         </td>
       </tr>`;
@@ -174,7 +174,7 @@ function renderAttend(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">كشف الحضور</span></div>
   <div class="ph">
-    <div><div class="ph-title">📋 كشف الحضور اليومي</div><div class="ph-sub">${fmtDate(attendDate)}</div></div>
+    <div><div class="ph-title"><i class="ti ti-clipboard-check"></i> كشف الحضور اليومي</div><div class="ph-sub">${fmtDate(attendDate)}</div></div>
     <div class="ph-actions">
       <input type="date" value="${attendDate}" onchange="attendDate=this.value;showPage('attend')" style="padding:9px 14px;border:1.5px solid var(--border2);border-radius:var(--r-sm);font-family:'Tajawal',sans-serif;font-size:0.90rem;outline:none;cursor:none;">
       <button class="btn btn-green btn-sm" onclick="markAllAtt('p')">✅ تحضير الكل</button>

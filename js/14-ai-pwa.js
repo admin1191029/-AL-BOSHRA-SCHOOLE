@@ -111,7 +111,7 @@ function renderInsights(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">الرؤى الذكية</span></div>
   <div class="ph">
-    <div><div class="ph-title">🤖 الرؤى والتوصيات الذكية</div>
+    <div><div class="ph-title"><i class="ti ti-bulb"></i> الرؤى والتوصيات الذكية</div>
     <div class="ph-sub">تحليل تلقائي لبيانات الفصل وتوصيات مخصصة للمعلم</div></div>
     <div class="ph-actions">
       <button class="btn btn-primary" onclick="showPage('insights')">🔄 تحديث</button>

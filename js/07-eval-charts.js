@@ -82,7 +82,7 @@ function renderSubjectPage(subId){
         </td>
         <td>
           <div style="display:flex;gap:5px;flex-wrap:wrap;">
-            <button class="btn btn-primary btn-sm" onclick="openEvalDyn('${s.id}','${subId}')">✏️ تقييم</button>
+            <button class="btn btn-primary btn-sm" onclick="openEvalDyn('${s.id}','${subId}')"><i class="ti ti-edit"></i> تقييم</button>
             <button class="btn btn-green btn-sm" onclick="openChart('${s.id}')">📊</button>
             <button class="btn btn-gold btn-sm" onclick="genStudentPDF('${s.id}')">📄</button>
             <button class="btn btn-plum btn-sm" onclick="waStudent('${s.id}')">💬</button>

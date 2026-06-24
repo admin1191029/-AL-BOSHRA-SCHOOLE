@@ -4,8 +4,8 @@
 
 const CL_TYPES = {
   add:  { label:'إضافة',  icon:'➕', color:'var(--mint)'  },
-  edit: { label:'تعديل', icon:'✏️', color:'var(--sky3)'  },
-  del:  { label:'حذف',   icon:'🗑️', color:'var(--ember)' },
+  edit: { label:'تعديل', icon:'<i class="ti ti-edit"></i>', color:'var(--sky3)'  },
+  del:  { label:'حذف',   icon:'<i class="ti ti-trash"></i>', color:'var(--ember)' },
   eval: { label:'تقييم', icon:'📋', color:'var(--plum)'  },
   att:  { label:'حضور',  icon:'📅', color:'var(--gold)'  },
   auth: { label:'دخول',  icon:'🔑', color:'var(--mint)'  },
@@ -33,12 +33,12 @@ function renderChangelog(){
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">سجل التغييرات</span></div>
   <div class="ph">
     <div>
-      <div class="ph-title">📜 سجل التغييرات</div>
+      <div class="ph-title"><i class="ti ti-history"></i> سجل التغييرات</div>
       <div class="ph-sub">${S.changelog?.length||0} إجراء مسجَّل — كل تعديل بتاريخه ووقته</div>
     </div>
     <div class="ph-actions">
       <button class="btn btn-ghost" onclick="exportChangelog()">📤 تصدير السجل</button>
-      <button class="btn btn-red btn-sm" onclick="clearChangelog()">🗑️ مسح السجل</button>
+      <button class="btn btn-red btn-sm" onclick="clearChangelog()"><i class="ti ti-trash"></i> مسح السجل</button>
     </div>
   </div>
 
@@ -116,7 +116,7 @@ function renderClassroomImport(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">استيراد Google Classroom</span></div>
   <div class="ph">
-    <div><div class="ph-title">🎓 استيراد من Google Classroom</div>
+    <div><div class="ph-title"><i class="ti ti-school"></i> استيراد من Google Classroom</div>
     <div class="ph-sub">جلب أسماء الطلاب مباشرةً من فصلك في Google Classroom</div></div>
   </div>
 

@@ -171,7 +171,7 @@ function renderPhotoManager(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">إدارة صور الطلاب</span></div>
   <div class="ph">
-    <div><div class="ph-title">📷 إدارة صور الطلاب</div>
+    <div><div class="ph-title"><i class="ti ti-camera"></i> إدارة صور الطلاب</div>
     <div class="ph-sub">أضف صورة لكل طالب — تظهر في كل صفحات التطبيق</div></div>
   </div>
   ${S.students.length===0?`<div class="empty"><div class="empty-emoji">📷</div><h3>لا يوجد طلاب</h3></div>`:`

@@ -100,7 +100,7 @@ function renderTreasureMap(){
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">🗺️ خريطة الكنز</span></div>
   <div class="ph">
     <div>
-      <div class="ph-title">🗺️ خريطة الكنز</div>
+      <div class="ph-title"><i class="ti ti-map-2"></i> خريطة الكنز</div>
       <div class="ph-sub">رحلة تعلم بصرية — تابع تقدم كل طالب محطةً بمحطة</div>
     </div>
     <div class="ph-actions">
@@ -431,7 +431,7 @@ function _renderStudentMap(sub,sec){
     <button class="btn btn-primary" onclick="genStudentPDF('${s.id}')">📄 تقرير PDF</button>
     <button class="btn btn-green" onclick="waStudentFiltered('${s.id}')">💬 واتساب للولي</button>
     <button class="btn btn-gold" onclick="_tmPrintCert('${s.id}')">🏅 طباعة شهادة</button>
-    <button class="btn btn-ghost" onclick="openEvalDyn('${s.id}','${subId}')">✏️ تحديث التقييم</button>
+    <button class="btn btn-ghost" onclick="openEvalDyn('${s.id}','${subId}')"><i class="ti ti-edit"></i> تحديث التقييم</button>
   </div>`;
 }
 

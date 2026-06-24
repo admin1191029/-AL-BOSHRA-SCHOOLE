@@ -106,7 +106,7 @@ function renderResources() {
 <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">☁️ مكتبة الموارد</span></div>
 <div class="ph">
   <div>
-    <div class="ph-title">☁️ مكتبة الموارد السحابية</div>
+    <div class="ph-title"><i class="ti ti-cloud"></i> مكتبة الموارد السحابية</div>
     <div class="ph-sub">${total} مورد مضاف — روابط، فيديوهات، أوراق عمل</div>
   </div>
   <div class="ph-actions">
@@ -175,8 +175,8 @@ ${items.length===0?`
             ${sub?`<span class="badge badge-plum">${sub.name}</span>`:''}
           </div>
           <div style="display:flex;gap:4px;flex-shrink:0;">
-            <button class="btn btn-xs btn-ghost" onclick="editResource('${r.id}')" title="تعديل">✏️</button>
-            <button class="btn btn-xs btn-red" onclick="deleteResource('${r.id}')" title="حذف">🗑️</button>
+            <button class="btn btn-xs btn-ghost" onclick="editResource('${r.id}')" title="تعديل"><i class="ti ti-edit"></i></button>
+            <button class="btn btn-xs btn-red" onclick="deleteResource('${r.id}')" title="حذف"><i class="ti ti-trash"></i></button>
           </div>
         </div>
         <div style="font-weight:800;font-size:0.95rem;color:var(--ink);margin-bottom:4px;">${r.title}</div>
@@ -212,7 +212,7 @@ function openAddResource(id) {
 
   const html = `
 <div class="modal-hdr">
-  <div><h3>${r?'✏️ تعديل مورد':'➕ إضافة مورد جديد'}</h3></div>
+  <div><h3>${r?'<i class="ti ti-edit"></i> تعديل مورد':'➕ إضافة مورد جديد'}</h3></div>
   <button class="modal-x" onclick="closeM('mbRes')">✕</button>
 </div>
 <div class="modal-body">

@@ -165,7 +165,7 @@ function avatarHTML(sid, size=40, extraStyle='', showEdit=false){
   if(s.photo){
     return `<div class="stu-photo-wrap" style="width:${size}px;height:${size}px;${extraStyle}">
       <img src="${s.photo}" class="stu-photo" width="${size}" height="${size}" style="width:${size}px;height:${size}px;" />
-      ${showEdit?`<div class="stu-photo-edit" onclick="openPhotoModal('${sid}',event)">✏️</div>`:''}
+      ${showEdit?`<div class="stu-photo-edit" onclick="openPhotoModal('${sid}',event)"><i class="ti ti-edit"></i></div>`:''}
     </div>`;
   }
   return `<div class="stu-photo-wrap" style="${extraStyle}" ${showEdit?`onclick="openPhotoModal('${sid}',event)"`:''}>`+

@@ -307,7 +307,7 @@ function renderCombinedView() {
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">العرض الشامل</span></div>
   <div class="ph">
     <div>
-      <div class="ph-title">🗂️ العرض الشامل</div>
+      <div class="ph-title"><i class="ti ti-stack-2"></i> العرض الشامل</div>
       <div class="ph-sub">جميع أقسام المنصة في مكان واحد</div>
     </div>
   </div>

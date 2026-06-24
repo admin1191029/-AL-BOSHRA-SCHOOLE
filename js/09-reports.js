@@ -32,7 +32,7 @@ function renderReports(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">التقارير</span></div>
   <div class="ph">
-    <div><div class="ph-title">📄 التقارير والمشاركة</div>
+    <div><div class="ph-title"><i class="ti ti-file-text"></i> التقارير والمشاركة</div>
     <div class="ph-sub">توليد وإرسال التقارير للأولياء والمدرسة</div></div>
   </div>
 

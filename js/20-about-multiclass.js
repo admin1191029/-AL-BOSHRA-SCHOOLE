@@ -160,7 +160,7 @@ function renderClassList(){
     saveClassMeta(def);
   }
 
-  const icons = ['🏫','📚','✏️','🎓','📖','🌟'];
+  const icons = ['🏫','📚','<i class="ti ti-edit"></i>','🎓','📖','🌟'];
 
   el.innerHTML = classes.map((c,ci)=>{
     const isActive = c.id === ACTIVE_CLASS_ID;
@@ -187,8 +187,8 @@ function renderClassList(){
       </div>
       <div style="display:flex;align-items:center;gap:5px;">
         ${isActive?'<div class="class-item-badge">الحالي ✓</div>':''}
-        <button class="btn btn-ghost btn-xs" onclick="event.stopPropagation();renameClass('${c.id}')" title="تعديل الاسم">✏️</button>
-        ${c.id!=='class_default'?`<button class="btn btn-red btn-xs" onclick="event.stopPropagation();deleteClass('${c.id}')" title="��ذف">🗑️</button>`:''}
+        <button class="btn btn-ghost btn-xs" onclick="event.stopPropagation();renameClass('${c.id}')" title="تعديل الاسم"><i class="ti ti-edit"></i></button>
+        ${c.id!=='class_default'?`<button class="btn btn-red btn-xs" onclick="event.stopPropagation();deleteClass('${c.id}')" title="��ذف"><i class="ti ti-trash"></i></button>`:''}
       </div>
     </div>`;
   }).join('');

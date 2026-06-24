@@ -27,7 +27,7 @@ function renderClassroomMode(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">🖥️ وضع الحصة</span></div>
   <div class="ph">
-    <div><div class="ph-title">🖥️ وضع الحصة — شاشة البروجكتور</div>
+    <div><div class="ph-title"><i class="ti ti-device-desktop"></i> وضع الحصة — شاشة البروجكتور</div>
     <div class="ph-sub">شاشة كاملة مصممة للعرض أمام الطلاب — عجلة · مؤقتات · لوحة شرف</div></div>
   </div>
   <div class="card" style="max-width:540px;margin:0 auto;">
@@ -628,7 +628,7 @@ function cmWbToggleDraw(){
     canvas.style.zIndex = '4';
     canvas.style.pointerEvents = 'none';
     canvas.classList.remove('cm-draw-open','cm-cursor-pen','cm-cursor-eraser');
-    btn.textContent = '✏️ تشغيل القلم';
+    btn.textContent = '<i class="ti ti-edit"></i> تشغيل القلم';
     btn.style.background = '';
     btn.style.borderColor = '';
     btn.style.color = '';
@@ -1192,7 +1192,7 @@ function bagRenderBooks(subId){
       +'<div style="font-size:0.70rem;color:#b45309;">'+bagEscapeHtml(b.size)+'</div></div></div>'
       +'<div style="display:flex;gap:6px;flex-shrink:0;">'
       +'<button type="button" onclick="bagOpenBook('+JSON.stringify(subId)+','+JSON.stringify(b.id)+')" class="btn btn-gold btn-sm">📖 فتح</button>'
-      +'<button type="button" onclick="bagRemoveBook('+JSON.stringify(subId)+','+JSON.stringify(b.id)+')" class="btn btn-ghost btn-sm">🗑️</button>'
+      +'<button type="button" onclick="bagRemoveBook('+JSON.stringify(subId)+','+JSON.stringify(b.id)+')" class="btn btn-ghost btn-sm"><i class="ti ti-trash"></i></button>'
       +'</div></div>';
   }).join('');
   if(typeof CM!=='undefined' && CM.open && CM.currentView==='slides' && String(subId)===String(CM.selectedSubId)) cmRenderBagBooksInClassroom();

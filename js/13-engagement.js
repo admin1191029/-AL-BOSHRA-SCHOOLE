@@ -113,11 +113,11 @@ function renderSeatMap(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">خريطة المقاعد</span></div>
   <div class="ph">
-    <div><div class="ph-title">🪑 خريطة مقاعد الفصل</div>
+    <div><div class="ph-title"><i class="ti ti-armchair"></i> خريطة مقاعد الفصل</div>
     <div class="ph-sub">اضغط على أي مقعد لتغيير الطالب · الألوان تعكس حضور اليوم</div></div>
     <div class="ph-actions">
       <button class="btn btn-primary" onclick="autoArrangeSeatMap()">🔀 ترتيب تلقائي</button>
-      <button class="btn btn-ghost" onclick="clearSeatMap()">🗑️ مسح الكل</button>
+      <button class="btn btn-ghost" onclick="clearSeatMap()"><i class="ti ti-trash"></i> مسح الكل</button>
     </div>
   </div>
 
@@ -203,7 +203,7 @@ function renderBehavior(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">تقييم السلوك</span></div>
   <div class="ph">
-    <div><div class="ph-title">⭐ تقييم السلوك والمشاركة</div>
+    <div><div class="ph-title"><i class="ti ti-star"></i> تقييم السلوك والمشاركة</div>
     <div class="ph-sub">التاريخ: ${fmtDate(td)} · اضغط النجوم وحدد الصفات</div></div>
     <div class="ph-actions">
       <button class="btn btn-gold" onclick="printBehaviorReport()">📄 تقرير سلوكي</button>
@@ -394,7 +394,7 @@ function renderGoals(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">الأهداف والخطط</span></div>
   <div class="ph">
-    <div><div class="ph-title">🎯 الأهداف والخطط التعليمية الفردية</div>
+    <div><div class="ph-title"><i class="ti ti-target"></i> الأهداف والخطط التعليمية الفردية</div>
     <div class="ph-sub">${pending} هدف قيد التنفيذ · ${done} مكتمل</div></div>
     <div class="ph-actions">
       <button class="btn btn-primary" onclick="openGoalFor(null)">➕ هد�� جديد</button>
@@ -499,7 +499,7 @@ function renderGradeBook(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">دفتر الدرجات</span></div>
   <div class="ph">
-    <div><div class="ph-title">📒 دفتر الدرجات</div>
+    <div><div class="ph-title"><i class="ti ti-notebook"></i> دفتر الدرجات</div>
     <div class="ph-sub">تتبع درجات الطلاب في الاختبارات والواجبات</div></div>
     <div class="ph-actions">
       <button class="btn btn-gold" onclick="addGradeColumn()">➕ اختبار / واجب</button>
@@ -657,7 +657,7 @@ function renderPlanner(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">المخطط الأسبوعي</span></div>
   <div class="ph">
-    <div><div class="ph-title">📅 المخطط الأسبوعي</div>
+    <div><div class="ph-title"><i class="ti ti-calendar"></i> المخطط الأسبوعي</div>
     <div class="ph-sub">أسبوع: ${fmtShort(wk)} · اضغط على أي حصة للتعديل</div></div>
     <div class="ph-actions">
       <button class="btn btn-ghost" onclick="clearWeekPlan()">↺ مسح الأسبوع</button>
@@ -717,7 +717,7 @@ function renderMeetings(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">لقاءات الأولياء</span></div>
   <div class="ph">
-    <div><div class="ph-title">🤝 سجل لقاءات أولياء الأمور</div>
+    <div><div class="ph-title"><i class="ti ti-messages"></i> سجل لقاءات أولياء الأمور</div>
     <div class="ph-sub">${S.meetings.length} لقاء مسجّل</div></div>
     <div class="ph-actions">
       <button class="btn btn-primary" onclick="openMeetingFor(null)">➕ تسجيل لقاء</button>
@@ -736,7 +736,7 @@ function renderMeetings(){
               <div style="font-size:0.75rem;color:var(--muted)">${MEET_TYPES[m.type]||m.type} · ${fmtShort(m.date)}</div>
             </div>
           </div>
-          <button class="btn btn-xs btn-red" onclick="deleteMeeting('${m.id}')">🗑️</button>
+          <button class="btn btn-xs btn-red" onclick="deleteMeeting('${m.id}')"><i class="ti ti-trash"></i></button>
         </div>
         <div class="meeting-body">${m.notes}</div>
         ${m.action?`<div class="meeting-footer"><span class="badge badge-green">✅ إجراء: ${m.action}</span></div>`:''}

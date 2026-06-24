@@ -476,7 +476,7 @@ function renderAbsenceReport(){
 <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">تقرير الغياب</span></div>
 <div class="ph">
   <div>
-    <div class="ph-title">🚫 تقرير الغياب</div>
+    <div class="ph-title"><i class="ti ti-calendar-off"></i> تقرير الغياب</div>
     <div class="ph-sub" id="absPerDesc">عرض: آخر 7 أيام — ${_absGetClassName()}</div>
   </div>
   <div class="ph-actions">

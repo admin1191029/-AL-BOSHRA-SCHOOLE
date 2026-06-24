@@ -615,7 +615,7 @@ function cmBuildVersus(qs){
     <button class="cm-btn cm-btn-ghost" style="font-size:0.82rem" onclick="cmVersusNext()">سؤال جديد ←</button>
     <button class="cm-btn cm-btn-ghost" style="font-size:0.82rem" onclick="cmVersusShuffle()">🔀 خلط</button>
     <button class="cm-btn cm-btn-ghost" style="font-size:0.78rem;opacity:0.55" onclick="cmVersusReset()">🔄 تصفير</button>
-    <button class="cm-btn cm-btn-ghost" style="font-size:0.78rem;opacity:0.55" onclick="cmVersusRename()">✏️ أسماء الفرق</button>
+    <button class="cm-btn cm-btn-ghost" style="font-size:0.78rem;opacity:0.55" onclick="cmVersusRename()"><i class="ti ti-edit"></i> أسماء الفرق</button>
   </div>`;
 }
 
@@ -676,7 +676,7 @@ function cmBuildOpposite(qs){
 
   <!-- الكلمة الحالية -->
   <div style="text-align:center;padding:28px 20px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.10);border-radius:18px;margin-bottom:14px;">
-    <div style="font-size:0.80rem;font-weight:800;color:rgba(255,255,255,0.30);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">✏️ كلمة وعكسها</div>
+    <div style="font-size:0.80rem;font-weight:800;color:rgba(255,255,255,0.30);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;"><i class="ti ti-edit"></i> كلمة وعكسها</div>
     <div style="font-size:3.5rem;font-weight:900;color:white;letter-spacing:-1px;margin-bottom:8px;">${q.word}</div>
     <div style="font-size:1rem;color:rgba(255,255,255,0.35);font-weight:700;">ما عكس هذه الكلمة؟</div>
     ${g.oppositeRevealed
@@ -910,7 +910,7 @@ function renderGamesBank(){
         <button class="btn btn-primary btn-sm" onclick="gbAddVersus()">➕ إضافة</button>
       </div>`
     },
-    { id:'opposite', icon:'✏️', name:'كلمة وعكسها', desc:'سلسلة كلمة وضدها', qs:allQ.opposite,
+    { id:'opposite', icon:'<i class="ti ti-edit"></i>', name:'كلمة وعكسها', desc:'سلسلة كلمة وضدها', qs:allQ.opposite,
       addForm:`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
         <input id="gba_op_w" placeholder="الكلمة..." style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.90rem;outline:none;background:var(--card);color:var(--ink);text-align:right;">
         <input id="gba_op_o" placeholder="العكس..." style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.90rem;outline:none;background:var(--card);color:var(--ink);text-align:right;">
@@ -922,7 +922,7 @@ function renderGamesBank(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">🎮 بنك الأسئلة</span></div>
   <div class="ph">
-    <div><div class="ph-title">🎮 بنك الأسئلة والألعاب</div>
+    <div><div class="ph-title"><i class="ti ti-device-gamepad-2"></i> بنك الأسئلة والألعاب</div>
     <div class="ph-sub">أضف أسئلتك الخاصة — تظهر تلقائياً في وضع ا��حصة</div></div>
     <div class="ph-actions">
       <button class="btn btn-primary" onclick="showPage('classroom_mode')">🖥️ وضع الحصة</button>
@@ -981,8 +981,8 @@ function gbRenderItem(type, q, i){
       ${extra}
     </div>
     <div class="gb-q-actions">
-      <button class="btn btn-ghost btn-xs" onclick="gbOpenEdit('${type}',${i})" title="تعديل">✏️</button>
-      <button class="btn btn-red btn-xs" onclick="gbDelete('${type}',${i})" title="حذف">🗑️</button>
+      <button class="btn btn-ghost btn-xs" onclick="gbOpenEdit('${type}',${i})" title="تعديل"><i class="ti ti-edit"></i></button>
+      <button class="btn btn-red btn-xs" onclick="gbDelete('${type}',${i})" title="حذف"><i class="ti ti-trash"></i></button>
     </div>
   </div>`;
 }

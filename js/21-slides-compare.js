@@ -645,7 +645,7 @@ function renderCompare(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">📊 مقارنة الفصول</span></div>
   <div class="ph">
-    <div><div class="ph-title">📊 مقارنة الفصول</div>
+    <div><div class="ph-title"><i class="ti ti-chart-bar"></i> مقارنة الفصول</div>
     <div class="ph-sub">مقارنة ${classes.length} فصول — الإتقان والحضور والتقدم</div></div>
     <div class="ph-actions" style="margin-top:6px;">
       <button class="btn btn-primary btn-sm no-print" onclick="window.print()">🖨️ طباعة مقارنة الفصول</button>

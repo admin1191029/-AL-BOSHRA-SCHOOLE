@@ -9,7 +9,7 @@ function renderNotes(){
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">الملاحظات</span></div>
   <div class="ph">
-    <div><div class="ph-title">📝 ملاحظات المعلم</div><div class="ph-sub">${S.notes.length} ملاحظة مسجلة</div></div>
+    <div><div class="ph-title"><i class="ti ti-note"></i> ملاحظات المعلم</div><div class="ph-sub">${S.notes.length} ملاحظة مسجلة</div></div>
     <div class="ph-actions">
       <button class="btn btn-primary" onclick="openNoteFor(null)">+ ملاحظة جديدة</button>
     </div>
@@ -25,7 +25,7 @@ function renderNotes(){
               <span class="badge ${typeColors[n.type]||'badge-blue'}">${typeLabels[n.type]||'عام'}</span>
               <span class="badge ${prioColors[n.prio]||'badge-gray'}">${n.prio==='urgent'?'⚡ عاجل':n.prio==='important'?'⭐ مهم':'عادي'}</span>
             </div>
-            <button class="btn btn-red btn-xs" onclick="delNote('${n.id}')">🗑️</button>
+            <button class="btn btn-red btn-xs" onclick="delNote('${n.id}')"><i class="ti ti-trash"></i></button>
           </div>
           ${s?`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:8px;background:var(--surface);border-radius:9px;">
             <div class="avatar av-32" style="${avatarStyle(s.id)};color:white;">${s.name.charAt(0)}</div>
@@ -87,7 +87,7 @@ function renderProfile(){
 
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">⚙️ الإعدادات</span></div>
-  <div class="ph"><div><div class="ph-title">⚙️ الملف الشخصي والإعدادات</div></div></div>
+  <div class="ph"><div><div class="ph-title"><i class="ti ti-settings"></i> الملف الشخصي والإعدادات</div></div></div>
 
   <div style="display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;">
 
@@ -108,7 +108,7 @@ function renderProfile(){
         </div>
         <div style="font-size:1.15rem;font-weight:900;color:var(--ink2);">${fullName()||'المعلم'}</div>
         <div style="color:var(--muted);font-size:0.82rem;margin:4px 0 14px;">مدارس البشرى الأهلية</div>
-        ${S.teacher.photo?`<button class="btn btn-ghost btn-sm" onclick="removeTeacherPhoto()" style="font-size:0.76rem;opacity:0.6;">🗑️ حذف الصورة</button>`:''}
+        ${S.teacher.photo?`<button class="btn btn-ghost btn-sm" onclick="removeTeacherPhoto()" style="font-size:0.76rem;opacity:0.6;"><i class="ti ti-trash"></i> حذف الصورة</button>`:''}
         <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
           <span class="badge badge-blue">🏫 البشرى الأهلية</span>
           <span class="badge badge-green">📚 ${S.students.length} طالب</span>
@@ -233,7 +233,7 @@ function renderProfile(){
 
       <!-- Edit info -->
       <div class="card" style="padding:22px;margin-bottom:14px;">
-        <div style="font-weight:800;color:var(--ink2);margin-bottom:18px;">✏️ البيانات الشخصية</div>
+        <div style="font-weight:800;color:var(--ink2);margin-bottom:18px;"><i class="ti ti-edit"></i> البيانات الشخصية</div>
         <div class="form-row">
           <div class="fg"><label>الاسم الأول</label><input type="text" id="pn1" value="${S.teacher.n1}" /></div>
           <div class="fg"><label>الاسم الثاني</label><input type="text" id="pn2" value="${S.teacher.n2}" /></div>
@@ -262,7 +262,7 @@ function renderProfile(){
           <button class="btn btn-ghost" onclick="importDataClick()">📥 استيراد JSON</button>
           <input type="file" id="importFile" style="display:none;" accept=".json" onchange="importData(this)" />
           <button class="btn btn-ghost" onclick="saveOfflineSnapshot();toast('تم حفظ نسخة offline ✅','success')">📦 Offline</button>
-          <button class="btn btn-red" onclick="clearAllData()">🗑️ حذف الكل</button>
+          <button class="btn btn-red" onclick="clearAllData()"><i class="ti ti-trash"></i> حذف الكل</button>
         </div>
         <div style="margin-top:12px;background:var(--surface);border-radius:10px;padding:12px 14px;border:1px solid var(--border);">
           <div style="display:flex;align-items:center;gap:8px;font-size:0.84rem;color:var(--muted);">
