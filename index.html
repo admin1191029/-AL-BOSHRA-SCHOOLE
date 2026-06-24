@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
-<link rel="stylesheet" href="css/styles.css?v=11">
+<link rel="stylesheet" href="css/styles.css?v=13">
 </head>
 <body>
 
@@ -236,10 +236,10 @@
     <div class="tb-right">
       <div class="tb-save"><div class="pulse-dot"></div> محفوظ تلقائياً</div>
       <button class="dark-toggle" id="darkToggle" onclick="cycleTheme()" title="تبديل المظهر" style="display:none;"></button>
-      <button id="sfxToggle" onclick="SFX.toggle();this.title=SFX._enabled?'صوت مفعّل':'صوت مكتوم';this.style.opacity=SFX._enabled?'1':'0.4';" title="صوت مفعّل" style="background:none;border:none;color:white;font-size:17px;padding:6px 8px;border-radius:10px;cursor:none;opacity:1;transition:opacity 0.2s;">🔊</button>
-      <button class="tb-notif" id="notifBtn" style="background:none;border:none;color:white;font-size:18px;padding:6px 8px;border-radius:10px;" onclick="openCmd()" title="بحث سريع Ctrl+K">🔍</button>
+      <button id="sfxToggle" onclick="SFX.toggle();this.title=SFX._enabled?'صوت مفعّل':'صوت مكتوم';this.style.opacity=SFX._enabled?'1':'0.5';" title="صوت مكتوم" style="background:none;border:none;color:#41506a;font-size:18px;padding:6px 8px;border-radius:10px;cursor:none;opacity:0.5;transition:opacity 0.2s;"><i class="ti ti-volume-off" id="sfxIcon"></i></button>
+      <button class="tb-notif" id="notifBtn" style="background:none;border:none;color:#41506a;font-size:18px;padding:6px 8px;border-radius:10px;" onclick="openCmd()" title="بحث سريع Ctrl+K"><i class="ti ti-search"></i></button>
       <button class="tb-notif" id="notifBtn2" onclick="toggleNotif(event)">
-        🔔
+        <i class="ti ti-bell"></i>
         <span class="notif-badge" id="notifCount">3</span>
       </button>
       <div class="tb-user" onclick="showPage('profile')">
@@ -1428,32 +1428,32 @@
   </div>
 </div>
 
-<script src="js/00-firebase.js?v=11"></script>
-<script src="js/01-core.js?v=11"></script>
-<script src="js/02-ui-effects.js?v=11"></script>
-<script src="js/03-auth-nav.js?v=11"></script>
-<script src="js/04-helpers.js?v=11"></script>
-<script src="js/05-dashboard.js?v=11"></script>
-<script src="js/06-students-attendance.js?v=11"></script>
-<script src="js/07-eval-charts.js?v=11"></script>
-<script src="js/08-pdf-engine.js?v=11"></script>
-<script src="js/09-reports.js?v=11"></script>
-<script src="js/10-analytics-curriculum.js?v=11"></script>
-<script src="js/11-notes-profile.js?v=11"></script>
-<script src="js/12-ui.js?v=11"></script>
-<script src="js/13-engagement.js?v=11"></script>
-<script src="js/14-ai-pwa.js?v=11"></script>
-<script src="js/15-changelog-classroom.js?v=11"></script>
-<script src="js/16-treasure-certs.js?v=11"></script>
-<script src="js/17-photo-mobile.js?v=11"></script>
-<script src="js/18-classroom-mode.js?v=11"></script>
-<script src="js/19-games.js?v=11"></script>
-<script src="js/20-about-multiclass.js?v=11"></script>
-<script src="js/21-slides-compare.js?v=11"></script>
-<script src="js/22-license.js?v=11"></script>
-<script src="js/23-misc-ui.js?v=11"></script>
-<script src="js/24-init.js?v=11"></script>
-<script src="js/26-cloud-sync.js?v=11"></script>
-<script src="js/25-pdf-absence.js?v=11"></script>
+<script src="js/00-firebase.js?v=13"></script>
+<script src="js/01-core.js?v=13"></script>
+<script src="js/02-ui-effects.js?v=13"></script>
+<script src="js/03-auth-nav.js?v=13"></script>
+<script src="js/04-helpers.js?v=13"></script>
+<script src="js/05-dashboard.js?v=13"></script>
+<script src="js/06-students-attendance.js?v=13"></script>
+<script src="js/07-eval-charts.js?v=13"></script>
+<script src="js/08-pdf-engine.js?v=13"></script>
+<script src="js/09-reports.js?v=13"></script>
+<script src="js/10-analytics-curriculum.js?v=13"></script>
+<script src="js/11-notes-profile.js?v=13"></script>
+<script src="js/12-ui.js?v=13"></script>
+<script src="js/13-engagement.js?v=13"></script>
+<script src="js/14-ai-pwa.js?v=13"></script>
+<script src="js/15-changelog-classroom.js?v=13"></script>
+<script src="js/16-treasure-certs.js?v=13"></script>
+<script src="js/17-photo-mobile.js?v=13"></script>
+<script src="js/18-classroom-mode.js?v=13"></script>
+<script src="js/19-games.js?v=13"></script>
+<script src="js/20-about-multiclass.js?v=13"></script>
+<script src="js/21-slides-compare.js?v=13"></script>
+<script src="js/22-license.js?v=13"></script>
+<script src="js/23-misc-ui.js?v=13"></script>
+<script src="js/24-init.js?v=13"></script>
+<script src="js/26-cloud-sync.js?v=13"></script>
+<script src="js/25-pdf-absence.js?v=13"></script>
 </body>
 </html>

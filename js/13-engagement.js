@@ -71,7 +71,7 @@ const SFX = {
     this._enabled = !this._enabled;
     localStorage.setItem('bs_sfx', this._enabled?'on':'off');
     const btn = document.getElementById('sfxToggle');
-    if(btn){ btn.textContent = this._enabled?'🔊':'🔇'; btn.style.opacity = this._enabled?'1':'0.45'; }
+    if(btn){ const ic=document.getElementById('sfxIcon'); if(ic) ic.className='ti '+(this._enabled?'ti-volume':'ti-volume-off'); btn.style.opacity = this._enabled?'1':'0.5'; }
     if(this._enabled) this.play('tick'); // test sound
   }
 };
