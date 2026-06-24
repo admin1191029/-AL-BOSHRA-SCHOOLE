@@ -170,7 +170,7 @@ function avatarHTML(sid, size=40, extraStyle='', showEdit=false){
   }
   return `<div class="stu-photo-wrap" style="${extraStyle}" ${showEdit?`onclick="openPhotoModal('${sid}',event)"`:''}>`+
     `<div class="avatar" style="width:${size}px;height:${size}px;font-size:${Math.round(size*0.38)}px;${avatarStyle(sid)};color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;">${s.name.charAt(0)}</div>`+
-    `${showEdit?`<div class="stu-photo-edit">📷</div>`:''}
+    `${showEdit?`<div class="stu-photo-edit"><i class="ti ti-camera"></i></div>`:''}
     </div>`;
 }
 

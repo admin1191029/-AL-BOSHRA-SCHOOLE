@@ -9,13 +9,13 @@ function renderStudents(){
   <div class="ph">
     <div><div class="ph-title"><i class="ti ti-users"></i> إدارة الطلاب</div><div class="ph-sub">${S.students.length} طالب مسجّل · الصف الأول الابتدائي</div></div>
     <div class="ph-actions">
-      <div class="search-box"><span class="search-icon">🔍</span><input placeholder="بحث عن طالب..." value="${stuSearch}" oninput="stuSearch=this.value;showPage('students')" /></div>
-      <button class="btn btn-ghost btn-sm" onclick="stuView=stuView==='table'?'cards':'table';showPage('students')">${stuView==='table'?'🃏 بطاقات':'📋 جدول'}</button>
-      <button class="btn btn-ghost btn-sm" onclick="openStudentCards()">🖨️ طباعة البطاقات</button>
-      <button class="btn btn-primary" onclick="openAddModal()">➕ إضافة طالب</button>
+      <div class="search-box"><span class="search-icon"><i class="ti ti-search"></i></span><input placeholder="بحث عن طالب..." value="${stuSearch}" oninput="stuSearch=this.value;showPage('students')" /></div>
+      <button class="btn btn-ghost btn-sm" onclick="stuView=stuView==='table'?'cards':'table';showPage('students')">${stuView==='table'?'<i class="ti ti-layout-grid"></i> بطاقات':'<i class="ti ti-table"></i> جدول'}</button>
+      <button class="btn btn-ghost btn-sm" onclick="openStudentCards()"><i class="ti ti-printer"></i> طباعة البطاقات</button>
+      <button class="btn btn-primary" onclick="openAddModal()"><i class="ti ti-plus"></i> إضافة طالب</button>
     </div>
   </div>
-  ${filtered.length===0?`<div class="empty"><div class="empty-emoji">👶</div><h3>لا يوجد طلاب</h3><p>اضغط "إضافة طالب" لبدء إضافة طلابك</p></div>`
+  ${filtered.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-users"></i></div><h3>لا يوجد طلاب</h3><p>اضغط "إضافة طالب" لبدء إضافة طلابك</p></div>`
   : stuView==='cards' ? renderStudentCards(filtered) : renderStudentTable(filtered)}
   `;
 }
@@ -71,15 +71,15 @@ function renderStudentTable(list){
             <span>${p.label}</span>
           </div>
         </td>
-        <td><span class="badge ${att==='p'?'badge-green':att==='a'?'badge-red':att==='e'?'badge-gold':'badge-gray'}">${att==='p'?'✅ حاضر':att==='a'?'❌ غائب':att==='e'?'📋 بعذر':'—'}</span></td>
+        <td><span class="badge ${att==='p'?'badge-green':att==='a'?'badge-red':att==='e'?'badge-gold':'badge-gray'}">${att==='p'?'حاضر':att==='a'?'غائب':att==='e'?'بعذر':'—'}</span></td>
         <td>
           <div style="display:flex;gap:6px;">
             <button class="btn btn-primary btn-xs" onclick="openEval('${s.id}')"><i class="ti ti-edit"></i> تقييم</button>
-            <button class="btn btn-green btn-xs" onclick="openChart('${s.id}')">📊</button>
-            <button class="btn btn-ghost btn-xs" onclick="openNoteFor('${s.id}')">📝</button>
-            <button class="btn btn-plum btn-xs" onclick="openGoalFor('${s.id}')">🎯</button>
-            <button class="btn btn-gold btn-xs" onclick="openMeetingFor('${s.id}')">🤝</button>
-            <button class="btn btn-red btn-xs" onclick="delStudent('${s.id}')"><i class="ti ti-trash"></i></button>
+            <button class="btn btn-green btn-xs" onclick="openChart('${s.id}')" title="رسم بياني"><i class="ti ti-chart-bar"></i></button>
+            <button class="btn btn-ghost btn-xs" onclick="openNoteFor('${s.id}')" title="ملاحظة"><i class="ti ti-note"></i></button>
+            <button class="btn btn-plum btn-xs" onclick="openGoalFor('${s.id}')" title="هدف"><i class="ti ti-target"></i></button>
+            <button class="btn btn-gold btn-xs" onclick="openMeetingFor('${s.id}')" title="لقاء ولي أمر"><i class="ti ti-messages"></i></button>
+            <button class="btn btn-red btn-xs" onclick="delStudent('${s.id}')" title="حذف"><i class="ti ti-trash"></i></button>
           </div>
         </td>
       </tr>`;
@@ -103,24 +103,24 @@ function renderStudentCards(list){
           ${avatarHTML(s.id,48,'border-radius:14px;',true)}
           <div>
             <div class="stu-card-name">${s.name}</div>
-            <div class="stu-card-num">${s.parent?'📱 '+s.parent:'لا يوجد رقم'}</div>
+            <div class="stu-card-num">${s.parent?'<i class="ti ti-phone"></i> '+s.parent:'لا يوجد رقم'}</div>
           </div>
         </div>
-        <div class="stu-card-prog-label"><span>📖 القراءة</span><span>${m.rPct}%</span></div>
+        <div class="stu-card-prog-label"><span><i class="ti ti-book"></i> القراءة</span><span>${m.rPct}%</span></div>
         <div class="prog-wrap" style="margin-bottom:10px;"><div class="prog-bar ${masteryColor(m.rPct)}" style="width:${m.rPct}%"></div></div>
-        <div class="stu-card-prog-label"><span>✍️ الكتابة</span><span>${m.wPct}%</span></div>
+        <div class="stu-card-prog-label"><span><i class="ti ti-pencil"></i> الكتابة</span><span>${m.wPct}%</span></div>
         <div class="prog-wrap"><div class="prog-bar ${masteryColor(m.wPct)}" style="width:${m.wPct}%"></div></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;">
           <span class="badge badge-${masteryColor(m.total)}">${m.total}%</span>
           <span style="font-size:0.80rem;font-weight:800;color:${trendColor}" title="${trendTitle}">
             ${trendIcon} ${p.label}
           </span>
-          <span class="badge badge-${att==='p'?'green':att==='a'?'red':att==='e'?'gold':'gray'}">${att==='p'?'✅':att==='a'?'❌':att==='e'?'📋':'—'}</span>
+          <span class="badge badge-${att==='p'?'green':att==='a'?'red':att==='e'?'gold':'gray'}">${att==='p'?'<i class="ti ti-check"></i>':att==='a'?'<i class="ti ti-x"></i>':att==='e'?'<i class="ti ti-clock"></i>':'—'}</span>
         </div>
         <div class="stu-card-actions" onclick="event.stopPropagation()">
-          <button class="btn btn-green btn-sm" onclick="openChart('${s.id}')">📊 رسم</button>
-          <button class="btn btn-ghost btn-sm" onclick="openNoteFor('${s.id}')">📝 ملاحظة</button>
-          <button class="btn btn-red btn-sm" onclick="delStudent('${s.id}')">🗑���</button>
+          <button class="btn btn-green btn-sm" onclick="openChart('${s.id}')"><i class="ti ti-chart-bar"></i> رسم</button>
+          <button class="btn btn-ghost btn-sm" onclick="openNoteFor('${s.id}')"><i class="ti ti-note"></i> ملاحظة</button>
+          <button class="btn btn-red btn-sm" onclick="delStudent('${s.id}')"><i class="ti ti-trash"></i></button>
         </div>
       </div>`;
     }).join('')}
