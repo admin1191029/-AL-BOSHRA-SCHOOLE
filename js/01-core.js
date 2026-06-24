@@ -103,7 +103,7 @@ function renderResources() {
   Object.keys(RES_TYPES).forEach(t=>{ byType[t]=(S.resources.filter(r=>r.type===t).length); });
 
   return `
-<div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">☁️ مكتبة الموارد</span></div>
+<div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">☁️ مكتبة الموارد</span></div>
 <div class="ph">
   <div>
     <div class="ph-title">☁️ مكتبة الموارد السحابية</div>

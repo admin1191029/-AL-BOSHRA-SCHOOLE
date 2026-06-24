@@ -97,7 +97,7 @@ function renderTreasureMap(){
   const activeSec = _tmGetSec();
 
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">🗺️ خريطة الكنز</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">🗺️ خريطة الكنز</span></div>
   <div class="ph">
     <div>
       <div class="ph-title">🗺️ خريطة الكنز</div>

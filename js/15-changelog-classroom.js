@@ -30,7 +30,7 @@ function logChange(type, action, detail=''){
 function renderChangelog(){
   const log = [...(S.changelog||[])].reverse().slice(0,100);
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">سجل التغييرات</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">سجل التغييرات</span></div>
   <div class="ph">
     <div>
       <div class="ph-title">📜 سجل التغييرات</div>
@@ -114,7 +114,7 @@ const GC_SCOPES = 'https://www.googleapis.com/auth/classroom.rosters.readonly ht
 
 function renderClassroomImport(){
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">استيراد Google Classroom</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">استيراد Google Classroom</span></div>
   <div class="ph">
     <div><div class="ph-title">🎓 استيراد من Google Classroom</div>
     <div class="ph-sub">جلب أسماء الطلاب مباشرةً من فصلك في Google Classroom</div></div>

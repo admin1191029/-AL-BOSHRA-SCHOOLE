@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════
 function renderAbout(){
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">💙 حول التطبيق</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">💙 حول التطبيق</span></div>
 
   <!-- شعار المدرسة -->
   <div style="text-align:center;padding:32px 20px 20px;">

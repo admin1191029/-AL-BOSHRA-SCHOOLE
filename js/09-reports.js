@@ -30,7 +30,7 @@ function renderReports(){
     : (S.subjects.find(s=>s.id===_repSubId)?.name||'');
 
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">التقارير</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">التقارير</span></div>
   <div class="ph">
     <div><div class="ph-title">📄 التقارير والمشاركة</div>
     <div class="ph-sub">توليد وإرسال التقارير للأولياء والمدرسة</div></div>

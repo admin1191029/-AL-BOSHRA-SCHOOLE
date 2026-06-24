@@ -920,7 +920,7 @@ function renderGamesBank(){
   ];
 
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">🎮 بنك الأسئلة</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">🎮 بنك الأسئلة</span></div>
   <div class="ph">
     <div><div class="ph-title">🎮 بنك الأسئلة والألعاب</div>
     <div class="ph-sub">أضف أسئلتك الخاصة — تظهر تلقائياً في وضع ا��حصة</div></div>

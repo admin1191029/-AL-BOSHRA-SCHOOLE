@@ -27,16 +27,16 @@ function renderDash(){
   }
 
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">لوحة التحكم</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">لوحة التحكم</span></div>
   <div class="ph">
     <div>
-      <div class="ph-title">أهلاً، ${S.teacher.n1} 👋</div>
+      <div class="ph-title">أهلاً، ${S.teacher.n1}</div>
       <div class="ph-sub">${fmtDate(td)} · الصف الأول الابتدائي · مدارس البشرى الأهلية</div>
     </div>
     <div class="ph-actions">
-      <button class="btn btn-primary" onclick="showPage('students');openAddModal()">➕ إضافة طالب</button>
-      <button class="btn btn-gold" onclick="showPage('reports')">📊 التقارير</button>
-      <button class="btn btn-ghost" onclick="cmToggleAppFullscreen()" title="ملء الشاشة للوحة التحكم">⛶ ملء الشاشة</button>
+      <button class="btn btn-primary" onclick="showPage('students');openAddModal()"><i class="ti ti-plus"></i> إضافة طالب</button>
+      <button class="btn btn-gold" onclick="showPage('reports')"><i class="ti ti-chart-bar"></i> التقارير</button>
+      <button class="btn btn-ghost" onclick="cmToggleAppFullscreen()" title="ملء الشاشة للوحة التحكم"><i class="ti ti-maximize"></i> ملء الشاشة</button>
     </div>
   </div>
 
@@ -304,7 +304,7 @@ function _cvCardHTML(c) {
 
 function renderCombinedView() {
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">العرض الشامل</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">العرض الشامل</span></div>
   <div class="ph">
     <div>
       <div class="ph-title">🗂️ العرض الشامل</div>

@@ -109,7 +109,7 @@ function renderInsights(){
   const borderMap={ember:'rgba(239,68,68,0.22)',mint:'rgba(16,185,129,0.22)',gold:'rgba(245,158,11,0.22)',plum:'rgba(124,58,237,0.22)',sky:'rgba(21,101,192,0.22)'};
   const titleMap={ember:'var(--ember)',mint:'#059669',gold:'#b45309',plum:'var(--plum)',sky:'var(--sky)'};
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">الرؤى الذكية</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">الرؤى الذكية</span></div>
   <div class="ph">
     <div><div class="ph-title">🤖 الرؤى والتوصيات الذكية</div>
     <div class="ph-sub">تحليل تلقائي لبيانات الفصل وتوصيات مخصصة للمعلم</div></div>

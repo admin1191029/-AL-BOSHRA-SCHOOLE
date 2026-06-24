@@ -12,7 +12,7 @@ function renderAnalytics(){
   }).sort((a,b)=>b.pct-a.pct):[];
 
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">تحليلات</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">تحليلات</span></div>
   <div class="ph"><div><div class="ph-title">📈 تحليلات متقدمة</div><div class="ph-sub">رؤى عميقة حول مستوى الصف</div></div></div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;">
@@ -89,7 +89,7 @@ function initAnalyticsCharts(){
 // ══════════════════════════════════════════════
 function renderCurriculum(){
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">إدارة المواد والمهارات</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">إدارة المواد والمهارات</span></div>
   <div class="ph">
     <div><div class="ph-title">📚 إدارة المواد الدراسية والمهارات</div>
     <div class="ph-sub">أضف مواد جديدة، وعدّل خانات التقييم ومهاراتها بحرية كامل��</div></div>

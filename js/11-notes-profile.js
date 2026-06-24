@@ -7,7 +7,7 @@ function renderNotes(){
   const prioColors={normal:'badge-gray',important:'badge-gold',urgent:'badge-red'};
   const typeColors={general:'badge-blue',academic:'badge-plum',behavior:'badge-gold',parent:'badge-green'};
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">الملاحظات</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">الملاحظات</span></div>
   <div class="ph">
     <div><div class="ph-title">📝 ملاحظات المعلم</div><div class="ph-sub">${S.notes.length} ملاحظة مسجلة</div></div>
     <div class="ph-actions">
@@ -86,7 +86,7 @@ function renderProfile(){
     : `<span style="font-size:40px;font-weight:900;color:white;">${S.teacher.n1.charAt(0)||'م'}</span>`;
 
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">⚙️ الإعدادات</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">⚙️ الإعدادات</span></div>
   <div class="ph"><div><div class="ph-title">⚙️ الملف الشخصي والإعدادات</div></div></div>
 
   <div style="display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;">

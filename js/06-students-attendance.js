@@ -5,7 +5,7 @@ let stuSearch='', stuView='table';
 function renderStudents(){
   const filtered=S.students.filter(s=>s.name.includes(stuSearch)||stuSearch==='');
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">الطلاب</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">الطلاب</span></div>
   <div class="ph">
     <div><div class="ph-title">👥 إدارة الطلاب</div><div class="ph-sub">${S.students.length} طالب مسجّل · الصف الأول الابتدائي</div></div>
     <div class="ph-actions">
@@ -172,7 +172,7 @@ function renderAttend(){
   const histDates=Object.keys(S.attendance).sort().slice(-5).reverse();
 
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">كشف الحضور</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">كشف الحضور</span></div>
   <div class="ph">
     <div><div class="ph-title">📋 كشف الحضور اليومي</div><div class="ph-sub">${fmtDate(attendDate)}</div></div>
     <div class="ph-actions">

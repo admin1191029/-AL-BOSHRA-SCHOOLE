@@ -554,7 +554,7 @@ function renderCompare(){
   const classes = getAllClasses();
   if(classes.length < 2){
     return `
-    <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">📊 مقارنة الفصول</span></div>
+    <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">📊 مقارنة الفصول</span></div>
     <div class="empty">
       <div class="empty-emoji">📊</div>
       <h3>تحتاج فصلين على الأقل</h3>
@@ -643,7 +643,7 @@ function renderCompare(){
   const allSubNames = [...new Set(metrics.flatMap(m=>m.subjectMastery.map(s=>s.name)))];
 
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">📊 مقارنة الفصول</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">📊 مقارنة الفصول</span></div>
   <div class="ph">
     <div><div class="ph-title">📊 مقارنة الفصول</div>
     <div class="ph-sub">مقارنة ${classes.length} فصول — الإتقان والحضور والتقدم</div></div>

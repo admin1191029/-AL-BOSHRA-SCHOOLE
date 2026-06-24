@@ -25,7 +25,7 @@ function renderClassroomMode(){
     )
   ).join('');
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">🖥️ وضع الحصة</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">🖥️ وضع الحصة</span></div>
   <div class="ph">
     <div><div class="ph-title">🖥️ وضع الحصة — شاشة البروجكتور</div>
     <div class="ph-sub">شاشة كاملة مصممة للعرض أمام الطلاب — عجلة · مؤقتات · لوحة شرف</div></div>

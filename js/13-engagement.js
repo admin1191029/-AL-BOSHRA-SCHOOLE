@@ -111,7 +111,7 @@ function renderSeatMap(){
   initSeatLayout();
   const td=today(), todayAtt=S.attendance[td]||{};
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">خريطة المقاعد</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">خريطة المقاعد</span></div>
   <div class="ph">
     <div><div class="ph-title">🪑 خريطة مقاعد الفصل</div>
     <div class="ph-sub">اضغط على أي مقعد لتغيير الطالب · الألوان تعكس حضور اليوم</div></div>
@@ -201,7 +201,7 @@ const BEH_NEU_TAGS=['هادئ','يحتاج تشجيع','خجول'];
 function renderBehavior(){
   const td=today();
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">تقييم السلوك</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">تقييم السلوك</span></div>
   <div class="ph">
     <div><div class="ph-title">⭐ تقييم السلوك والمشاركة</div>
     <div class="ph-sub">التاريخ: ${fmtDate(td)} · اضغط النجوم وحدد الصفات</div></div>
@@ -392,7 +392,7 @@ function renderGoals(){
   const done=S.goals.filter(g=>g.done).length;
   const today_=today();
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">الأهداف والخطط</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">الأهداف والخطط</span></div>
   <div class="ph">
     <div><div class="ph-title">🎯 الأهداف والخطط التعليمية الفردية</div>
     <div class="ph-sub">${pending} هدف قيد التنفيذ · ${done} مكتمل</div></div>
@@ -497,7 +497,7 @@ function renderGradeBook(){
     save();
   }
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">دفتر الدرجات</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">دفتر الدرجات</span></div>
   <div class="ph">
     <div><div class="ph-title">📒 دفتر الدرجات</div>
     <div class="ph-sub">تتبع درجات الطلاب في الاختبارات والواجبات</div></div>
@@ -655,7 +655,7 @@ function renderPlanner(){
   if(!S.planner[wk]) S.planner[wk]={};
   const todayDay=new Date().getDay(); // 0=Sun
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">المخطط الأسبوعي</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">المخطط الأسبوعي</span></div>
   <div class="ph">
     <div><div class="ph-title">📅 المخطط الأسبوعي</div>
     <div class="ph-sub">أسبوع: ${fmtShort(wk)} · اضغط على أي حصة للتعديل</div></div>
@@ -715,7 +715,7 @@ const MEET_TYPES={physical:'🤝 حضوري',phone:'📞 هاتفي',whatsapp:'�
 let meetTargetSid=null;
 function renderMeetings(){
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">لقاءات الأولياء</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">لقاءات الأولياء</span></div>
   <div class="ph">
     <div><div class="ph-title">🤝 سجل لقاءات أولياء الأمور</div>
     <div class="ph-sub">${S.meetings.length} لقاء مسجّل</div></div>

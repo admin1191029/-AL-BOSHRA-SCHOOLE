@@ -7,7 +7,7 @@ function renderSubjectPage(subId){
   if(!sub) return `<div class="empty"><div class="empty-emoji">📚</div><h3>المادة غير موجودة</h3></div>`;
   const list=S.students.filter(s=>s.name.includes(subjectSearch)||subjectSearch==='');
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">${sub.icon} ${sub.name}</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">${sub.icon} ${sub.name}</span></div>
   <div class="ph">
     <div>
       <div class="ph-title">${sub.icon} مادة ${sub.name}</div>

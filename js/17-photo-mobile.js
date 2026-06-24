@@ -169,7 +169,7 @@ function saveStudent(){
 // Bulk photo import page inside profile
 function renderPhotoManager(){
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">إدارة صور الطلاب</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">إدارة صور الطلاب</span></div>
   <div class="ph">
     <div><div class="ph-title">📷 إدارة صور الطلاب</div>
     <div class="ph-sub">أضف صورة لكل طالب — تظهر في كل صفحات التطبيق</div></div>
