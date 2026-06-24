@@ -95,8 +95,8 @@ function renderDash(){
 
   <div class="dash-cards-grid">
     <div class="card">
-      <div class="card-header"><h3>🏆 أعلى الطلاب تقدماً</h3><button class="btn btn-ghost btn-sm" onclick="showPage('analytics')">عرض الكل</button></div>
-      ${top5.length===0?`<div class="empty"><div class="empty-emoji">🌱</div><h3>لا توجد تقييمات بعد</h3><p>ابدأ بتقييم طلابك</p></div>`:`
+      <div class="card-header"><h3><i class="ti ti-trophy"></i> أعلى الطلاب تقدماً</h3><button class="btn btn-ghost btn-sm" onclick="showPage('analytics')">عرض الكل</button></div>
+      ${top5.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-seedling"></i></div><h3>لا توجد تقييمات بعد</h3><p>ابدأ بتقييم طلابك</p></div>`:`
       <div style="padding:14px 20px;display:flex;flex-direction:column;gap:12px;">
         ${top5.map((s,i)=>`
           <div style="display:flex;align-items:center;gap:12px;">
@@ -113,9 +113,9 @@ function renderDash(){
     </div>
 
     <div class="card">
-      <div class="card-header"><h3>📝 آخر الملاحظات</h3><button class="btn btn-ghost btn-sm" onclick="showPage('notes')">الكل</button></div>
+      <div class="card-header"><h3><i class="ti ti-note"></i> آخر الملاحظات</h3><button class="btn btn-ghost btn-sm" onclick="showPage('notes')">الكل</button></div>
       <div style="padding:14px 16px;">
-        ${recent.length===0?`<div class="empty"><div class="empty-emoji">🗒️</div><h3>لا توجد ملاحظات</h3></div>`:`
+        ${recent.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-note"></i></div><h3>لا توجد ملاحظات</h3></div>`:`
         <div class="timeline">
           ${recent.map((n,i)=>{
             const s=S.students.find(x=>x.id===n.sid);

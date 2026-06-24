@@ -86,12 +86,12 @@ function renderReports(){
   <!-- Charts -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;">
     <div class="chart-box">
-      <h3>📊 توزيع المستويات</h3>
+      <h3><i class="ti ti-chart-bar"></i> توزيع المستويات</h3>
       <div class="chart-sub">${subjectLabel}</div>
       <div class="chart-h chart-h-220"><canvas id="repChart1"></canvas></div>
     </div>
     <div class="chart-box">
-      <h3>📈 مقارنة الطلاب</h3>
+      <h3><i class="ti ti-chart-line"></i> مقارنة الطلاب</h3>
       <div class="chart-sub">أعلى 10 طلاب</div>
       <div class="chart-h chart-h-220"><canvas id="repChart2"></canvas></div>
     </div>
@@ -100,10 +100,10 @@ function renderReports(){
   <!-- Detail Table -->
   <div class="card" style="margin-bottom:20px;">
     <div class="card-header">
-      <h3>📋 كشف المتابعة التفصيلي — ${subjectLabel}</h3>
+      <h3><i class="ti ti-clipboard-check"></i> كشف المتابعة التفصيلي — ${subjectLabel}</h3>
       <span class="badge badge-blue">${S.students.length} طالب</span>
     </div>
-    ${S.students.length===0?`<div class="empty"><div class="empty-emoji">📊</div><h3>لا توجد بيانات</h3></div>`:`
+    ${S.students.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-chart-bar"></i></div><h3>لا توجد بيانات</h3></div>`:`
     <div class="tbl-wrap"><table class="tbl">
       <thead>
         <tr>

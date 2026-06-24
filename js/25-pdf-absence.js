@@ -515,7 +515,7 @@ function renderAbsenceReport(){
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
   <div class="card">
-    <div class="card-header"><h3>📊 الغياب اليومي</h3></div>
+    <div class="card-header"><h3><i class="ti ti-chart-bar"></i> الغياب اليومي</h3></div>
     <div class="card-body"><div style="position:relative;width:100%;height:220px;"><canvas id="absChartBar"></canvas></div></div>
   </div>
   <div class="card">
@@ -536,7 +536,7 @@ function renderAbsenceReport(){
 </div>
 
 <div class="card" style="margin-bottom:14px;">
-  <div class="card-header"><h3>📋 سجل الغياب التفصيلي</h3><span class="badge badge-red" id="absTableCount">—</span></div>
+  <div class="card-header"><h3><i class="ti ti-clipboard-check"></i> سجل الغياب التفصيلي</h3><span class="badge badge-red" id="absTableCount">—</span></div>
   <div class="card-body" style="padding:0;">
     <div style="overflow-x:auto;">
       <table class="tbl">

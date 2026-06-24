@@ -152,7 +152,7 @@ function renderResources() {
 <!-- الموارد -->
 ${items.length===0?`
 <div class="empty">
-  <div class="empty-emoji">☁️</div>
+  <div class="empty-emoji"><i class="ti ti-cloud"></i></div>
   <h3>${total===0?'المكتبة فارغة':'لا توجد نتائج'}</h3>
   <p>${total===0?'أضف روابط وفيديوهات وأوراق عمل لتنظيمها هنا':'جرب تغيير الفلتر أو البحث'}</p>
   ${total===0?`<button class="btn btn-primary" style="margin-top:12px;" onclick="openAddResource()">➕ إضافة أول مورد</button>`:''}

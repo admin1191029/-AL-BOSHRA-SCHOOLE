@@ -31,7 +31,7 @@ function renderClassroomMode(){
     <div class="ph-sub">شاشة كاملة مصممة للعرض أمام الطلاب — عجلة · مؤقتات · لوحة شرف</div></div>
   </div>
   <div class="card" style="max-width:540px;margin:0 auto;">
-    <div class="card-header"><h3>⚙️ إعداد الحصة</h3></div>
+    <div class="card-header"><h3><i class="ti ti-settings"></i> إعداد الحصة</h3></div>
     <div class="card-body">
       <div class="fg"><label>المادة</label><select id="cm_subSelect" onchange="cmUpdateSkillSelect()">${subOpts}</select></div>
       <div class="fg"><label>المهارة المستهدفة اليوم</label>

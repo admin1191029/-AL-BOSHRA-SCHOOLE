@@ -14,7 +14,7 @@ function renderNotes(){
       <button class="btn btn-primary" onclick="openNoteFor(null)">+ ملاحظة جديدة</button>
     </div>
   </div>
-  ${S.notes.length===0?`<div class="empty"><div class="empty-emoji">🗒️</div><h3>لا توجد ملاحظات بعد</h3><p>سجّل ملاحظاتك على الطلاب من هنا</p><button class="btn btn-primary" style="margin-top:12px;" onclick="openNoteFor(null)">➕ إضافة ملاحظة</button></div>`:`
+  ${S.notes.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-note"></i></div><h3>لا توجد ملاحظات بعد</h3><p>سجّل ملاحظاتك على الطلاب من هنا</p><button class="btn btn-primary" style="margin-top:12px;" onclick="openNoteFor(null)">➕ إضافة ملاحظة</button></div>`:`
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">
     ${[...S.notes].reverse().map(n=>{
       const s=S.students.find(x=>x.id===n.sid);

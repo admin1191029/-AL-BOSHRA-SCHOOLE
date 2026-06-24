@@ -17,12 +17,12 @@ function renderAnalytics(){
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;">
     <div class="chart-box">
-      <h3>📊 توزيع الإتقان الكلي</h3>
+      <h3><i class="ti ti-chart-bar"></i> توزيع الإتقان الكلي</h3>
       <div class="chart-sub">كل طالب بنسبته</div>
       <div class="chart-h chart-h-220"><canvas id="anChart1"></canvas></div>
     </div>
     <div class="chart-box">
-      <h3>📉 أصعب المهارات — ${firstSec?firstSec.name:''}</h3>
+      <h3><i class="ti ti-trending-down"></i> أصعب المهارات — ${firstSec?firstSec.name:''}</h3>
       <div class="chart-sub">المهارات الأقل إتقاناً في الفصل</div>
       <div class="chart-h chart-h-220"><canvas id="anChart2"></canvas></div>
     </div>
@@ -30,7 +30,7 @@ function renderAnalytics(){
 
   <div style="display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:18px;">
     <div class="card">
-      <div class="card-header"><h3>🏆 ترتيب الطلاب</h3></div>
+      <div class="card-header"><h3><i class="ti ti-trophy"></i> ترتيب الطلاب</h3></div>
       <div class="tbl-wrap"><table class="tbl">
         <thead><tr><th>الترتيب</th><th>الطالب</th><th>القراءة</th><th>الكتابة</th><th>الكلي</th></tr></thead>
         <tbody>
@@ -111,7 +111,7 @@ function renderCurriculum(){
 }
 
 function renderCurriculumSubjects(){
-  if(!S.subjects.length) return `<div class="empty"><div class="empty-emoji">📚</div><h3>لا توجد مواد</h3><p>اضغط "إضافة مادة جديدة" للبدء</p></div>`;
+  if(!S.subjects.length) return `<div class="empty"><div class="empty-emoji"><i class="ti ti-books"></i></div><h3>لا توجد مواد</h3><p>اضغط "إضافة مادة جديدة" للبدء</p></div>`;
   return S.subjects.map((sub,si)=>`
     <div class="card" style="margin-bottom:16px;" id="subCard_${sub.id}">
       <div class="card-header" style="background:linear-gradient(135deg,var(--ink2),var(--sky));color:white;border-radius:20px 20px 0 0;">

@@ -174,7 +174,7 @@ function renderPhotoManager(){
     <div><div class="ph-title"><i class="ti ti-camera"></i> إدارة صور الطلاب</div>
     <div class="ph-sub">أضف صورة لكل طالب — تظهر في كل صفحات التطبيق</div></div>
   </div>
-  ${S.students.length===0?`<div class="empty"><div class="empty-emoji">📷</div><h3>لا يوجد طلاب</h3></div>`:`
+  ${S.students.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-camera"></i></div><h3>لا يوجد طلاب</h3></div>`:`
   <div class="photo-class-grid">
     ${S.students.map(s=>`
       <div class="photo-class-item" onclick="openPhotoModal('${s.id}',event)">

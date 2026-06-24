@@ -556,7 +556,7 @@ function renderCompare(){
     return `
     <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">📊 مقارنة الفصول</span></div>
     <div class="empty">
-      <div class="empty-emoji">📊</div>
+      <div class="empty-emoji"><i class="ti ti-chart-bar"></i></div>
       <h3>تحتاج فصلين على الأقل</h3>
       <p>أضف فصلاً ثانياً من زر الفصل في الأعلى</p>
       <button class="btn btn-primary" onclick="openClassSwitcher()">➕ إضافة فصل</button>
@@ -701,7 +701,7 @@ function renderCompare(){
   <!-- Subject comparison table -->
   ${allSubNames.length ? `
   <div class="card">
-    <div class="card-header"><h3>📚 مقارنة المواد</h3></div>
+    <div class="card-header"><h3><i class="ti ti-books"></i> مقارنة المواد</h3></div>
     <div class="card-body" style="padding:0;">
       <div class="tbl-wrap"><table class="tbl">
         <thead><tr>

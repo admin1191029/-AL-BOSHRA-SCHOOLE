@@ -4,7 +4,7 @@
 let subjectSearch='';
 function renderSubjectPage(subId){
   const sub=S.subjects.find(x=>x.id===subId);
-  if(!sub) return `<div class="empty"><div class="empty-emoji">📚</div><h3>المادة غير موجودة</h3></div>`;
+  if(!sub) return `<div class="empty"><div class="empty-emoji"><i class="ti ti-books"></i></div><h3>المادة غير موجودة</h3></div>`;
   const list=S.students.filter(s=>s.name.includes(subjectSearch)||subjectSearch==='');
   return `
   <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">${sub.icon} ${sub.name}</span></div>
@@ -190,7 +190,7 @@ function _evalLoadSubject(subId, sid){
   wrap.innerHTML = '';
 
   if(sub.sections.length === 0){
-    wrap.innerHTML = '<div class="empty"><div class="empty-emoji">📭</div><h3>لا توجد خانات في هذه المادة</h3><p>أضف خانات من صفحة إدارة المواد</p></div>';
+    wrap.innerHTML = '<div class="empty"><div class="empty-emoji"><i class="ti ti-mail-off"></i></div><h3>لا توجد خانات في هذه المادة</h3><p>أضف خانات من صفحة إدارة المواد</p></div>';
     return;
   }
 

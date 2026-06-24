@@ -152,7 +152,7 @@ function renderTreasureMap(){
 }
 
 function _renderClassMap(sub,sec){
-  if(!sec||!S.students.length) return `<div class="empty"><div class="empty-emoji">🗺️</div><h3>لا يوجد طلاب بعد</h3></div>`;
+  if(!sec||!S.students.length) return `<div class="empty"><div class="empty-emoji"><i class="ti ti-map-2"></i></div><h3>لا يوجد طلاب بعد</h3></div>`;
   const subId=sub.id, secId=sec.id;
   const shownStudents = _tmStudentsFor(subId, secId);
   if(!shownStudents.length) return `<div class="empty"><div class="empty-emoji">🔎</div><h3>لا توجد نتائج مطابقة</h3><p>جرّب اسمًا آخر أو امسح البحث</p></div>`;
@@ -192,7 +192,7 @@ function _renderClassMap(sub,sec){
   <!-- Class Road Map -->
   <div class="card" style="margin-bottom:20px;overflow:visible;">
     <div class="card-header">
-      <h3>🗺️ خريطة الرحلة — ${sec.icon||''} ${sec.name}</h3>
+      <h3><i class="ti ti-map-2"></i> خريطة الرحلة — ${sec.icon||''} ${sec.name}</h3>
       <span class="badge badge-gold">${sec.skills.length} محطة</span>
     </div>
     <div style="padding:10px 16px;overflow-x:auto;">
@@ -348,7 +348,7 @@ function _renderStudentMap(sub,sec){
 
   <!-- Individual road -->
   <div class="card" style="margin-bottom:20px;overflow:visible;">
-    <div class="card-header"><h3>🗺️ رحلة ${s.name.split(' ')[0]}</h3>
+    <div class="card-header"><h3><i class="ti ti-map-2"></i> رحلة ${s.name.split(' ')[0]}</h3>
       ${nextLocked>=0?`<span class="badge badge-gold">⭐ التالية: ${sec.skills[nextLocked]?.substring(0,15)}</span>`:'<span class="badge badge-green">🏆 أتم الرحلة!</span>'}
     </div>
     <div style="padding:10px 16px;overflow-x:auto;">
@@ -385,7 +385,7 @@ function _renderStudentMap(sub,sec){
   <!-- Skill detail list -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
     <div class="card">
-      <div class="card-header"><h3>✅ المحطات المُتقنة (${m.done.length})</h3></div>
+      <div class="card-header"><h3><i class="ti ti-circle-check"></i> المحطات المُتقنة (${m.done.length})</h3></div>
       <div style="padding:10px 14px;">
         ${m.done.length===0?'<div style="color:var(--muted);font-size:.85rem;padding:8px 0">لا توجد بعد</div>':
           m.done.map(i=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.84rem;">
@@ -395,7 +395,7 @@ function _renderStudentMap(sub,sec){
       </div>
     </div>
     <div class="card">
-      <div class="card-header"><h3>🎯 المحطات المتبقية (${m.total-m.done.length})</h3></div>
+      <div class="card-header"><h3><i class="ti ti-target"></i> المحطات المتبقية (${m.total-m.done.length})</h3></div>
       <div style="padding:10px 14px;">
         ${m.done.length===m.total?'<div style="color:var(--mint);font-size:.85rem;padding:8px 0">🏆 أتم جميع المحطات!</div>':
           sec.skills.map((sk,i)=>ev[i]!=='m'?`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.84rem;">

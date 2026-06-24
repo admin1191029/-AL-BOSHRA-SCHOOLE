@@ -400,7 +400,7 @@ function renderGoals(){
       <button class="btn btn-primary" onclick="openGoalFor(null)">➕ هد�� جديد</button>
     </div>
   </div>
-  ${S.students.length===0?`<div class="empty"><div class="empty-emoji">🎯</div><h3>لا يوجد طلاب</h3></div>`:`
+  ${S.students.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-target"></i></div><h3>لا يوجد طلاب</h3></div>`:`
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;">
     ${S.students.map(s=>{
       const sGoals=S.goals.filter(g=>g.sid===s.id||g.sid===null).slice(0,6);
@@ -723,7 +723,7 @@ function renderMeetings(){
       <button class="btn btn-primary" onclick="openMeetingFor(null)">➕ تسجيل لقاء</button>
     </div>
   </div>
-  ${S.meetings.length===0?`<div class="empty"><div class="empty-emoji">🤝</div><h3>لا توجد لقاءات مسجلة بعد</h3><p>ابدأ بتسجيل أول لقاء مع ولي أمر</p></div>`:`
+  ${S.meetings.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-messages"></i></div><h3>لا توجد لقاءات مسجلة بعد</h3><p>ابدأ بتسجيل أول لقاء مع ولي أمر</p></div>`:`
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;">
     ${[...S.meetings].reverse().map(m=>{
       const s=m.sid?S.students.find(x=>x.id===m.sid):null;

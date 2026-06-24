@@ -42,7 +42,7 @@ function renderChangelog(){
     </div>
   </div>
 
-  ${log.length===0?`<div class="empty"><div class="empty-emoji">📜</div><h3>لا توجد سجلات بعد</h3><p>ستظهر هنا كل التغييرات التي تجريها</p></div>`:`
+  ${log.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-history"></i></div><h3>لا توجد سجلات بعد</h3><p>ستظهر هنا كل التغييرات التي تجريها</p></div>`:`
 
   <!-- Filters -->
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
