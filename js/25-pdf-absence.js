@@ -131,7 +131,7 @@ function absRenderData(period,from,to){
     ['absKpiTotal','absKpiDays','absKpiAbsent','absKpiExcused','absKpiRate','absKpiCritical']
       .forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent='0'; });
     const tb=document.getElementById('absTable');
-    if(tb) tb.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--muted2);">👥 أضف طلاباً أولاً من قسم الطلاب</td></tr>`;
+    if(tb) tb.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--muted2);"><i class="ti ti-users"></i> أضف طلاباً أولاً من قسم الطلاب</td></tr>`;
     const ta=document.getElementById('absTopAbsent');
     if(ta) ta.innerHTML=`<p style="color:var(--muted2);text-align:center;padding:16px;">لا يوجد طلاب مضافون</p>`;
     return;
@@ -226,7 +226,7 @@ function absRenderData(period,from,to){
   const tbody=document.getElementById('absTable');
   if(tbody){
     if(records.length===0){
-      tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--muted2);">✅ لا يوجد غياب مسجل في هذه الفترة</td></tr>`;
+      tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--muted2);"><i class="ti ti-circle-check"></i> لا يوجد غياب مسجل في هذه الفترة</td></tr>`;
     } else {
       tbody.innerHTML=records.slice(0,50).map((r,i)=>`
         <tr>
@@ -245,7 +245,7 @@ function absRenderData(period,from,to){
   const taEl=document.getElementById('absTopAbsent');
   if(taEl){
     if(topStudents.length===0){
-      taEl.innerHTML=`<p style="color:var(--muted2);text-align:center;padding:16px;">✅ لا يوجد غياب في هذه الفترة</p>`;
+      taEl.innerHTML=`<p style="color:var(--muted2);text-align:center;padding:16px;"><i class="ti ti-circle-check"></i> لا يوجد غياب في هذه الفترة</p>`;
     } else {
       taEl.innerHTML=topStudents.slice(0,5).map(([sid,cnt])=>{
         const st=S.students.find(s=>s.id===sid);
@@ -323,9 +323,9 @@ function absExportPDF(){
     let absCount=0, excCount=0;
     const cells = daysCols.map(d=>{
       const v=(S.attendance[d.dateStr]||{})[s.id];
-      if(v==='p') return `<td style="text-align:center;border-left:1px solid #e2e8f8;color:#059669;font-size:1em">✅</td>`;
-      if(v==='a'){ absCount++; return `<td style="text-align:center;border-left:1px solid #e2e8f8;color:#dc2626;font-size:1em">❌</td>`; }
-      if(v==='e'){ excCount++; return `<td style="text-align:center;border-left:1px solid #e2e8f8;color:#d97706;font-size:1em">📋</td>`; }
+      if(v==='p') return `<td style="text-align:center;border-left:1px solid #e2e8f8;color:#059669;font-size:1em"><i class="ti ti-circle-check"></i></td>`;
+      if(v==='a'){ absCount++; return `<td style="text-align:center;border-left:1px solid #e2e8f8;color:#dc2626;font-size:1em"><i class="ti ti-circle-x"></i></td>`; }
+      if(v==='e'){ excCount++; return `<td style="text-align:center;border-left:1px solid #e2e8f8;color:#d97706;font-size:1em"><i class="ti ti-clipboard-check"></i></td>`; }
       return `<td style="text-align:center;border-left:1px solid #e2e8f8;color:#cbd5e1;font-size:.8em">—</td>`;
     }).join('');
 
@@ -393,32 +393,32 @@ function absExportPDF(){
 </head>
 <body style="padding:12px">
 <div class="no-print">
-  <button class="pbtn primary" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+  <button class="pbtn primary" onclick="window.print()"><i class="ti ti-printer"></i> طباعة / حفظ PDF</button>
   <button class="pbtn secondary" onclick="window.close()">✕ إغلاق</button>
   <span style="color:#64748b;font-size:.85em;margin-right:8px">يظهر الجدول بشكل صحيح عند الطباعة — اختر «حفظ كـ PDF» من خيارات الطابعة</span>
 </div>
 
 <div class="header">
   <div>
-    <h1>📋 كشف الحضور والغياب</h1>
+    <h1><i class="ti ti-clipboard-check"></i> كشف الحضور والغياب</h1>
     <div class="meta">مدارس البشرى الأهلية &nbsp;·&nbsp; ${className} &nbsp;·&nbsp; المعلم: ${teacher} &nbsp;·&nbsp; ${label}</div>
   </div>
   <span class="badge-period">${_absCurrentPeriod==='week'?'أسبوعي':_absCurrentPeriod==='month'?'شهري':_absCurrentPeriod==='semester'?'فصلي':'مخصص'} — ${daysCols.length} يوم</span>
 </div>
 
 <div class="stats">
-  <div class="stat"><div class="sv">${S.students.length}</div><div class="sl">👥 الطلاب</div></div>
-  <div class="stat"><div class="sv">${daysCols.length}</div><div class="sl">📅 الأيام</div></div>
-  <div class="stat"><div class="sv green">${totalPresent}</div><div class="sl">✅ حضور</div></div>
-  <div class="stat"><div class="sv red">${totalAbsent}</div><div class="sl">❌ غياب</div></div>
-  <div class="stat"><div class="sv gold">${totalExcused}</div><div class="sl">📋 بعذر</div></div>
-  <div class="stat"><div class="sv green">${rate}%</div><div class="sl">📊 نسبة الحضور</div></div>
+  <div class="stat"><div class="sv">${S.students.length}</div><div class="sl"><i class="ti ti-users"></i> الطلاب</div></div>
+  <div class="stat"><div class="sv">${daysCols.length}</div><div class="sl"><i class="ti ti-calendar"></i> الأيام</div></div>
+  <div class="stat"><div class="sv green">${totalPresent}</div><div class="sl"><i class="ti ti-circle-check"></i> حضور</div></div>
+  <div class="stat"><div class="sv red">${totalAbsent}</div><div class="sl"><i class="ti ti-circle-x"></i> غياب</div></div>
+  <div class="stat"><div class="sv gold">${totalExcused}</div><div class="sl"><i class="ti ti-clipboard-check"></i> بعذر</div></div>
+  <div class="stat"><div class="sv green">${rate}%</div><div class="sl"><i class="ti ti-chart-bar"></i> نسبة الحضور</div></div>
 </div>
 
 <div class="legend">
-  <span>✅ حاضر</span>
-  <span>❌ غائب بدون عذر</span>
-  <span>📋 غائب بعذر</span>
+  <span><i class="ti ti-circle-check"></i> حاضر</span>
+  <span><i class="ti ti-circle-x"></i> غائب بدون عذر</span>
+  <span><i class="ti ti-clipboard-check"></i> غائب بعذر</span>
   <span>— غير مسجل</span>
   <span style="background:rgba(239,68,68,0.1);color:#dc2626;padding:1px 7px;border-radius:99px;font-weight:800">3 = حالة حرجة</span>
 </div>
@@ -430,8 +430,8 @@ function absExportPDF(){
       <th style="width:30px;text-align:center">#</th>
       <th style="min-width:130px">اسم الطالب</th>
       ${thDayNames}
-      <th style="text-align:center;width:44px;border-left:1px solid rgba(255,255,255,0.2)">❌</th>
-      <th style="text-align:center;width:44px;border-left:1px solid rgba(255,255,255,0.2)">📋</th>
+      <th style="text-align:center;width:44px;border-left:1px solid rgba(255,255,255,0.2)"><i class="ti ti-circle-x"></i></th>
+      <th style="text-align:center;width:44px;border-left:1px solid rgba(255,255,255,0.2)"><i class="ti ti-clipboard-check"></i></th>
     </tr>
     <tr>
       <th></th><th style="font-size:.72em;font-weight:400;opacity:.6">الأيام ↓</th>
@@ -473,16 +473,16 @@ function renderAbsenceReport(){
   _absCurrentPeriod='week';
 
   return `
-<div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">تقرير الغياب</span></div>
+<div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">تقرير الغياب</span></div>
 <div class="ph">
   <div>
-    <div class="ph-title">🚫 تقرير الغياب</div>
+    <div class="ph-title"><i class="ti ti-calendar-off"></i> تقرير الغياب</div>
     <div class="ph-sub" id="absPerDesc">عرض: آخر 7 أيام — ${_absGetClassName()}</div>
   </div>
   <div class="ph-actions">
     <button class="btn btn-ghost btn-sm" onclick="absExportCSV()">⬇ تصدير CSV</button>
-    <button class="btn btn-primary btn-sm" onclick="absExportPDF()">📄 تصدير PDF</button>
-    <button class="btn btn-sm" onclick="absExportForAdmin()" style="background:linear-gradient(135deg,#059669,#10b981);color:white;box-shadow:0 4px 14px rgba(5,150,105,0.30);">📤 إرسال للإدارة</button>
+    <button class="btn btn-primary btn-sm" onclick="absExportPDF()"><i class="ti ti-file-text"></i> تصدير PDF</button>
+    <button class="btn btn-sm" onclick="absExportForAdmin()" style="background:linear-gradient(135deg,#059669,#10b981);color:white;box-shadow:0 4px 14px rgba(5,150,105,0.30);"><i class="ti ti-send"></i> إرسال للإدارة</button>
   </div>
 </div>
 
@@ -501,21 +501,21 @@ function renderAbsenceReport(){
   <input type="date" id="absDateFrom" value="${wkStr}" style="padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.84rem;outline:none;direction:ltr;cursor:none;">
   <label style="font-size:0.82rem;color:var(--muted);font-weight:700;">إلى:</label>
   <input type="date" id="absDateTo" value="${todayStr}" style="padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:0.84rem;outline:none;direction:ltr;cursor:none;">
-  <button class="btn btn-primary btn-sm" onclick="absApplyCustom()">⚡ إنشاء التقرير</button>
+  <button class="btn btn-primary btn-sm" onclick="absApplyCustom()"><i class="ti ti-bolt"></i> إنشاء التقرير</button>
 </div>
 
 <div class="kpi-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr));margin-bottom:16px;">
-  <div class="kpi blue"><span class="kpi-icon">👥</span><div class="kpi-val" id="absKpiTotal">—</div><div class="kpi-label">إجمالي الطلاب</div></div>
-  <div class="kpi gold"><span class="kpi-icon">📅</span><div class="kpi-val" id="absKpiDays">—</div><div class="kpi-label">أيام مسجلة</div></div>
-  <div class="kpi red"><span class="kpi-icon">🚫</span><div class="kpi-val" id="absKpiAbsent">—</div><div class="kpi-label">بدون عذر</div></div>
-  <div class="kpi gold"><span class="kpi-icon">📝</span><div class="kpi-val" id="absKpiExcused">—</div><div class="kpi-label">بعذر</div></div>
-  <div class="kpi green"><span class="kpi-icon">✅</span><div class="kpi-val" id="absKpiRate">—</div><div class="kpi-label">نسبة الحضور</div></div>
+  <div class="kpi blue"><span class="kpi-icon"><i class="ti ti-users"></i></span><div class="kpi-val" id="absKpiTotal">—</div><div class="kpi-label">إجمالي الطلاب</div></div>
+  <div class="kpi gold"><span class="kpi-icon"><i class="ti ti-calendar"></i></span><div class="kpi-val" id="absKpiDays">—</div><div class="kpi-label">أيام مسجلة</div></div>
+  <div class="kpi red"><span class="kpi-icon"><i class="ti ti-calendar-off"></i></span><div class="kpi-val" id="absKpiAbsent">—</div><div class="kpi-label">بدون عذر</div></div>
+  <div class="kpi gold"><span class="kpi-icon"><i class="ti ti-note"></i></span><div class="kpi-val" id="absKpiExcused">—</div><div class="kpi-label">بعذر</div></div>
+  <div class="kpi green"><span class="kpi-icon"><i class="ti ti-circle-check"></i></span><div class="kpi-val" id="absKpiRate">—</div><div class="kpi-label">نسبة الحضور</div></div>
   <div class="kpi plum"><span class="kpi-icon">⚠️</span><div class="kpi-val" id="absKpiCritical">—</div><div class="kpi-label">حالات حرجة (3+)</div></div>
 </div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
   <div class="card">
-    <div class="card-header"><h3>📊 الغياب اليومي</h3></div>
+    <div class="card-header"><h3><i class="ti ti-chart-bar"></i> الغياب اليومي</h3></div>
     <div class="card-body"><div style="position:relative;width:100%;height:220px;"><canvas id="absChartBar"></canvas></div></div>
   </div>
   <div class="card">
@@ -536,7 +536,7 @@ function renderAbsenceReport(){
 </div>
 
 <div class="card" style="margin-bottom:14px;">
-  <div class="card-header"><h3>📋 سجل الغياب التفصيلي</h3><span class="badge badge-red" id="absTableCount">—</span></div>
+  <div class="card-header"><h3><i class="ti ti-clipboard-check"></i> سجل الغياب التفصيلي</h3><span class="badge badge-red" id="absTableCount">—</span></div>
   <div class="card-body" style="padding:0;">
     <div style="overflow-x:auto;">
       <table class="tbl">
@@ -559,12 +559,8 @@ function initAbsenceReportCharts(){
 
 
 load();
-if(!checkLicense()){
-  // شاشة الترخيص ظاهرة — انتظر تفعيل المفتاح
-} else {
-  // الترخيص سليم — دع Firebase يقرر حالة الدخول (دخول حقيقي بحساب)
-  initAuth();
-}
+// لا شاشة ترخيص — يبدأ مباشرةً بنظام الدخول الحقيقي (حساب المعلّم)
+initAuth();
 
 // ══════════════════════════════════════════════
 // 📤 تصدير تقرير الغياب للإدارة

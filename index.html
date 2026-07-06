@@ -24,7 +24,8 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+<link rel="stylesheet" href="css/styles.css?v=20">
 </head>
 <body>
 
@@ -110,7 +111,7 @@
       <img class="ws-logo-img" id="wsLogoImg" src="" onerror="this.style.display='none';this.parentElement.innerHTML='🏫';" style="font-size:3rem;" />
     </div>
     <div class="ws-title">مدارس البشرى<br><span>الأهلية</span></div>
-    <div class="ws-sub">منصة المعلم الذكية — جاري ��لتحميل...</div>
+    <div class="ws-sub">منصة المعلّم الرقمية — جاري التحميل...</div>
     <div class="ws-loader"><div class="ws-loader-bar"></div></div>
   </div>
   <div class="ws-hint">© مدارس البشرى الأهلية</div>
@@ -124,15 +125,14 @@
   </div>
   <div class="login-grid">
     <div class="login-hero">
-      <div class="login-hero-badge">🏫 مدارس البشرى الأهلية</div>
-      <h1>منصة المعلم<br><span>الذكية</span> 🎓</h1>
-      <p>نظام متكامل لمتابعة تقدم الطلاب، إدارة الحضور، وإصدار التقارير التفاعلية بتصميم احترافي.</p>
+      <div class="login-hero-badge">مدارس البشرى الأهلية</div>
+      <h1>منصة المعلّم<br><span>الرقمية</span></h1>
+      <p>إدارة صفّك بذكاء واحترافية — متابعة الطلاب، الحضور، التقييم، والتقارير في منصّة واحدة منظّمة.</p>
       <div class="hero-features">
-        <div class="hero-feat"><div class="feat-icon">💾</div>حفظ تلقائي فوري — لا تفقد شيئاً أبداً</div>
-        <div class="hero-feat"><div class="feat-icon">📊</div>رسوم بيانية تفاعلية متقدمة لكل طالب</div>
-        <div class="hero-feat"><div class="feat-icon">📄</div>تقارير PDF احترافية للأولياء والمدرسة</div>
-        <div class="hero-feat"><div class="feat-icon">💬</div>مشاركة فورية عبر واتساب وبريد إلكتروني</div>
-        <div class="hero-feat"><div class="feat-icon">🔐</div>تسجيل دخول آمن بحساب Google</div>
+        <div class="hero-feat"><div class="feat-icon">📈</div>متابعة تقدّم كل طالب بالرسوم البيانية</div>
+        <div class="hero-feat"><div class="feat-icon">📋</div>تسجيل الحضور والغياب بسهولة</div>
+        <div class="hero-feat"><div class="feat-icon">📄</div>تقارير احترافية للأولياء والإدارة</div>
+        <div class="hero-feat"><div class="feat-icon">☁️</div>حفظ سحابي آمن لكل معلّم</div>
       </div>
     </div>
     <div class="login-form-side">
@@ -170,6 +170,55 @@
 </div>
 
 <!-- ══════════════════════════════════════════
+  ONBOARDING — إعداد المستخدم الجديد
+══════════════════════════════════════════ -->
+<div id="onboardingScreen" style="display:none;position:fixed;inset:0;z-index:1001;background:#eef2f8;align-items:center;justify-content:center;padding:20px;font-family:'Tajawal',sans-serif;overflow:auto;" dir="rtl">
+  <style>
+    #onboardingScreen .ob-input{width:100%;padding:12px 15px;background:#fbfcfe;border:1.5px solid #d8e0ec;border-radius:10px;color:#1b2942;font-family:'Tajawal',sans-serif;font-size:0.96rem;outline:none;margin-bottom:14px;box-sizing:border-box;}
+    #onboardingScreen .ob-input:focus{border-color:#2f6db0;background:#fff;box-shadow:0 0 0 3px rgba(47,109,176,0.12);}
+    #onboardingScreen .ob-label{display:block;font-size:0.84rem;font-weight:700;color:#41506a;margin-bottom:7px;}
+    #onboardingScreen .ob-btn{background:#16335c;color:#fff;border:none;border-radius:10px;padding:12px 22px;font-family:'Tajawal',sans-serif;font-size:0.96rem;font-weight:800;cursor:pointer;}
+    #onboardingScreen .ob-btn:hover{background:#1d447a;}
+    #onboardingScreen .ob-ghost{background:#fff;color:#41506a;border:1.5px solid #d8e0ec;border-radius:10px;padding:12px 20px;font-family:'Tajawal',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;}
+    #onboardingScreen .ob-dot{width:28px;height:5px;border-radius:99px;background:#d8e0ec;transition:background 0.2s;}
+    #onboardingScreen .ob-dot.active{background:#16335c;}
+  </style>
+  <div style="width:460px;max-width:96vw;background:#fff;border:1px solid #e4e9f1;border-radius:18px;box-shadow:0 24px 60px rgba(22,51,92,0.14);padding:38px 36px;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+      <div style="width:46px;height:46px;border-radius:12px;background:#16335c;display:flex;align-items:center;justify-content:center;font-size:22px;">🏫</div>
+      <div style="flex:1;">
+        <div style="font-size:0.78rem;color:#73839c;font-weight:600;">إعداد الحساب</div>
+        <div style="display:flex;gap:6px;margin-top:6px;">
+          <div class="ob-dot active" id="obDot1"></div>
+          <div class="ob-dot" id="obDot2"></div>
+        </div>
+      </div>
+    </div>
+    <div id="obStep1">
+      <h2 style="font-size:1.4rem;font-weight:800;color:#16335c;margin:0 0 6px;">أهلاً بك في منصة البشرى 👋</h2>
+      <p style="font-size:0.9rem;color:#73839c;margin:0 0 22px;line-height:1.7;">خلّينا نجهّز حسابك في خطوتين سريعتين. نبدأ باسمك:</p>
+      <label class="ob-label">اسم المعلم / المعلمة</label>
+      <input class="ob-input" id="obName" placeholder="مثال: أحمد محمد" />
+      <div id="obErr1" style="display:none;color:#dc2626;font-size:0.82rem;font-weight:700;margin:-6px 0 12px;"></div>
+      <button class="ob-btn" style="width:100%;" onclick="obNext()">التالي ←</button>
+    </div>
+    <div id="obStep2" style="display:none;">
+      <h2 style="font-size:1.4rem;font-weight:800;color:#16335c;margin:0 0 6px;">أنشئ أول فصل</h2>
+      <p style="font-size:0.9rem;color:#73839c;margin:0 0 22px;line-height:1.7;">تقدر تضيف فصول تانية في أي وقت من داخل التطبيق.</p>
+      <label class="ob-label">اسم الفصل</label>
+      <input class="ob-input" id="obClassName" placeholder="مثال: فصل ١/أ" />
+      <label class="ob-label">المرحلة الدراسية</label>
+      <input class="ob-input" id="obClassGrade" placeholder="مثال: الصف الأول الابتدائي" />
+      <div id="obErr2" style="display:none;color:#dc2626;font-size:0.82rem;font-weight:700;margin:-6px 0 12px;"></div>
+      <div style="display:flex;gap:10px;margin-top:4px;">
+        <button class="ob-ghost" onclick="obGoStep(1)">رجوع</button>
+        <button class="ob-btn" style="flex:1;" onclick="obFinish()">ابدأ الآن ←</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
   APP
 ══════════════════════════════════════════ -->
 <div id="app">
@@ -186,11 +235,11 @@
     </div>
     <div class="tb-right">
       <div class="tb-save"><div class="pulse-dot"></div> محفوظ تلقائياً</div>
-      <button class="dark-toggle" id="darkToggle" onclick="cycleTheme()" title="تبديل المظهر (فاتح / ليلي / دافئ / معلمات)"></button>
-      <button id="sfxToggle" onclick="SFX.toggle();this.title=SFX._enabled?'صوت مفعّل':'صوت مكتوم';this.style.opacity=SFX._enabled?'1':'0.4';" title="صوت مفعّل" style="background:none;border:none;color:white;font-size:17px;padding:6px 8px;border-radius:10px;cursor:none;opacity:1;transition:opacity 0.2s;">🔊</button>
-      <button class="tb-notif" id="notifBtn" style="background:none;border:none;color:white;font-size:18px;padding:6px 8px;border-radius:10px;" onclick="openCmd()" title="بحث سريع Ctrl+K">🔍</button>
+      <button class="dark-toggle" id="darkToggle" onclick="cycleTheme()" title="تبديل المظهر" style="display:none;"></button>
+      <button id="sfxToggle" onclick="SFX.toggle();this.title=SFX._enabled?'صوت مفعّل':'صوت مكتوم';this.style.opacity=SFX._enabled?'1':'0.5';" title="صوت مكتوم" style="background:none;border:none;color:#41506a;font-size:18px;padding:6px 8px;border-radius:10px;cursor:none;opacity:0.5;transition:opacity 0.2s;"><i class="ti ti-volume-off" id="sfxIcon"></i></button>
+      <button class="tb-notif" id="notifBtn" style="background:none;border:none;color:#41506a;font-size:18px;padding:6px 8px;border-radius:10px;" onclick="openCmd()" title="بحث سريع Ctrl+K"><i class="ti ti-search"></i></button>
       <button class="tb-notif" id="notifBtn2" onclick="toggleNotif(event)">
-        🔔
+        <i class="ti ti-bell"></i>
         <span class="notif-badge" id="notifCount">3</span>
       </button>
       <div class="tb-user" onclick="showPage('profile')">
@@ -242,10 +291,10 @@
   <div class="layout">
     <nav class="sidebar" id="sidebar">
       <div class="sb-section">الرئيسية</div>
-      <button class="nav-btn active" id="nav-dash" onclick="showPage('dash')"><span class="nav-icon">🏠</span> لوحة التحكم</button>
-      <button class="nav-btn" id="nav-combined_view" onclick="showPage('combined_view')"><span class="nav-icon">🗂️</span> العرض الشامل</button>
-      <button class="nav-btn" id="nav-students" onclick="showPage('students')"><span class="nav-icon">👥</span> الطلاب <span class="nav-badge green" id="nb-students">0</span></button>
-      <button class="nav-btn" id="nav-attend" onclick="showPage('attend')"><span class="nav-icon">📋</span> الحضور اليومي</button>
+      <button class="nav-btn active" id="nav-dash" onclick="showPage('dash')"><span class="nav-icon"><i class="ti ti-home"></i></span> لوحة التحكم</button>
+      <button class="nav-btn" id="nav-combined_view" onclick="showPage('combined_view')"><span class="nav-icon"><i class="ti ti-stack-2"></i></span> العرض الشامل</button>
+      <button class="nav-btn" id="nav-students" onclick="showPage('students')"><span class="nav-icon"><i class="ti ti-users"></i></span> الطلاب <span class="nav-badge green" id="nb-students">0</span></button>
+      <button class="nav-btn" id="nav-attend" onclick="showPage('attend')"><span class="nav-icon"><i class="ti ti-clipboard-check"></i></span> الحضور اليومي</button>
       <div class="sb-divider"></div>
       <div class="sb-section" style="display:flex;align-items:center;justify-content:space-between;">
         المواد الدراسية
@@ -254,41 +303,41 @@
       <div id="subjectNavList"></div>
       <div class="sb-divider"></div>
       <div class="sb-section">التقارير والأدوات</div>
-      <button class="nav-btn" id="nav-reports" onclick="showPage('reports')"><span class="nav-icon">📊</span> التقارير</button>
-      <button class="nav-btn" id="nav-absence_report" onclick="showPage('absence_report')"><span class="nav-icon">🚫</span> تقرير الغياب <span class="nav-badge" style="background:var(--ember);color:white;">جديد</span></button>
-      <button class="nav-btn" id="nav-analytics" onclick="showPage('analytics')"><span class="nav-icon">📈</span> تحليلات</button>
-      <button class="nav-btn" id="nav-gradebook" onclick="showPage('gradebook')"><span class="nav-icon">📒</span> دفتر الدرجات</button>
-      <button class="nav-btn" id="nav-notes" onclick="showPage('notes')"><span class="nav-icon">📝</span> الملاحظات <span class="nav-badge gold" id="nb-notes">0</span></button>
-      <button class="nav-btn" id="nav-resources" onclick="showPage('resources')"><span class="nav-icon">☁️</span> مكتبة الموارد <span class="nav-badge" id="nb-resources" style="background:var(--plum);color:white;display:none;">0</span></button>
+      <button class="nav-btn" id="nav-reports" onclick="showPage('reports')"><span class="nav-icon"><i class="ti ti-chart-bar"></i></span> التقارير</button>
+      <button class="nav-btn" id="nav-absence_report" onclick="showPage('absence_report')"><span class="nav-icon"><i class="ti ti-calendar-off"></i></span> تقرير الغياب <span class="nav-badge" style="background:var(--ember);color:white;">جديد</span></button>
+      <button class="nav-btn" id="nav-analytics" onclick="showPage('analytics')"><span class="nav-icon"><i class="ti ti-chart-line"></i></span> تحليلات</button>
+      <button class="nav-btn" id="nav-gradebook" onclick="showPage('gradebook')"><span class="nav-icon"><i class="ti ti-notebook"></i></span> دفتر الدرجات</button>
+      <button class="nav-btn" id="nav-notes" onclick="showPage('notes')"><span class="nav-icon"><i class="ti ti-note"></i></span> الملاحظات <span class="nav-badge gold" id="nb-notes">0</span></button>
+      <button class="nav-btn" id="nav-resources" onclick="showPage('resources')"><span class="nav-icon"><i class="ti ti-cloud"></i></span> مكتبة الموارد <span class="nav-badge" id="nb-resources" style="background:var(--plum);color:white;display:none;">0</span></button>
       <div class="sb-divider"></div>
       <div class="sb-section">أدوات الفصل</div>
-      <button class="nav-btn" id="nav-classroom_mode" onclick="showPage('classroom_mode')" style="position:relative;overflow:hidden;">
-        <span class="nav-icon">🖥️</span> وضع الحصة
+      <button class="nav-btn" id="nav-classroom_mode" onclick="showPage('classroom_mode')" style="position:relative;">
+        <span class="nav-icon"><i class="ti ti-device-desktop"></i></span> وضع الحصة
         <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:linear-gradient(135deg,var(--sky),var(--plum));color:white;font-size:0.60rem;font-weight:900;padding:2px 7px;border-radius:99px;">LIVE</span>
       </button>
       <button class="nav-btn" id="nav-games_bank" onclick="showPage('games_bank')">
-        <span class="nav-icon">🎮</span> بنك الأسئلة
+        <span class="nav-icon"><i class="ti ti-device-gamepad-2"></i></span> بنك الأسئلة
       </button>
-      <button class="nav-btn" id="nav-treasuremap" onclick="showPage('treasuremap')" style="position:relative;overflow:hidden;">
-        <span class="nav-icon">🗺️</span> خريطة الكنز
+      <button class="nav-btn" id="nav-treasuremap" onclick="showPage('treasuremap')" style="position:relative;">
+        <span class="nav-icon"><i class="ti ti-map-2"></i></span> خريطة الكنز
         <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:linear-gradient(135deg,#f59e0b,#ef4444);color:white;font-size:0.62rem;font-weight:900;padding:2px 7px;border-radius:99px;">جديد</span>
       </button>
-      <button class="nav-btn" id="nav-seatmap" onclick="showPage('seatmap')"><span class="nav-icon">🪑</span> خريطة المقاعد</button>
-      <button class="nav-btn" id="nav-behavior" onclick="showPage('behavior')"><span class="nav-icon">⭐</span> تقييم السلوك</button>
-      <button class="nav-btn" id="nav-goals" onclick="showPage('goals')"><span class="nav-icon">🎯</span> الأهداف والخطط <span class="nav-badge" id="nb-goals" style="background:var(--sky);color:white;">0</span></button>
-      <button class="nav-btn" id="nav-planner" onclick="showPage('planner')"><span class="nav-icon">📅</span> المخطط الأسبوعي</button>
-      <button class="nav-btn" id="nav-meetings" onclick="showPage('meetings')"><span class="nav-icon">🤝</span> لقاءات الأولياء</button>
-      <button class="nav-btn" id="nav-insights" onclick="showPage('insights')"><span class="nav-icon">🤖</span> رؤى ذكية</button>
+      <button class="nav-btn" id="nav-seatmap" onclick="showPage('seatmap')"><span class="nav-icon"><i class="ti ti-armchair"></i></span> خريطة المقاعد</button>
+      <button class="nav-btn" id="nav-behavior" onclick="showPage('behavior')"><span class="nav-icon"><i class="ti ti-star"></i></span> تقييم السلوك</button>
+      <button class="nav-btn" id="nav-goals" onclick="showPage('goals')"><span class="nav-icon"><i class="ti ti-target"></i></span> الأهداف والخطط <span class="nav-badge" id="nb-goals" style="background:var(--sky);color:white;">0</span></button>
+      <button class="nav-btn" id="nav-planner" onclick="showPage('planner')"><span class="nav-icon"><i class="ti ti-calendar"></i></span> المخطط الأسبوعي</button>
+      <button class="nav-btn" id="nav-meetings" onclick="showPage('meetings')"><span class="nav-icon"><i class="ti ti-messages"></i></span> لقاءات الأولياء</button>
+      <button class="nav-btn" id="nav-insights" onclick="showPage('insights')"><span class="nav-icon"><i class="ti ti-bulb"></i></span> رؤى ذكية</button>
       <div class="sb-divider"></div>
       <div class="sb-section">الإعدادات</div>
-      <button class="nav-btn" id="nav-curriculum" onclick="showPage('curriculum')"><span class="nav-icon">📚</span> إدارة المواد والمهارات</button>
-      <button class="nav-btn" id="nav-changelog" onclick="showPage('changelog')"><span class="nav-icon">📜</span> سجل التغييرات <span class="nav-badge" id="nb-changelog" style="background:var(--muted2);color:white;">0</span></button>
-      <button class="nav-btn" id="nav-classroom" onclick="showPage('classroom')"><span class="nav-icon">🎓</span> استيراد Classroom</button>
-      <button class="nav-btn" id="nav-photos" onclick="showPage('photos')"><span class="nav-icon">📷</span> صور الطلاب</button>
-      <button class="nav-btn" id="nav-profile" onclick="showPage('profile')"><span class="nav-icon">⚙️</span> الملف الشخصي</button>
-      <button class="nav-btn" id="nav-compare" onclick="showPage('compare')"><span class="nav-icon">📊</span> مقارنة الفصول</button>
-      <button class="nav-btn" id="nav-about" onclick="showPage('about')"><span class="nav-icon">💙</span> حول التطبيق</button>
-      <button class="nav-btn" id="nav-userguide" onclick="openM('mbCmGuide')"><span class="nav-icon">📖</span> دليل الاستخدام</button>
+      <button class="nav-btn" id="nav-curriculum" onclick="showPage('curriculum')"><span class="nav-icon"><i class="ti ti-books"></i></span> إدارة المواد والمهارات</button>
+      <button class="nav-btn" id="nav-changelog" onclick="showPage('changelog')"><span class="nav-icon"><i class="ti ti-history"></i></span> سجل التغييرات <span class="nav-badge" id="nb-changelog" style="background:var(--muted2);color:white;">0</span></button>
+      <button class="nav-btn" id="nav-classroom" onclick="showPage('classroom')"><span class="nav-icon"><i class="ti ti-school"></i></span> استيراد Classroom</button>
+      <button class="nav-btn" id="nav-photos" onclick="showPage('photos')"><span class="nav-icon"><i class="ti ti-camera"></i></span> صور الطلاب</button>
+      <button class="nav-btn" id="nav-profile" onclick="showPage('profile')"><span class="nav-icon"><i class="ti ti-settings"></i></span> الملف الشخصي</button>
+      <button class="nav-btn" id="nav-compare" onclick="showPage('compare')"><span class="nav-icon"><i class="ti ti-chart-bar"></i></span> مقارنة الفصول</button>
+      <button class="nav-btn" id="nav-about" onclick="showPage('about')"><span class="nav-icon"><i class="ti ti-info-circle"></i></span> حول التطبيق</button>
+      <button class="nav-btn" id="nav-userguide" onclick="openM('mbCmGuide')"><span class="nav-icon"><i class="ti ti-book-2"></i></span> دليل الاستخدام</button>
 
       <div class="sb-teacher-card" id="sbTeacherCard">
         <div class="sb-teacher-avatar" id="sbAvatar" style="overflow:hidden;padding:0;"></div>
@@ -1379,31 +1428,32 @@
   </div>
 </div>
 
-<script src="js/00-firebase.js"></script>
-<script src="js/01-core.js"></script>
-<script src="js/02-ui-effects.js"></script>
-<script src="js/03-auth-nav.js"></script>
-<script src="js/04-helpers.js"></script>
-<script src="js/05-dashboard.js"></script>
-<script src="js/06-students-attendance.js"></script>
-<script src="js/07-eval-charts.js"></script>
-<script src="js/08-pdf-engine.js"></script>
-<script src="js/09-reports.js"></script>
-<script src="js/10-analytics-curriculum.js"></script>
-<script src="js/11-notes-profile.js"></script>
-<script src="js/12-ui.js"></script>
-<script src="js/13-engagement.js"></script>
-<script src="js/14-ai-pwa.js"></script>
-<script src="js/15-changelog-classroom.js"></script>
-<script src="js/16-treasure-certs.js"></script>
-<script src="js/17-photo-mobile.js"></script>
-<script src="js/18-classroom-mode.js"></script>
-<script src="js/19-games.js"></script>
-<script src="js/20-about-multiclass.js"></script>
-<script src="js/21-slides-compare.js"></script>
-<script src="js/22-license.js"></script>
-<script src="js/23-misc-ui.js"></script>
-<script src="js/24-init.js"></script>
-<script src="js/25-pdf-absence.js"></script>
+<script src="js/00-firebase.js?v=20"></script>
+<script src="js/01-core.js?v=20"></script>
+<script src="js/02-ui-effects.js?v=20"></script>
+<script src="js/03-auth-nav.js?v=20"></script>
+<script src="js/04-helpers.js?v=20"></script>
+<script src="js/05-dashboard.js?v=20"></script>
+<script src="js/06-students-attendance.js?v=20"></script>
+<script src="js/07-eval-charts.js?v=20"></script>
+<script src="js/08-pdf-engine.js?v=20"></script>
+<script src="js/09-reports.js?v=20"></script>
+<script src="js/10-analytics-curriculum.js?v=20"></script>
+<script src="js/11-notes-profile.js?v=20"></script>
+<script src="js/12-ui.js?v=20"></script>
+<script src="js/13-engagement.js?v=20"></script>
+<script src="js/14-ai-pwa.js?v=20"></script>
+<script src="js/15-changelog-classroom.js?v=20"></script>
+<script src="js/16-treasure-certs.js?v=20"></script>
+<script src="js/17-photo-mobile.js?v=20"></script>
+<script src="js/18-classroom-mode.js?v=20"></script>
+<script src="js/19-games.js?v=20"></script>
+<script src="js/20-about-multiclass.js?v=20"></script>
+<script src="js/21-slides-compare.js?v=20"></script>
+<script src="js/22-license.js?v=20"></script>
+<script src="js/23-misc-ui.js?v=20"></script>
+<script src="js/24-init.js?v=20"></script>
+<script src="js/26-cloud-sync.js?v=20"></script>
+<script src="js/25-pdf-absence.js?v=20"></script>
 </body>
 </html>

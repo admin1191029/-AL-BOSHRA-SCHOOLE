@@ -4,19 +4,19 @@
 let subjectSearch='';
 function renderSubjectPage(subId){
   const sub=S.subjects.find(x=>x.id===subId);
-  if(!sub) return `<div class="empty"><div class="empty-emoji">📚</div><h3>المادة غير موجودة</h3></div>`;
+  if(!sub) return `<div class="empty"><div class="empty-emoji"><i class="ti ti-books"></i></div><h3>المادة غير موجودة</h3></div>`;
   const list=S.students.filter(s=>s.name.includes(subjectSearch)||subjectSearch==='');
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">${sub.icon} ${sub.name}</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">${sub.icon} ${sub.name}</span></div>
   <div class="ph">
     <div>
       <div class="ph-title">${sub.icon} مادة ${sub.name}</div>
       <div class="ph-sub">${sub.sections.map(sec=>`${sec.icon||'📌'} ${sec.name} (${sec.skills.length} مهارة)`).join(' · ')}</div>
     </div>
     <div class="ph-actions">
-      <div class="search-box"><span class="search-icon">🔍</span><input placeholder="بحث..." value="${subjectSearch}" oninput="subjectSearch=this.value;showPage('${subId}')" /></div>
-      <button class="btn btn-plum" onclick="startQuickEval('${sub.id}','${sub.sections[0]?.id||''}')">⚡ تقييم سريع</button>
-      <button class="btn btn-ghost btn-sm" onclick="showPage('curriculum')">⚙️ تعديل المهارات</button>
+      <div class="search-box"><span class="search-icon"><i class="ti ti-search"></i></span><input placeholder="بحث..." value="${subjectSearch}" oninput="subjectSearch=this.value;showPage('${subId}')" /></div>
+      <button class="btn btn-plum" onclick="startQuickEval('${sub.id}','${sub.sections[0]?.id||''}')"><i class="ti ti-bolt"></i> تقييم سريع</button>
+      <button class="btn btn-ghost btn-sm" onclick="showPage('curriculum')"><i class="ti ti-settings"></i> تعديل المهارات</button>
     </div>
   </div>
 
@@ -82,9 +82,9 @@ function renderSubjectPage(subId){
         </td>
         <td>
           <div style="display:flex;gap:5px;flex-wrap:wrap;">
-            <button class="btn btn-primary btn-sm" onclick="openEvalDyn('${s.id}','${subId}')">✏️ تقييم</button>
-            <button class="btn btn-green btn-sm" onclick="openChart('${s.id}')">📊</button>
-            <button class="btn btn-gold btn-sm" onclick="genStudentPDF('${s.id}')">📄</button>
+            <button class="btn btn-primary btn-sm" onclick="openEvalDyn('${s.id}','${subId}')"><i class="ti ti-edit"></i> تقييم</button>
+            <button class="btn btn-green btn-sm" onclick="openChart('${s.id}')"><i class="ti ti-chart-bar"></i></button>
+            <button class="btn btn-gold btn-sm" onclick="genStudentPDF('${s.id}')"><i class="ti ti-file-text"></i></button>
             <button class="btn btn-plum btn-sm" onclick="waStudent('${s.id}')">💬</button>
           </div>
         </td>
@@ -102,7 +102,7 @@ function renderSubjectPage(subId){
 
         <!-- كتب وملفات PDF للمادة -->
         <div>
-          <div style="font-size:0.82rem;font-weight:800;color:var(--ink2);margin-bottom:10px;">📖 كتب وملفات PDF</div>
+          <div style="font-size:0.82rem;font-weight:800;color:var(--ink2);margin-bottom:10px;"><i class="ti ti-book"></i> كتب وملفات PDF</div>
           <p style="font-size:0.76rem;color:var(--muted);margin-bottom:8px;line-height:1.45;">يمكنك إضافة أكثر من ملف PDF (دفعة واحدة أو عدة مرات). تُحفظ على هذا الجهاز.</p>
           <label for="bagBook_${sub.id}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border-radius:10px;border:2px dashed var(--border2);background:var(--surface);color:var(--muted);font-size:0.82rem;cursor:pointer;transition:all 0.2s;">
             📁 إضافة PDF (واحد أو أكثر)
@@ -113,7 +113,7 @@ function renderSubjectPage(subId){
 
         <!-- أنشطة المادة -->
         <div>
-          <div style="font-size:0.82rem;font-weight:800;color:var(--ink2);margin-bottom:10px;">🎨 أنشطة المادة</div>
+          <div style="font-size:0.82rem;font-weight:800;color:var(--ink2);margin-bottom:10px;"><i class="ti ti-palette"></i> أنشطة المادة</div>
           <div id="bagActList_${sub.id}" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px;max-height:180px;overflow-y:auto;"></div>
           <div style="display:flex;gap:6px;">
             <input type="text" id="bagActInput_${sub.id}" placeholder="أضف نشاطاً للمادة..." style="flex:1;padding:8px 12px;border-radius:9px;border:1.5px solid var(--border2);background:white;color:var(--ink);font-family:'Tajawal',sans-serif;font-size:0.85rem;outline:none;" onkeydown="if(event.key==='Enter')bagAddActivity('${sub.id}')" />
@@ -190,7 +190,7 @@ function _evalLoadSubject(subId, sid){
   wrap.innerHTML = '';
 
   if(sub.sections.length === 0){
-    wrap.innerHTML = '<div class="empty"><div class="empty-emoji">📭</div><h3>لا توجد خانات في هذه المادة</h3><p>أضف خانات من صفحة إدارة المواد</p></div>';
+    wrap.innerHTML = '<div class="empty"><div class="empty-emoji"><i class="ti ti-mail-off"></i></div><h3>لا توجد خانات في هذه المادة</h3><p>أضف خانات من صفحة إدارة المواد</p></div>';
     return;
   }
 
@@ -243,8 +243,8 @@ function _buildSectionHTML(sec, subId, sid){
       <div class="eval-num">${i+1}</div>
       <div class="eval-name">${sk}</div>
       <div class="eval-btns">
-        <button class="ev-btn ev-m ${isMastered?'on':''}" onclick="setEvDyn('${subId}','${sec.id}',${i},'m')">✅ أتقن</button>
-        <button class="ev-btn ev-n ${isNot?'on':''}"  onclick="setEvDyn('${subId}','${sec.id}',${i},'n')">❌ لم يتقن بعد</button>
+        <button class="ev-btn ev-m ${isMastered?'on':''}" onclick="setEvDyn('${subId}','${sec.id}',${i},'m')"><i class="ti ti-circle-check"></i> أتقن</button>
+        <button class="ev-btn ev-n ${isNot?'on':''}"  onclick="setEvDyn('${subId}','${sec.id}',${i},'n')"><i class="ti ti-circle-x"></i> لم يتقن بعد</button>
       </div>
     </div>`;
   }).join('');
@@ -256,8 +256,8 @@ function _buildSectionHTML(sec, subId, sid){
         <span class="badge badge-${badgeCol}" id="secBadge__${subId}__${sec.id}">${mastered}/${sec.skills.length} أتقن (${pct}%)</span>
       </div>
       <div style="display:flex;gap:7px;">
-        <button class="btn btn-green btn-xs" onclick="setAllEvalDyn('${subId}','${sec.id}','m')">✅ كل أتقن</button>
-        <button class="btn btn-red btn-xs"   onclick="setAllEvalDyn('${subId}','${sec.id}','n')">❌ كل لم يتقن بعد</button>
+        <button class="btn btn-green btn-xs" onclick="setAllEvalDyn('${subId}','${sec.id}','m')"><i class="ti ti-circle-check"></i> كل أتقن</button>
+        <button class="btn btn-red btn-xs"   onclick="setAllEvalDyn('${subId}','${sec.id}','n')"><i class="ti ti-circle-x"></i> كل لم يتقن بعد</button>
         <button class="btn btn-ghost btn-xs" onclick="clearEvalDyn('${subId}','${sec.id}')">↺ مسح</button>
       </div>
     </div>
@@ -386,7 +386,7 @@ function openChart(sid){
       miniCards.push('<div class="kpi '+col+'" style="padding:12px;"><div class="kpi-val" style="font-size:1.3rem;">'+pct+'%</div><div class="kpi-label">'+(sec.icon||'')+'  '+sub.name+' — '+sec.name+' ('+mst+'/'+sec.skills.length+')</div></div>');
     });
   });
-  miniCards.push('<div class="kpi '+masteryColor(m.total)+'" style="padding:12px;grid-column:1/-1;"><div class="kpi-val" style="font-size:1.4rem;">⭐ '+m.total+'%</div><div class="kpi-label">المستوى الكلي لجميع المواد — '+masteryLabel(m.total)+'</div></div>');
+  miniCards.push('<div class="kpi '+masteryColor(m.total)+'" style="padding:12px;grid-column:1/-1;"><div class="kpi-val" style="font-size:1.4rem;"><i class="ti ti-star"></i> '+m.total+'%</div><div class="kpi-label">المستوى الكلي لجميع المواد — '+masteryLabel(m.total)+'</div></div>');
   document.getElementById('chartMiniStats').style.gridTemplateColumns='repeat(auto-fill,minmax(160px,1fr))';
   document.getElementById('chartMiniStats').innerHTML=miniCards.join('');  openM('mbChart');
   setTimeout(()=>buildCharts(sid),150);

@@ -4,8 +4,8 @@
 
 const CL_TYPES = {
   add:  { label:'إضافة',  icon:'➕', color:'var(--mint)'  },
-  edit: { label:'تعديل', icon:'✏️', color:'var(--sky3)'  },
-  del:  { label:'حذف',   icon:'🗑️', color:'var(--ember)' },
+  edit: { label:'تعديل', icon:'<i class="ti ti-edit"></i>', color:'var(--sky3)'  },
+  del:  { label:'حذف',   icon:'<i class="ti ti-trash"></i>', color:'var(--ember)' },
   eval: { label:'تقييم', icon:'📋', color:'var(--plum)'  },
   att:  { label:'حضور',  icon:'📅', color:'var(--gold)'  },
   auth: { label:'دخول',  icon:'🔑', color:'var(--mint)'  },
@@ -30,19 +30,19 @@ function logChange(type, action, detail=''){
 function renderChangelog(){
   const log = [...(S.changelog||[])].reverse().slice(0,100);
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">سجل التغييرات</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">سجل التغييرات</span></div>
   <div class="ph">
     <div>
-      <div class="ph-title">📜 سجل التغييرات</div>
+      <div class="ph-title"><i class="ti ti-history"></i> سجل التغييرات</div>
       <div class="ph-sub">${S.changelog?.length||0} إجراء مسجَّل — كل تعديل بتاريخه ووقته</div>
     </div>
     <div class="ph-actions">
-      <button class="btn btn-ghost" onclick="exportChangelog()">📤 تصدير السجل</button>
-      <button class="btn btn-red btn-sm" onclick="clearChangelog()">🗑️ مسح السجل</button>
+      <button class="btn btn-ghost" onclick="exportChangelog()"><i class="ti ti-send"></i> تصدير السجل</button>
+      <button class="btn btn-red btn-sm" onclick="clearChangelog()"><i class="ti ti-trash"></i> مسح السجل</button>
     </div>
   </div>
 
-  ${log.length===0?`<div class="empty"><div class="empty-emoji">📜</div><h3>لا توجد سجلات بعد</h3><p>ستظهر هنا كل التغييرات التي تجريها</p></div>`:`
+  ${log.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-history"></i></div><h3>لا توجد سجلات بعد</h3><p>ستظهر هنا كل التغييرات التي تجريها</p></div>`:`
 
   <!-- Filters -->
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
@@ -114,15 +114,15 @@ const GC_SCOPES = 'https://www.googleapis.com/auth/classroom.rosters.readonly ht
 
 function renderClassroomImport(){
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">استيراد Google Classroom</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">استيراد Google Classroom</span></div>
   <div class="ph">
-    <div><div class="ph-title">🎓 استيراد من Google Classroom</div>
+    <div><div class="ph-title"><i class="ti ti-school"></i> استيراد من Google Classroom</div>
     <div class="ph-sub">جلب أسماء الطلاب مباشرةً من فصلك في Google Classroom</div></div>
   </div>
 
   <div class="gc-card">
     <div class="gc-header">
-      <div class="gc-logo">🎓</div>
+      <div class="gc-logo"><i class="ti ti-school"></i></div>
       <div>
         <div class="gc-title">Google Classroom Import</div>
         <div class="gc-sub">يتطلب حساب Google ومعلم في Classroom</div>
@@ -163,7 +163,7 @@ function renderClassroomImport(){
         <div style="flex:1">
           <strong>اختر الفصل واستورد الطلاب</strong>
           <div id="gcCoursesList" style="margin-top:10px;">
-            ${_gcToken?'<button class="btn btn-green btn-sm" onclick="gcLoadCourses()">🔄 تحميل الفصول</button>':'<span style="font-size:0.82rem;color:var(--muted)">سجّل الدخول أولاً</span>'}
+            ${_gcToken?'<button class="btn btn-green btn-sm" onclick="gcLoadCourses()"><i class="ti ti-refresh"></i> تحميل الفصول</button>':'<span style="font-size:0.82rem;color:var(--muted)">سجّل الدخول أولاً</span>'}
           </div>
         </div>
       </div>
@@ -178,13 +178,13 @@ function renderClassroomImport(){
   </div>
 
   <div class="note-card" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#bfdbfe;color:#1e40af;margin-top:12px;">
-    <span class="note-icon">📋</span>
+    <span class="note-icon"><i class="ti ti-clipboard-check"></i></span>
     <div>
       <strong>بديل سريع — استيراد من ملف نصي:</strong><br>
       أضف أسماء الطلاب سطراً بسطر وسيتم استيرادهم مباشرة:
       <div style="margin-top:8px;display:flex;gap:8px;align-items:flex-start;">
         <textarea id="textImportNames" placeholder="محمد أحمد&#10;فاطمة علي&#10;عبدالله محمد&#10;..." style="flex:1;min-height:100px;padding:10px;border:1.5px solid var(--border2);border-radius:9px;font-family:'Tajawal',sans-serif;font-size:0.88rem;resize:vertical;outline:none;"></textarea>
-        <button class="btn btn-primary" onclick="importFromText()" style="flex-shrink:0;">⬇️ استيراد</button>
+        <button class="btn btn-primary" onclick="importFromText()" style="flex-shrink:0;"><i class="ti ti-download"></i> استيراد</button>
       </div>
     </div>
   </div>`;
@@ -220,9 +220,9 @@ function gcSignIn(){
         const params = new URLSearchParams(hash.substring(1));
         _gcToken = params.get('access_token');
         if(_gcToken){
-          document.getElementById('gcAuthStatus').innerHTML='<span style="color:var(--mint);font-weight:800">✅ تم الدخول</span>';
+          document.getElementById('gcAuthStatus').innerHTML='<span style="color:var(--mint);font-weight:800"><i class="ti ti-circle-check"></i> تم الدخول</span>';
           document.getElementById('gcStep3').style.opacity='1';
-          document.getElementById('gcCoursesList').innerHTML='<button class="btn btn-green btn-sm" onclick="gcLoadCourses()">🔄 تحميل الفصول</button>';
+          document.getElementById('gcCoursesList').innerHTML='<button class="btn btn-green btn-sm" onclick="gcLoadCourses()"><i class="ti ti-refresh"></i> تحميل الفصول</button>';
           logChange('auth','تسجيل دخول Google Classroom','');
           toast('✅ تم تسجيل الدخول بنجاح','success');
         }
@@ -260,11 +260,11 @@ async function gcLoadCourses(){
             <div style="font-weight:800;color:#1a73e8;">${c.name}</div>
             <div style="font-size:0.78rem;color:var(--muted)">${c.section||''} · ${c.enrollmentCode||''}</div>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="gcImportStudents('${c.id}','${c.name.replace(/'/g,'')}')">⬇️ استيراد</button>
+          <button class="btn btn-primary btn-sm" onclick="gcImportStudents('${c.id}','${c.name.replace(/'/g,'')}')"><i class="ti ti-download"></i> استيراد</button>
         </div>`).join('')+
       '</div>';
   } catch(e){
-    el.innerHTML=`<span style="color:var(--ember)">❌ خطأ: ${e.message}</span>`;
+    el.innerHTML=`<span style="color:var(--ember)"><i class="ti ti-circle-x"></i> خطأ: ${e.message}</span>`;
     toast('فشل تحميل الفصول: '+e.message,'error');
   }
 }

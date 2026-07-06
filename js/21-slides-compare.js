@@ -554,12 +554,12 @@ function renderCompare(){
   const classes = getAllClasses();
   if(classes.length < 2){
     return `
-    <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">📊 مقارنة الفصول</span></div>
+    <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active"><i class="ti ti-chart-bar"></i> مقارنة الفصول</span></div>
     <div class="empty">
-      <div class="empty-emoji">📊</div>
+      <div class="empty-emoji"><i class="ti ti-chart-bar"></i></div>
       <h3>تحتاج فصلين على الأقل</h3>
       <p>أضف فصلاً ثانياً من زر الفصل في الأعلى</p>
-      <button class="btn btn-primary" onclick="openClassSwitcher()">➕ إضافة فصل</button>
+      <button class="btn btn-primary" onclick="openClassSwitcher()"><i class="ti ti-plus"></i> إضافة فصل</button>
     </div>`;
   }
 
@@ -643,12 +643,12 @@ function renderCompare(){
   const allSubNames = [...new Set(metrics.flatMap(m=>m.subjectMastery.map(s=>s.name)))];
 
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">📊 مقارنة الفصول</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active"><i class="ti ti-chart-bar"></i> مقارنة الفصول</span></div>
   <div class="ph">
-    <div><div class="ph-title">📊 مقارنة الفصول</div>
+    <div><div class="ph-title"><i class="ti ti-chart-bar"></i> مقارنة الفصول</div>
     <div class="ph-sub">مقارنة ${classes.length} فصول — الإتقان والحضور والتقدم</div></div>
     <div class="ph-actions" style="margin-top:6px;">
-      <button class="btn btn-primary btn-sm no-print" onclick="window.print()">🖨️ طباعة مقارنة الفصول</button>
+      <button class="btn btn-primary btn-sm no-print" onclick="window.print()"><i class="ti ti-printer"></i> طباعة مقارنة الفصول</button>
     </div>
   </div>
 
@@ -660,7 +660,7 @@ function renderCompare(){
       const isBestM = m.id===bestMastery.id;
       const isBestA = m.id===bestAtt.id;
       return `<div class="card" style="border-top:3px solid ${col};position:relative;">
-        ${isBestM?`<div style="position:absolute;top:10px;left:10px;background:${col};color:white;font-size:0.68rem;font-weight:900;padding:2px 8px;border-radius:99px;">🏆 الأعلى إتقاناً</div>`:''}
+        ${isBestM?`<div style="position:absolute;top:10px;left:10px;background:${col};color:white;font-size:0.68rem;font-weight:900;padding:2px 8px;border-radius:99px;"><i class="ti ti-trophy"></i> الأعلى إتقاناً</div>`:''}
         <div class="card-body" style="padding-top:${isBestM?'30px':'14px'}">
           <div style="font-size:1rem;font-weight:900;color:var(--ink2);margin-bottom:2px;">${m.name}</div>
           <div style="font-size:0.78rem;color:var(--muted);margin-bottom:14px;">${m.note||''} · ${m.stuCount} طالب</div>
@@ -668,7 +668,7 @@ function renderCompare(){
           <!-- Mastery bar -->
           <div style="margin-bottom:10px;">
             <div style="display:flex;justify-content:space-between;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:4px;">
-              <span>⭐ متوسط الإتقان</span><span style="color:${col};font-size:0.92rem;">${m.avgMastery}%</span>
+              <span><i class="ti ti-star"></i> متوسط الإتقان</span><span style="color:${col};font-size:0.92rem;">${m.avgMastery}%</span>
             </div>
             <div style="height:8px;background:var(--border);border-radius:99px;overflow:hidden;">
               <div style="height:100%;width:${m.avgMastery}%;background:${col};border-radius:99px;transition:width 0.8s ease;"></div>
@@ -678,7 +678,7 @@ function renderCompare(){
           <!-- Attendance bar -->
           <div style="margin-bottom:14px;">
             <div style="display:flex;justify-content:space-between;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:4px;">
-              <span>📋 نسبة الحضور</span><span>${m.attRate}%</span>
+              <span><i class="ti ti-clipboard-check"></i> نسبة الحضور</span><span>${m.attRate}%</span>
             </div>
             <div style="height:8px;background:var(--border);border-radius:99px;overflow:hidden;">
               <div style="height:100%;width:${m.attRate}%;background:var(--mint);border-radius:99px;"></div>
@@ -687,7 +687,7 @@ function renderCompare(){
 
           <!-- Top student -->
           ${m.topStudent ? `<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--surface);border-radius:10px;border:1px solid var(--border);">
-            <span style="font-size:1rem">🥇</span>
+            <span style="font-size:1rem"><i class="ti ti-medal"></i></span>
             <div>
               <div style="font-size:0.80rem;font-weight:800;color:var(--ink2);">${m.topStudent.name.split(' ').slice(0,2).join(' ')}</div>
               <div style="font-size:0.72rem;color:var(--muted);">الأعلى إتقاناً — ${m.topPct}%</div>
@@ -701,7 +701,7 @@ function renderCompare(){
   <!-- Subject comparison table -->
   ${allSubNames.length ? `
   <div class="card">
-    <div class="card-header"><h3>📚 مقارنة المواد</h3></div>
+    <div class="card-header"><h3><i class="ti ti-books"></i> مقارنة المواد</h3></div>
     <div class="card-body" style="padding:0;">
       <div class="tbl-wrap"><table class="tbl">
         <thead><tr>
@@ -738,7 +738,7 @@ function renderCompare(){
 
   <!-- Summary insight -->
   <div class="note-card" style="margin-top:16px;">
-    <span class="note-icon">💡</span>
+    <span class="note-icon"><i class="ti ti-bulb"></i></span>
     <div>
       <strong>أبرز الملاحظات:</strong><br>
       ${bestMastery.avgMastery>0?`🏆 <strong>${bestMastery.name}</strong> الأعلى إتقاناً بمتوسط ${bestMastery.avgMastery}%. `:''}

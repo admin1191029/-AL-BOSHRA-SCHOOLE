@@ -7,14 +7,14 @@ function renderNotes(){
   const prioColors={normal:'badge-gray',important:'badge-gold',urgent:'badge-red'};
   const typeColors={general:'badge-blue',academic:'badge-plum',behavior:'badge-gold',parent:'badge-green'};
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">الملاحظات</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">الملاحظات</span></div>
   <div class="ph">
-    <div><div class="ph-title">📝 ملاحظات المعلم</div><div class="ph-sub">${S.notes.length} ملاحظة مسجلة</div></div>
+    <div><div class="ph-title"><i class="ti ti-note"></i> ملاحظات المعلم</div><div class="ph-sub">${S.notes.length} ملاحظة مسجلة</div></div>
     <div class="ph-actions">
       <button class="btn btn-primary" onclick="openNoteFor(null)">+ ملاحظة جديدة</button>
     </div>
   </div>
-  ${S.notes.length===0?`<div class="empty"><div class="empty-emoji">🗒️</div><h3>لا توجد ملاحظات بعد</h3><p>سجّل ملاحظاتك على الطلاب من هنا</p><button class="btn btn-primary" style="margin-top:12px;" onclick="openNoteFor(null)">➕ إضافة ملاحظة</button></div>`:`
+  ${S.notes.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-note"></i></div><h3>لا توجد ملاحظات بعد</h3><p>سجّل ملاحظاتك على الطلاب من هنا</p><button class="btn btn-primary" style="margin-top:12px;" onclick="openNoteFor(null)"><i class="ti ti-plus"></i> إضافة ملاحظة</button></div>`:`
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">
     ${[...S.notes].reverse().map(n=>{
       const s=S.students.find(x=>x.id===n.sid);
@@ -25,12 +25,12 @@ function renderNotes(){
               <span class="badge ${typeColors[n.type]||'badge-blue'}">${typeLabels[n.type]||'عام'}</span>
               <span class="badge ${prioColors[n.prio]||'badge-gray'}">${n.prio==='urgent'?'⚡ عاجل':n.prio==='important'?'⭐ مهم':'عادي'}</span>
             </div>
-            <button class="btn btn-red btn-xs" onclick="delNote('${n.id}')">🗑️</button>
+            <button class="btn btn-red btn-xs" onclick="delNote('${n.id}')"><i class="ti ti-trash"></i></button>
           </div>
           ${s?`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:8px;background:var(--surface);border-radius:9px;">
             <div class="avatar av-32" style="${avatarStyle(s.id)};color:white;">${s.name.charAt(0)}</div>
             <span style="font-weight:700;font-size:0.88rem;">${s.name}</span>
-          </div>`:'<div style="font-size:0.80rem;color:var(--muted);margin-bottom:8px;">📌 ملاحظة عامة</div>'}
+          </div>`:'<div style="font-size:0.80rem;color:var(--muted);margin-bottom:8px;"><i class="ti ti-pin"></i> ملاحظة عامة</div>'}
           <div style="font-size:0.90rem;color:var(--ink);line-height:1.6;">${n.text}</div>
           <div style="font-size:0.74rem;color:var(--muted2);margin-top:10px;">${fmtShort(n.date)}</div>
         </div>
@@ -86,8 +86,8 @@ function renderProfile(){
     : `<span style="font-size:40px;font-weight:900;color:white;">${S.teacher.n1.charAt(0)||'م'}</span>`;
 
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">⚙️ الإعدادات</span></div>
-  <div class="ph"><div><div class="ph-title">⚙️ الملف الشخصي والإعدادات</div></div></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active"><i class="ti ti-settings"></i> الإعدادات</span></div>
+  <div class="ph"><div><div class="ph-title"><i class="ti ti-settings"></i> الملف الشخصي والإعدادات</div></div></div>
 
   <div style="display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;">
 
@@ -108,16 +108,16 @@ function renderProfile(){
         </div>
         <div style="font-size:1.15rem;font-weight:900;color:var(--ink2);">${fullName()||'المعلم'}</div>
         <div style="color:var(--muted);font-size:0.82rem;margin:4px 0 14px;">مدارس البشرى الأهلية</div>
-        ${S.teacher.photo?`<button class="btn btn-ghost btn-sm" onclick="removeTeacherPhoto()" style="font-size:0.76rem;opacity:0.6;">🗑️ حذف الصورة</button>`:''}
+        ${S.teacher.photo?`<button class="btn btn-ghost btn-sm" onclick="removeTeacherPhoto()" style="font-size:0.76rem;opacity:0.6;"><i class="ti ti-trash"></i> حذف الصورة</button>`:''}
         <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
-          <span class="badge badge-blue">🏫 البشرى الأهلية</span>
-          <span class="badge badge-green">📚 ${S.students.length} طالب</span>
+          <span class="badge badge-blue"><i class="ti ti-building"></i> البشرى الأهلية</span>
+          <span class="badge badge-green"><i class="ti ti-books"></i> ${S.students.length} طالب</span>
         </div>
       </div>
 
       <!-- Stats -->
       <div class="card" style="padding:18px;margin-bottom:14px;">
-        <div style="font-weight:800;color:var(--ink2);margin-bottom:12px;">📊 إحصائياتك</div>
+        <div style="font-weight:800;color:var(--ink2);margin-bottom:12px;"><i class="ti ti-chart-bar"></i> إحصائياتك</div>
         ${[
           ['👥 الطلاب', S.students.length],
           ['⭐ متوسط الإتقان', totalMastery+'%'],
@@ -135,8 +135,8 @@ function renderProfile(){
     <!-- RIGHT: Settings + Help -->
     <div>
       <!-- Theme Color -->
-      <div class="card" style="padding:22px;margin-bottom:14px;">
-        <div style="font-weight:800;color:var(--ink2);margin-bottom:14px;">🎨 لون الثيم</div>
+      <div class="card" style="padding:22px;margin-bottom:14px;display:none;">
+        <div style="font-weight:800;color:var(--ink2);margin-bottom:14px;"><i class="ti ti-palette"></i> لون الثيم</div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
           ${THEME_COLORS.map(tc=>`
             <div class="theme-color-swatch ${(()=>{try{return localStorage.getItem('bs_accent_color')||'blue';}catch(e){return'blue';}})()===tc.id?'active':''}"
@@ -149,7 +149,7 @@ function renderProfile(){
       </div>
 
       <!-- Cursor Style -->
-      <div class="card" style="padding:22px;margin-bottom:14px;">
+      <div class="card" style="padding:22px;margin-bottom:14px;display:none;">
         <div style="font-weight:800;color:var(--ink2);margin-bottom:14px;">🖱️ شكل المؤشر</div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
           ${[
@@ -164,7 +164,7 @@ function renderProfile(){
           <!-- Custom image cursor button -->
           <button id="csbtn-custom" onclick="setCursorStyle('custom')"
             style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 18px;border-radius:12px;border:2px solid var(--border2);background:var(--surface);font-family:'Tajawal',sans-serif;font-size:0.82rem;font-weight:800;color:var(--ink2);transition:all 0.18s;min-width:70px;">
-            <span style="font-size:1.4rem;">🖼️</span>
+            <span style="font-size:1.4rem;"><i class="ti ti-photo"></i></span>
             <span>مخصص</span>
           </button>
         </div>
@@ -191,7 +191,7 @@ function renderProfile(){
         <div id="customCursorInput" style="display:${(()=>{try{return localStorage.getItem('bs_cursor_style')==='custom'?'flex':'none';}catch(e){return'none';}})()};flex-direction:column;gap:10px;background:var(--surface);border:1.5px solid var(--border2);border-radius:12px;padding:14px;">
           <!-- Upload -->
           <div style="display:flex;align-items:center;gap:10px;">
-            <span style="font-size:0.85rem;font-weight:700;color:var(--ink2);white-space:nowrap;">📁 رفع صورة:</span>
+            <span style="font-size:0.85rem;font-weight:700;color:var(--ink2);white-space:nowrap;"><i class="ti ti-folder"></i> رفع صورة:</span>
             <label style="flex:1;display:flex;align-items:center;gap:8px;padding:8px 12px;border:1.5px dashed var(--border2);border-radius:9px;cursor:pointer;font-size:0.82rem;color:var(--muted);font-family:'Tajawal',sans-serif;">
               <span>اختر صورة من جهازك</span>
               <input type="file" accept="image/*" style="display:none;" onchange="loadCustomCursorFile(this)" />
@@ -199,7 +199,7 @@ function renderProfile(){
           </div>
           <!-- URL -->
           <div style="display:flex;align-items:center;gap:10px;">
-            <span style="font-size:0.85rem;font-weight:700;color:var(--ink2);white-space:nowrap;">🔗 رابط URL:</span>
+            <span style="font-size:0.85rem;font-weight:700;color:var(--ink2);white-space:nowrap;"><i class="ti ti-link"></i> رابط URL:</span>
             <input id="customCursorUrl" type="text" placeholder="https://..." dir="ltr"
               style="flex:1;padding:8px 12px;border:1.5px solid var(--border2);border-radius:9px;font-size:0.82rem;font-family:'Tajawal',sans-serif;outline:none;"
               oninput="applyCustomCursorUrl(this.value)" />
@@ -233,13 +233,13 @@ function renderProfile(){
 
       <!-- Edit info -->
       <div class="card" style="padding:22px;margin-bottom:14px;">
-        <div style="font-weight:800;color:var(--ink2);margin-bottom:18px;">✏️ البيانات الشخصية</div>
+        <div style="font-weight:800;color:var(--ink2);margin-bottom:18px;"><i class="ti ti-edit"></i> البيانات الشخصية</div>
         <div class="form-row">
           <div class="fg"><label>الاسم الأول</label><input type="text" id="pn1" value="${S.teacher.n1}" /></div>
           <div class="fg"><label>الاسم الثاني</label><input type="text" id="pn2" value="${S.teacher.n2}" /></div>
         </div>
         <div class="fg"><label>اللقب</label><input type="text" id="pn3" value="${S.teacher.n3}" /></div>
-        <button class="btn btn-primary" onclick="saveProfile()">💾 حفظ التغييرات</button>
+        <button class="btn btn-primary" onclick="saveProfile()"><i class="ti ti-device-floppy"></i> حفظ التغييرات</button>
       </div>
 
       <!-- Data tools -->
@@ -258,11 +258,11 @@ function renderProfile(){
           <div id="bsAiKeyHint" style="font-size:0.76rem;color:var(--muted);margin-top:8px;line-height:1.5;"></div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn btn-ghost" onclick="exportData()">📤 تصدير JSON (كل الفصول)</button>
-          <button class="btn btn-ghost" onclick="importDataClick()">📥 استيراد JSON</button>
+          <button class="btn btn-ghost" onclick="exportData()"><i class="ti ti-send"></i> تصدير JSON (كل الفصول)</button>
+          <button class="btn btn-ghost" onclick="importDataClick()"><i class="ti ti-download"></i> استيراد JSON</button>
           <input type="file" id="importFile" style="display:none;" accept=".json" onchange="importData(this)" />
           <button class="btn btn-ghost" onclick="saveOfflineSnapshot();toast('تم حفظ نسخة offline ✅','success')">📦 Offline</button>
-          <button class="btn btn-red" onclick="clearAllData()">🗑️ حذف الكل</button>
+          <button class="btn btn-red" onclick="clearAllData()"><i class="ti ti-trash"></i> حذف الكل</button>
         </div>
         <div style="margin-top:12px;background:var(--surface);border-radius:10px;padding:12px 14px;border:1px solid var(--border);">
           <div style="display:flex;align-items:center;gap:8px;font-size:0.84rem;color:var(--muted);">
@@ -274,7 +274,7 @@ function renderProfile(){
 
       <!-- HELP & CONCEPTS -->
       <div class="card" style="padding:22px;">
-        <div style="font-weight:800;color:var(--ink2);margin-bottom:18px;">📖 دليل الاستخدام والمفاهيم</div>
+        <div style="font-weight:800;color:var(--ink2);margin-bottom:18px;"><i class="ti ti-book"></i> دليل الاستخدام والمفاهيم</div>
         ${[
           { icon:'🌱', title:'في بداية رحلته (<40%)', desc:'الطالب بدأ يتعلم المهارة — يحتاج تكرار وتدريب إضافي. ليس حكماً على قدرته، بل وصف لمرحلته الحالية.' },
           { icon:'📈', title:'يتقدم بشكل جيد (40-70%)', desc:'الطالب يُظهر فهماً جيداً ويتحسن — استمر في التشجيع والتعزيز.' },

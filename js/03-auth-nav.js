@@ -66,12 +66,14 @@ async function authSubmit(){
     if(AUTH_MODE==='signup'){
       const name=(_authEl('authName').value||'').trim();
       if(!name){ authShowError('أدخل اسمك'); btn.disabled=false; btn.textContent=orig; return; }
+      window.__pendingName=name;
       const cred=await fbAuth.createUserWithEmailAndPassword(email,pass);
       if(cred.user && name){
         await cred.user.updateProfile({ displayName:name });
         _setTeacherFromName(name);
       }
       try{ SFX.play('confetti'); }catch(e){}
+      routeUser(cred.user);
     } else {
       await fbAuth.signInWithEmailAndPassword(email,pass);
       try{ SFX.play('confetti'); }catch(e){}
@@ -87,12 +89,23 @@ async function authSubmit(){
 async function authGoogle(){
   if(!fbReady){ authShowError('خدمة الدخول غير متاحة حالياً'); return; }
   authClearMsgs();
+  const provider=new firebase.auth.GoogleAuthProvider();
+  // نجرّب النافذة المنبثقة أولاً ونوجّه المستخدم فور نجاحها (لا نعتمد على onAuthStateChanged وحده)
   try{
-    const provider=new firebase.auth.GoogleAuthProvider();
-    await fbAuth.signInWithPopup(provider);
-    try{ SFX.play('confetti'); }catch(e){}
+    const result = await fbAuth.signInWithPopup(provider);
+    if(result && result.user){ routeUser(result.user); }
   }catch(e){
-    authShowError(_authMapError(e));
+    const code = (e && e.code) || '';
+    const coop = e && /Cross-Origin-Opener-Policy/i.test(e.message||'');
+    // لو فشلت النافذة المنبثقة (حظر/COOP) ⇒ نتحوّل عبر redirect
+    if(coop || code==='auth/popup-blocked' || code==='auth/cancelled-popup-request' ||
+       code==='auth/popup-closed-by-user' || code==='auth/operation-not-supported-in-this-environment'){
+      authShowInfo('⏳ جاري التحويل إلى Google...');
+      try{ await fbAuth.signInWithRedirect(provider); }
+      catch(e2){ authShowError(_authMapError(e2)); }
+    } else {
+      authShowError(_authMapError(e));
+    }
   }
 }
 
@@ -116,17 +129,54 @@ function initAuth(){
     authShowError('تعذّر الاتصال بخدمة الدخول — تحقق من الإنترنت');
     return;
   }
+  // أكمل نتيجة تحويل Google عند العودة — نوجّه المستخدم صراحةً (لا نعتمد على onAuthStateChanged وحده)
+  fbAuth.getRedirectResult().then(function(res){
+    if(res && res.user){ routeUser(res.user); }
+  }).catch(function(e){
+    authShowError(_authMapError(e));
+  });
   fbAuth.onAuthStateChanged(function(user){
     if(user){
-      _applyAuthUser(user);
-      document.getElementById('licenseScreen').style.display='none';
-      document.getElementById('loginScreen').style.display='none';
-      enterApp();
+      routeUser(user);
     } else {
+      __routed=false;
+      const ls=document.getElementById('licenseScreen'); if(ls) ls.style.display='none';
+      const ob=document.getElementById('onboardingScreen'); if(ob) ob.style.display='none';
       document.getElementById('app').style.display='none';
       document.getElementById('loginScreen').style.display='flex';
     }
   });
+}
+
+// يقرر وجهة المستخدم: المستخدم الجديد → صفحة الإعداد، والعائد → التطبيق مباشرةً
+let __routed=false;
+function routeUser(user){
+  if(__routed) return;
+  __routed=true;
+  _applyAuthUser(user);
+  const ls=document.getElementById('licenseScreen'); if(ls) ls.style.display='none';
+  document.getElementById('loginScreen').style.display='none';
+  _routeWithCloud(user);
+}
+
+async function _routeWithCloud(user){
+  let onboarded=false;
+  try{ onboarded = localStorage.getItem('bs_onboarded_'+user.uid)==='1'; }catch(e){}
+  // اسحب بيانات الحساب من السحابة (إن وُجدت) قبل الدخول — offline-first
+  try{
+    if(typeof cloudPull==='function'){
+      const res = await cloudPull(user.uid);
+      if(res && res.hadCloud){
+        load();                 // أعد تحميل S من localStorage بعد التحديث من السحابة
+        onboarded = true;        // عنده بيانات سحابية ⇒ مُعدّ مسبقاً
+        try{ localStorage.setItem('bs_onboarded_'+user.uid,'1'); }catch(e){}
+      } else if(onboarded && typeof cloudPushAll==='function'){
+        cloudPushAll();          // ترحيل: بيانات محلية موجودة والسحابة فاضية ⇒ ارفعها
+      }
+    }
+  }catch(e){ console.warn('routeWithCloud', e&&e.message); }
+  if(onboarded){ enterApp(); }
+  else { startOnboarding(); }
 }
 
 function _applyAuthUser(user){
@@ -213,6 +263,8 @@ function enterApp(){
     });
   }
   _setTeacherAvatars();
+  // مزامنة زر الصوت مع الحالة (مكتوم افتراضياً)
+  try{ const _sb=document.getElementById('sfxToggle'); if(_sb){ const _si=document.getElementById('sfxIcon'); if(_si) _si.className='ti '+(SFX._enabled?'ti-volume':'ti-volume-off'); _sb.style.opacity=SFX._enabled?'1':'0.5'; _sb.title=SFX._enabled?'صوت مفعّل':'صوت مكتوم'; } }catch(e){}
   document.getElementById('sbName').textContent=fullName();
   document.getElementById('nb-students').textContent=S.students.length;
   document.getElementById('nb-notes').textContent=S.notes.length;
@@ -249,6 +301,47 @@ function doLogout(){
     document.getElementById('app').style.display='none';
     document.getElementById('loginScreen').style.display='flex';
   }
+}
+
+// ── صفحة الإعداد للمستخدم الجديد (Onboarding) ──
+function startOnboarding(){
+  const scr=document.getElementById('onboardingScreen');
+  if(!scr){ enterApp(); return; }
+  const nm = (window.__pendingName||'') || (fbAuth&&fbAuth.currentUser&&fbAuth.currentUser.displayName) || fullName() || '';
+  const nmEl=document.getElementById('obName'); if(nmEl) nmEl.value=nm;
+  obGoStep(1);
+  document.getElementById('app').style.display='none';
+  document.getElementById('loginScreen').style.display='none';
+  scr.style.display='flex';
+}
+function obGoStep(n){
+  [1,2].forEach(i=>{
+    const st=document.getElementById('obStep'+i); if(st) st.style.display=(i===n)?'block':'none';
+    const dot=document.getElementById('obDot'+i); if(dot) dot.className='ob-dot'+((i<=n)?' active':'');
+  });
+}
+function obNext(){
+  const name=(document.getElementById('obName').value||'').trim();
+  const e=document.getElementById('obErr1');
+  if(!name){ if(e){e.textContent='من فضلك أدخل اسمك';e.style.display='block';} return; }
+  if(e) e.style.display='none';
+  _setTeacherFromName(name);
+  obGoStep(2);
+}
+function obFinish(){
+  const cname=(document.getElementById('obClassName').value||'').trim();
+  const cgrade=(document.getElementById('obClassGrade').value||'').trim();
+  const e=document.getElementById('obErr2');
+  if(!cname){ if(e){e.textContent='أدخل اسم الفصل';e.style.display='block';} return; }
+  if(e) e.style.display='none';
+  const meta={ id:'class_default', name:cname, note:cgrade||'', createdAt:Date.now() };
+  try{ saveClassMeta(meta); }catch(err){}
+  ACTIVE_CLASS_ID='class_default';
+  try{ localStorage.setItem('bs_active_class','class_default'); }catch(err){}
+  try{ if(fbAuth&&fbAuth.currentUser) localStorage.setItem('bs_onboarded_'+fbAuth.currentUser.uid,'1'); }catch(err){}
+  window.__pendingName='';
+  document.getElementById('onboardingScreen').style.display='none';
+  enterApp();
 }
 
 // ══════════════════════════════════════════════
@@ -297,7 +390,7 @@ function rebuildSubjectNav(){
   if(!el) return;
   el.innerHTML=S.subjects.map(sub=>`
     <button class="nav-btn dyn-nav-btn" data-sid="${sub.id}" onclick="showPage('${sub.id}')">
-      <span class="nav-icon">${sub.icon||'📚'}</span> ${sub.name}
+      <span class="nav-icon"><i class="ti ti-book"></i></span> ${sub.name}
     </button>
   `).join('');
 }

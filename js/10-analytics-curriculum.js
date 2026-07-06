@@ -12,17 +12,17 @@ function renderAnalytics(){
   }).sort((a,b)=>b.pct-a.pct):[];
 
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">تحليلات</span></div>
-  <div class="ph"><div><div class="ph-title">📈 تحليلات متقدمة</div><div class="ph-sub">رؤى عميقة حول مستوى الصف</div></div></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">تحليلات</span></div>
+  <div class="ph"><div><div class="ph-title"><i class="ti ti-chart-line"></i> تحليلات متقدمة</div><div class="ph-sub">رؤى عميقة حول مستوى الصف</div></div></div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;">
     <div class="chart-box">
-      <h3>📊 توزيع الإتقان الكلي</h3>
+      <h3><i class="ti ti-chart-bar"></i> توزيع الإتقان الكلي</h3>
       <div class="chart-sub">كل طالب بنسبته</div>
       <div class="chart-h chart-h-220"><canvas id="anChart1"></canvas></div>
     </div>
     <div class="chart-box">
-      <h3>📉 أصعب المهارات — ${firstSec?firstSec.name:''}</h3>
+      <h3><i class="ti ti-trending-down"></i> أصعب المهارات — ${firstSec?firstSec.name:''}</h3>
       <div class="chart-sub">المهارات الأقل إتقاناً في الفصل</div>
       <div class="chart-h chart-h-220"><canvas id="anChart2"></canvas></div>
     </div>
@@ -30,7 +30,7 @@ function renderAnalytics(){
 
   <div style="display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:18px;">
     <div class="card">
-      <div class="card-header"><h3>🏆 ترتيب الطلاب</h3></div>
+      <div class="card-header"><h3><i class="ti ti-trophy"></i> ترتيب الطلاب</h3></div>
       <div class="tbl-wrap"><table class="tbl">
         <thead><tr><th>الترتيب</th><th>الطالب</th><th>القراءة</th><th>الكتابة</th><th>الكلي</th></tr></thead>
         <tbody>
@@ -89,18 +89,18 @@ function initAnalyticsCharts(){
 // ══════════════════════════════════════════════
 function renderCurriculum(){
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">إدارة المواد والمهارات</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">إدارة المواد والمهارات</span></div>
   <div class="ph">
-    <div><div class="ph-title">📚 إدارة المواد الدراسية والمهارات</div>
+    <div><div class="ph-title"><i class="ti ti-books"></i> إدارة المواد الدراسية والمهارات</div>
     <div class="ph-sub">أضف مواد جديدة، وعدّل خانات التقييم ومهاراتها بحرية كامل��</div></div>
     <div class="ph-actions">
-      <button class="btn btn-primary" onclick="addSubject()">➕ إضافة مادة جديدة</button>
+      <button class="btn btn-primary" onclick="addSubject()"><i class="ti ti-plus"></i> إضافة مادة جديدة</button>
       <button class="btn btn-ghost" onclick="resetCurriculum()">↺ استعادة الافتراضي</button>
     </div>
   </div>
 
   <div class="note-card" style="margin-bottom:20px;">
-    <span class="note-icon">💡</span>
+    <span class="note-icon"><i class="ti ti-bulb"></i></span>
     <div>يمكنك إضافة أي عدد من المواد والخانات والمهارات. ستظهر المواد تلقائياً في القائمة الجانبية وفي صفحات التقييم والتقارير.</div>
   </div>
 
@@ -111,7 +111,7 @@ function renderCurriculum(){
 }
 
 function renderCurriculumSubjects(){
-  if(!S.subjects.length) return `<div class="empty"><div class="empty-emoji">📚</div><h3>لا توجد مواد</h3><p>اضغط "إضافة مادة جديدة" للبدء</p></div>`;
+  if(!S.subjects.length) return `<div class="empty"><div class="empty-emoji"><i class="ti ti-books"></i></div><h3>لا توجد مواد</h3><p>اضغط "إضافة مادة جديدة" للبدء</p></div>`;
   return S.subjects.map((sub,si)=>`
     <div class="card" style="margin-bottom:16px;" id="subCard_${sub.id}">
       <div class="card-header" style="background:linear-gradient(135deg,var(--ink2),var(--sky));color:white;border-radius:20px 20px 0 0;">
@@ -123,9 +123,9 @@ function renderCurriculumSubjects(){
           </div>
         </div>
         <div style="display:flex;gap:8px;">
-          <button class="btn btn-xs" style="background:rgba(255,255,255,0.15);color:white;" onclick="editSubject('${sub.id}')">✏️ تعديل</button>
-          <button class="btn btn-xs" style="background:rgba(255,255,255,0.15);color:white;" onclick="addSection('${sub.id}')">➕ خانة</button>
-          <button class="btn btn-xs" style="background:rgba(239,68,68,0.25);color:#fca5a5;" onclick="deleteSubject('${sub.id}')">🗑️</button>
+          <button class="btn btn-xs" style="background:rgba(255,255,255,0.15);color:white;" onclick="editSubject('${sub.id}')"><i class="ti ti-edit"></i> تعديل</button>
+          <button class="btn btn-xs" style="background:rgba(255,255,255,0.15);color:white;" onclick="addSection('${sub.id}')"><i class="ti ti-plus"></i> خانة</button>
+          <button class="btn btn-xs" style="background:rgba(239,68,68,0.25);color:#fca5a5;" onclick="deleteSubject('${sub.id}')"><i class="ti ti-trash"></i></button>
         </div>
       </div>
       <div class="card-body" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">
@@ -147,8 +147,8 @@ function renderSectionCard(subId, sec, secIdx){
         </div>
       </div>
       <div style="display:flex;gap:6px;">
-        <button class="btn btn-xs btn-ghost" onclick="editSection('${subId}','${sec.id}')">✏️</button>
-        <button class="btn btn-xs btn-red" onclick="deleteSection('${subId}','${sec.id}')">🗑️</button>
+        <button class="btn btn-xs btn-ghost" onclick="editSection('${subId}','${sec.id}')"><i class="ti ti-edit"></i></button>
+        <button class="btn btn-xs btn-red" onclick="deleteSection('${subId}','${sec.id}')"><i class="ti ti-trash"></i></button>
       </div>
     </div>
     <div style="padding:10px 12px;" id="skillsList_${sec.id}">
@@ -157,7 +157,7 @@ function renderSectionCard(subId, sec, secIdx){
           <span style="width:20px;height:20px;background:var(--surface);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.70rem;font-weight:900;color:var(--muted);flex-shrink:0;">${i+1}</span>
           <span style="flex:1;font-size:0.86rem;font-weight:600;color:var(--ink);">${sk}</span>
           <div style="display:flex;gap:4px;opacity:0.7;">
-            <button class="btn btn-xs btn-ghost" style="padding:3px 7px;" onclick="editSkill('${subId}','${sec.id}',${i})" title="تعديل">✏️</button>
+            <button class="btn btn-xs btn-ghost" style="padding:3px 7px;" onclick="editSkill('${subId}','${sec.id}',${i})" title="تعديل"><i class="ti ti-edit"></i></button>
             <button class="btn btn-xs btn-red" style="padding:3px 7px;" onclick="deleteSkill('${subId}','${sec.id}',${i})" title="حذف">×</button>
           </div>
         </div>
@@ -165,7 +165,7 @@ function renderSectionCard(subId, sec, secIdx){
     </div>
     <div style="padding:8px 12px;border-top:1px dashed var(--border);display:flex;gap:7px;">
       <input type="text" id="newSkill_${sec.id}" placeholder="اسم المهارة الجديدة..." style="flex:1;padding:8px 12px;border:1.5px solid var(--border2);border-radius:9px;font-family:'Tajawal',sans-serif;font-size:0.85rem;outline:none;text-align:right;" onkeydown="if(event.key==='Enter')addSkill('${subId}','${sec.id}')" />
-      <button class="btn btn-green btn-sm" onclick="addSkill('${subId}','${sec.id}')">➕ إضافة</button>
+      <button class="btn btn-green btn-sm" onclick="addSkill('${subId}','${sec.id}')"><i class="ti ti-plus"></i> إضافة</button>
     </div>
   </div>`;
 }
@@ -261,7 +261,7 @@ function addSkill(subId, secId){
           <span style="width:20px;height:20px;background:var(--surface);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.70rem;font-weight:900;color:var(--muted);flex-shrink:0;">${i+1}</span>
           <span style="flex:1;font-size:0.86rem;font-weight:600;color:var(--ink);">${sk}</span>
           <div style="display:flex;gap:4px;opacity:0.7;">
-            <button class="btn btn-xs btn-ghost" style="padding:3px 7px;" onclick="editSkill('${subId}','${secId}',${i})">✏️</button>
+            <button class="btn btn-xs btn-ghost" style="padding:3px 7px;" onclick="editSkill('${subId}','${secId}',${i})"><i class="ti ti-edit"></i></button>
             <button class="btn btn-xs btn-red" style="padding:3px 7px;" onclick="deleteSkill('${subId}','${secId}',${i})">×</button>
           </div>
         </div>

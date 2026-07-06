@@ -25,13 +25,13 @@ function renderClassroomMode(){
     )
   ).join('');
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">🖥️ وضع الحصة</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active"><i class="ti ti-device-desktop"></i> وضع الحصة</span></div>
   <div class="ph">
-    <div><div class="ph-title">🖥️ وضع الحصة — شاشة البروجكتور</div>
+    <div><div class="ph-title"><i class="ti ti-device-desktop"></i> وضع الحصة — شاشة البروجكتور</div>
     <div class="ph-sub">شاشة كاملة مصممة للعرض أمام الطلاب — عجلة · مؤقتات · لوحة شرف</div></div>
   </div>
   <div class="card" style="max-width:540px;margin:0 auto;">
-    <div class="card-header"><h3>⚙️ إعداد الحصة</h3></div>
+    <div class="card-header"><h3><i class="ti ti-settings"></i> إعداد الحصة</h3></div>
     <div class="card-body">
       <div class="fg"><label>المادة</label><select id="cm_subSelect" onchange="cmUpdateSkillSelect()">${subOpts}</select></div>
       <div class="fg"><label>المهارة المستهدفة اليوم</label>
@@ -40,7 +40,7 @@ function renderClassroomMode(){
       <div class="fg"><label>مدة الحصة (دقيقة)</label>
         <input type="number" id="cm_duration" value="45" min="5" max="90" /></div>
       <div class="note-card" style="margin-top:4px;">
-        <span class="note-icon">💡</span>
+        <span class="note-icon"><i class="ti ti-bulb"></i></span>
         <div>اضغط <strong>Space</strong> لتشغيل المؤقت · <strong>W</strong> للعجلة · <strong>H</strong> للوحة الشرف · <strong>Esc</strong> للإغلاق</div>
       </div>
       <button class="btn btn-ghost" style="width:100%;font-size:1rem;padding:14px;margin-top:8px" onclick="cmToggleAppFullscreen()" type="button">
@@ -628,7 +628,7 @@ function cmWbToggleDraw(){
     canvas.style.zIndex = '4';
     canvas.style.pointerEvents = 'none';
     canvas.classList.remove('cm-draw-open','cm-cursor-pen','cm-cursor-eraser');
-    btn.textContent = '✏️ تشغيل القلم';
+    btn.textContent = '<i class="ti ti-edit"></i> تشغيل القلم';
     btn.style.background = '';
     btn.style.borderColor = '';
     btn.style.color = '';
@@ -1191,8 +1191,8 @@ function bagRenderBooks(subId){
       +'<div style="min-width:0;"><div style="font-size:0.82rem;font-weight:800;color:#92400e;word-break:break-word;">'+nm+'</div>'
       +'<div style="font-size:0.70rem;color:#b45309;">'+bagEscapeHtml(b.size)+'</div></div></div>'
       +'<div style="display:flex;gap:6px;flex-shrink:0;">'
-      +'<button type="button" onclick="bagOpenBook('+JSON.stringify(subId)+','+JSON.stringify(b.id)+')" class="btn btn-gold btn-sm">📖 فتح</button>'
-      +'<button type="button" onclick="bagRemoveBook('+JSON.stringify(subId)+','+JSON.stringify(b.id)+')" class="btn btn-ghost btn-sm">🗑️</button>'
+      +'<button type="button" onclick="bagOpenBook('+JSON.stringify(subId)+','+JSON.stringify(b.id)+')" class="btn btn-gold btn-sm"><i class="ti ti-book"></i> فتح</button>'
+      +'<button type="button" onclick="bagRemoveBook('+JSON.stringify(subId)+','+JSON.stringify(b.id)+')" class="btn btn-ghost btn-sm"><i class="ti ti-trash"></i></button>'
       +'</div></div>';
   }).join('');
   if(typeof CM!=='undefined' && CM.open && CM.currentView==='slides' && String(subId)===String(CM.selectedSubId)) cmRenderBagBooksInClassroom();
@@ -1616,8 +1616,8 @@ function cmEvalToggle(sid,subId,secId){
     return `<div style="display:flex;align-items:center;gap:10px;padding:9px 13px;border-radius:10px;background:${v==='m'?'rgba(16,185,129,0.12)':v==='n'?'rgba(239,68,68,0.10)':'rgba(255,255,255,0.04)'};border:1px solid ${v==='m'?'rgba(16,185,129,0.25)':v==='n'?'rgba(239,68,68,0.20)':'rgba(255,255,255,0.07)'};margin-bottom:6px;">
       <span style="font-size:0.70rem;color:rgba(255,255,255,0.30);width:18px;text-align:center;font-weight:700">${i+1}</span>
       <span style="flex:1;font-size:0.86rem;color:rgba(255,255,255,0.85);font-weight:600">${sk}</span>
-      <button onclick="cmEvalSet('${sid}','${subId}','${secId}',${i},'m')" style="padding:5px 11px;border-radius:7px;border:none;background:${v==='m'?'var(--mint)':'rgba(16,185,129,0.15)'};color:${v==='m'?'var(--ink)':'var(--mint)'};font-family:Tajawal,sans-serif;font-size:0.78rem;font-weight:800;cursor:none;">✅ أتقن</button>
-      <button onclick="cmEvalSet('${sid}','${subId}','${secId}',${i},'n')" style="padding:5px 11px;border-radius:7px;border:none;background:${v==='n'?'var(--ember)':'rgba(239,68,68,0.15)'};color:${v==='n'?'white':'var(--ember)'};font-family:Tajawal,sans-serif;font-size:0.78rem;font-weight:800;cursor:none;">❌ لم يتقن بعد</button>
+      <button onclick="cmEvalSet('${sid}','${subId}','${secId}',${i},'m')" style="padding:5px 11px;border-radius:7px;border:none;background:${v==='m'?'var(--mint)':'rgba(16,185,129,0.15)'};color:${v==='m'?'var(--ink)':'var(--mint)'};font-family:Tajawal,sans-serif;font-size:0.78rem;font-weight:800;cursor:none;"><i class="ti ti-circle-check"></i> أتقن</button>
+      <button onclick="cmEvalSet('${sid}','${subId}','${secId}',${i},'n')" style="padding:5px 11px;border-radius:7px;border:none;background:${v==='n'?'var(--ember)':'rgba(239,68,68,0.15)'};color:${v==='n'?'white':'var(--ember)'};font-family:Tajawal,sans-serif;font-size:0.78rem;font-weight:800;cursor:none;"><i class="ti ti-circle-x"></i> لم يتقن بعد</button>
     </div>`;
   }).join('');
   const photoEl=s.photo
@@ -1632,8 +1632,8 @@ function cmEvalToggle(sid,subId,secId){
     </div>
     ${skillRows}
     <div style="display:flex;gap:8px;margin-top:12px;">
-      <button onclick="cmEvalMarkAll('${sid}','${subId}','${secId}','m')" style="flex:1;padding:10px;border-radius:10px;border:none;background:rgba(16,185,129,0.18);color:var(--mint);font-family:Tajawal,sans-serif;font-size:0.84rem;font-weight:800;cursor:none;">✅ أتقن الكل</button>
-      <button onclick="cmEvalMarkAll('${sid}','${subId}','${secId}','n')" style="flex:1;padding:10px;border-radius:10px;border:none;background:rgba(239,68,68,0.15);color:var(--ember);font-family:Tajawal,sans-serif;font-size:0.84rem;font-weight:800;cursor:none;">❌ لم يُتقن بعد — وهو في طور التعلم</button>
+      <button onclick="cmEvalMarkAll('${sid}','${subId}','${secId}','m')" style="flex:1;padding:10px;border-radius:10px;border:none;background:rgba(16,185,129,0.18);color:var(--mint);font-family:Tajawal,sans-serif;font-size:0.84rem;font-weight:800;cursor:none;"><i class="ti ti-circle-check"></i> أتقن الكل</button>
+      <button onclick="cmEvalMarkAll('${sid}','${subId}','${secId}','n')" style="flex:1;padding:10px;border-radius:10px;border:none;background:rgba(239,68,68,0.15);color:var(--ember);font-family:Tajawal,sans-serif;font-size:0.84rem;font-weight:800;cursor:none;"><i class="ti ti-circle-x"></i> لم يُتقن بعد — وهو في طور التعلم</button>
     </div>
   </div>`;
   document.getElementById('classroomOverlay').appendChild(popup);

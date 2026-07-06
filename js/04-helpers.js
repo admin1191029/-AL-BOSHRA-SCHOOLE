@@ -50,7 +50,7 @@ function studentMastery(sid){
 }
 
 function masteryColor(pct){ return pct>=70?'gold':pct>=40?'blue':'green'; }
-function masteryLabel(pct){ return pct>=70?'أتقن المهارة 🏆':pct>=40?'يتقدم بشكل جيد 📈':'في بداية رحلته 🌱'; }
+function masteryLabel(pct){ return pct>=70?'أتقن المهارة':pct>=40?'يتقدم بشكل جيد':'في بداية رحلته'; }
 
 // ── مؤشر التقدم الحقيقي ─────────────────────────────────────
 // يحسب كم مهارة أتقنها الطالب في آخر N يوم
@@ -165,12 +165,12 @@ function avatarHTML(sid, size=40, extraStyle='', showEdit=false){
   if(s.photo){
     return `<div class="stu-photo-wrap" style="width:${size}px;height:${size}px;${extraStyle}">
       <img src="${s.photo}" class="stu-photo" width="${size}" height="${size}" style="width:${size}px;height:${size}px;" />
-      ${showEdit?`<div class="stu-photo-edit" onclick="openPhotoModal('${sid}',event)">✏️</div>`:''}
+      ${showEdit?`<div class="stu-photo-edit" onclick="openPhotoModal('${sid}',event)"><i class="ti ti-edit"></i></div>`:''}
     </div>`;
   }
   return `<div class="stu-photo-wrap" style="${extraStyle}" ${showEdit?`onclick="openPhotoModal('${sid}',event)"`:''}>`+
     `<div class="avatar" style="width:${size}px;height:${size}px;font-size:${Math.round(size*0.38)}px;${avatarStyle(sid)};color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;">${s.name.charAt(0)}</div>`+
-    `${showEdit?`<div class="stu-photo-edit">📷</div>`:''}
+    `${showEdit?`<div class="stu-photo-edit"><i class="ti ti-camera"></i></div>`:''}
     </div>`;
 }
 

@@ -97,14 +97,14 @@ function renderTreasureMap(){
   const activeSec = _tmGetSec();
 
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">🗺️ خريطة الكنز</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active"><i class="ti ti-map-2"></i> خريطة الكنز</span></div>
   <div class="ph">
     <div>
-      <div class="ph-title">🗺️ خريطة الكنز</div>
+      <div class="ph-title"><i class="ti ti-map-2"></i> خريطة الكنز</div>
       <div class="ph-sub">رحلة تعلم بصرية — تابع تقدم كل طالب محطةً بمحطة</div>
     </div>
     <div class="ph-actions">
-      <button class="btn ${_tmView==='class'?'btn-primary':'btn-ghost'} btn-sm" onclick="_tmView='class';showPage('treasuremap')">🏫 عرض الفصل</button>
+      <button class="btn ${_tmView==='class'?'btn-primary':'btn-ghost'} btn-sm" onclick="_tmView='class';showPage('treasuremap')"><i class="ti ti-building"></i> عرض الفصل</button>
       <button class="btn ${_tmView==='student'?'btn-primary':'btn-ghost'} btn-sm" onclick="_tmView='student';showPage('treasuremap')">👤 عرض فردي</button>
       <button class="btn btn-gold btn-sm" onclick="_tmPrintCerts()">🏅 طباعة الشهادات</button>
     </div>
@@ -152,7 +152,7 @@ function renderTreasureMap(){
 }
 
 function _renderClassMap(sub,sec){
-  if(!sec||!S.students.length) return `<div class="empty"><div class="empty-emoji">🗺️</div><h3>لا يوجد طلاب بعد</h3></div>`;
+  if(!sec||!S.students.length) return `<div class="empty"><div class="empty-emoji"><i class="ti ti-map-2"></i></div><h3>لا يوجد طلاب بعد</h3></div>`;
   const subId=sub.id, secId=sec.id;
   const shownStudents = _tmStudentsFor(subId, secId);
   if(!shownStudents.length) return `<div class="empty"><div class="empty-emoji">🔎</div><h3>لا توجد نتائج مطابقة</h3><p>جرّب اسمًا آخر أو امسح البحث</p></div>`;
@@ -174,9 +174,9 @@ function _renderClassMap(sub,sec){
   return `
   <!-- Class summary KPIs -->
   <div class="kpi-grid" style="margin-bottom:20px;">
-    <div class="kpi blue"><span class="kpi-icon">👥</span><div class="kpi-val">${S.students.length}</div><div class="kpi-label">طلاب في الرحلة</div></div>
-    <div class="kpi green"><span class="kpi-icon">🏆</span><div class="kpi-val">${completed}</div><div class="kpi-label">وصلوا الكنز</div></div>
-    <div class="kpi gold"><span class="kpi-icon">⭐</span><div class="kpi-val">${avgPct}%</div><div class="kpi-label">متوسط التقدم</div></div>
+    <div class="kpi blue"><span class="kpi-icon"><i class="ti ti-users"></i></span><div class="kpi-val">${S.students.length}</div><div class="kpi-label">طلاب في الرحلة</div></div>
+    <div class="kpi green"><span class="kpi-icon"><i class="ti ti-trophy"></i></span><div class="kpi-val">${completed}</div><div class="kpi-label">وصلوا الكنز</div></div>
+    <div class="kpi gold"><span class="kpi-icon"><i class="ti ti-star"></i></span><div class="kpi-val">${avgPct}%</div><div class="kpi-label">متوسط التقدم</div></div>
     <div class="kpi red"><span class="kpi-icon">⚠️</span><div class="kpi-val">${needsHelp}</div><div class="kpi-label">يحتاجون دعم</div></div>
   </div>
 
@@ -192,7 +192,7 @@ function _renderClassMap(sub,sec){
   <!-- Class Road Map -->
   <div class="card" style="margin-bottom:20px;overflow:visible;">
     <div class="card-header">
-      <h3>🗺️ خريطة الرحلة — ${sec.icon||''} ${sec.name}</h3>
+      <h3><i class="ti ti-map-2"></i> خريطة الرحلة — ${sec.icon||''} ${sec.name}</h3>
       <span class="badge badge-gold">${sec.skills.length} محطة</span>
     </div>
     <div style="padding:10px 16px;overflow-x:auto;">
@@ -213,7 +213,7 @@ function _renderClassMap(sub,sec){
           return `<div class="tm-station" onclick="_tmShowStationInfo('${subId}','${secId}',${i},event)">
             <div class="tm-node ${cls}" title="${sk}">
               ${rate.pct===100?'✅':icon}
-              ${rate.pct===100?`<div style="position:absolute;top:-8px;right:-8px;background:#f59e0b;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;border:2px solid white;">⭐</div>`:''}
+              ${rate.pct===100?`<div style="position:absolute;top:-8px;right:-8px;background:#f59e0b;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;border:2px solid white;"><i class="ti ti-star"></i></div>`:''}
             </div>
             <div class="tm-label">${sk.length>10?sk.substring(0,9)+'…':sk}</div>
             <div class="tm-pct ${cls}">${rate.pct}%</div>
@@ -224,7 +224,7 @@ function _renderClassMap(sub,sec){
         <div class="tm-connector" style="background:linear-gradient(90deg,#a78bfa,#7c3aed)"></div>
         <!-- Treasure finish -->
         <div class="tm-station">
-          <div class="tm-node finish">🏆</div>
+          <div class="tm-node finish"><i class="ti ti-trophy"></i></div>
           <div class="tm-label">الكنز!</div>
         </div>
       </div>
@@ -235,7 +235,7 @@ function _renderClassMap(sub,sec){
   <div class="card" style="margin-bottom:20px;">
     <div class="card-header"><h3>🌡️ خريطة الحرارة — كل طالب × كل محطة</h3>
       <div style="display:flex;gap:8px;font-size:0.76rem;color:var(--muted);font-weight:700;">
-        <span>🟢 أتقن</span><span>🟡 لم يتقن بعد</span><span>⬜ لم يُقيَّم</span>
+        <span><i class="ti ti-circle-filled"></i> أتقن</span><span>🟡 لم يتقن بعد</span><span>⬜ لم يُقيَّم</span>
       </div>
     </div>
     <div style="padding:16px;overflow-x:auto;">
@@ -323,9 +323,9 @@ function _renderStudentMap(sub,sec){
       <div style="font-size:1.4rem;font-weight:900;margin-bottom:4px;">${s.name}</div>
       <div style="opacity:.80;font-size:.88rem;">رحلة: ${sub.icon||'📚'} ${sub.name} — ${sec.icon||'📌'} ${sec.name}</div>
       <div style="margin-top:10px;display:flex;gap:16px;flex-wrap:wrap;">
-        <span style="display:flex;align-items:center;gap:5px;font-size:.85rem">✅ أتقن: <strong>${m.done.length}/${m.total}</strong></span>
-        <span style="display:flex;align-items:center;gap:5px;font-size:.85rem">⭐ التقدم: <strong>${m.pct}%</strong></span>
-        <span style="display:flex;align-items:center;gap:5px;font-size:.85rem">⭐ السلوك اليوم: <strong>${'★'.repeat(starsToday)||'—'}</strong></span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:.85rem"><i class="ti ti-circle-check"></i> أتقن: <strong>${m.done.length}/${m.total}</strong></span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:.85rem"><i class="ti ti-star"></i> التقدم: <strong>${m.pct}%</strong></span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:.85rem"><i class="ti ti-star"></i> السلوك اليوم: <strong>${'★'.repeat(starsToday)||'—'}</strong></span>
       </div>
     </div>
     <div style="text-align:center;">
@@ -337,7 +337,7 @@ function _renderStudentMap(sub,sec){
   <!-- Progress bar full -->
   <div style="margin-bottom:20px;">
     <div style="display:flex;justify-content:space-between;font-size:.80rem;font-weight:800;color:var(--muted);margin-bottom:6px;">
-      <span>🚀 البداية</span><span>المحطة ${m.done.length} من ${m.total}</span><span>🏆 الكنز</span>
+      <span>🚀 البداية</span><span>المحطة ${m.done.length} من ${m.total}</span><span><i class="ti ti-trophy"></i> الكنز</span>
     </div>
     <div style="background:var(--border);border-radius:99px;height:14px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,0.10)">
       <div style="height:100%;width:${m.pct}%;background:linear-gradient(90deg,#1565c0,#10b981,#f59e0b);border-radius:99px;transition:width 1s cubic-bezier(.34,1.56,.64,1);position:relative;">
@@ -348,8 +348,8 @@ function _renderStudentMap(sub,sec){
 
   <!-- Individual road -->
   <div class="card" style="margin-bottom:20px;overflow:visible;">
-    <div class="card-header"><h3>🗺️ رحلة ${s.name.split(' ')[0]}</h3>
-      ${nextLocked>=0?`<span class="badge badge-gold">⭐ التالية: ${sec.skills[nextLocked]?.substring(0,15)}</span>`:'<span class="badge badge-green">🏆 أتم الرحلة!</span>'}
+    <div class="card-header"><h3><i class="ti ti-map-2"></i> رحلة ${s.name.split(' ')[0]}</h3>
+      ${nextLocked>=0?`<span class="badge badge-gold"><i class="ti ti-star"></i> التالية: ${sec.skills[nextLocked]?.substring(0,15)}</span>`:'<span class="badge badge-green"><i class="ti ti-trophy"></i> أتم الرحلة!</span>'}
     </div>
     <div style="padding:10px 16px;overflow-x:auto;">
       <div class="tm-road">
@@ -385,19 +385,19 @@ function _renderStudentMap(sub,sec){
   <!-- Skill detail list -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
     <div class="card">
-      <div class="card-header"><h3>✅ المحطات المُتقنة (${m.done.length})</h3></div>
+      <div class="card-header"><h3><i class="ti ti-circle-check"></i> المحطات المُتقنة (${m.done.length})</h3></div>
       <div style="padding:10px 14px;">
         ${m.done.length===0?'<div style="color:var(--muted);font-size:.85rem;padding:8px 0">لا توجد بعد</div>':
           m.done.map(i=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.84rem;">
-            <span style="color:var(--mint);font-size:16px">✅</span>
+            <span style="color:var(--mint);font-size:16px"><i class="ti ti-circle-check"></i></span>
             <span style="font-weight:700">${i+1}. ${sec.skills[i]}</span>
           </div>`).join('')}
       </div>
     </div>
     <div class="card">
-      <div class="card-header"><h3>🎯 المحطات المتبقية (${m.total-m.done.length})</h3></div>
+      <div class="card-header"><h3><i class="ti ti-target"></i> المحطات المتبقية (${m.total-m.done.length})</h3></div>
       <div style="padding:10px 14px;">
-        ${m.done.length===m.total?'<div style="color:var(--mint);font-size:.85rem;padding:8px 0">🏆 أتم جميع المحطات!</div>':
+        ${m.done.length===m.total?'<div style="color:var(--mint);font-size:.85rem;padding:8px 0"><i class="ti ti-trophy"></i> أتم جميع المحطات!</div>':
           sec.skills.map((sk,i)=>ev[i]!=='m'?`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.84rem;">
             <span style="font-size:16px">${ev[i]==='n'?'❌':'⬜'}</span>
             <span style="color:${ev[i]==='n'?'var(--ember)':'var(--muted)'};font-weight:600">${i+1}. ${sk}</span>
@@ -428,10 +428,10 @@ function _renderStudentMap(sub,sec){
 
   <!-- Actions -->
   <div style="display:flex;gap:10px;flex-wrap:wrap;">
-    <button class="btn btn-primary" onclick="genStudentPDF('${s.id}')">📄 تقرير PDF</button>
+    <button class="btn btn-primary" onclick="genStudentPDF('${s.id}')"><i class="ti ti-file-text"></i> تقرير PDF</button>
     <button class="btn btn-green" onclick="waStudentFiltered('${s.id}')">💬 واتساب للولي</button>
     <button class="btn btn-gold" onclick="_tmPrintCert('${s.id}')">🏅 طباعة شهادة</button>
-    <button class="btn btn-ghost" onclick="openEvalDyn('${s.id}','${subId}')">✏️ تحديث التقييم</button>
+    <button class="btn btn-ghost" onclick="openEvalDyn('${s.id}','${subId}')"><i class="ti ti-edit"></i> تحديث التقييم</button>
   </div>`;
 }
 
@@ -450,10 +450,10 @@ function _tmShowStationInfo(subId,secId,skillIdx,event){
   const popup=document.getElementById('tmPopup');
   if(!popup) return;
   popup.innerHTML=`
-    <div class="tm-popup-title">📌 ${skill}</div>
+    <div class="tm-popup-title"><i class="ti ti-pin"></i> ${skill}</div>
     <div style="font-size:.78rem;color:var(--muted);margin-bottom:8px">${Math.round((done.length/S.students.length)*100)}% إتقان</div>
-    ${done.length?`<div class="tm-popup-skill"><span style="color:var(--mint)">✅</span> أتقن: ${done.map(s=>s.name).join('، ')}</div>`:''}
-    ${not.length?`<div class="tm-popup-skill"><span style="color:var(--ember)">❌</span> لم يتقن بعد: ${not.map(s=>s.name).join('، ')}</div>`:''}
+    ${done.length?`<div class="tm-popup-skill"><span style="color:var(--mint)"><i class="ti ti-circle-check"></i></span> أتقن: ${done.map(s=>s.name).join('، ')}</div>`:''}
+    ${not.length?`<div class="tm-popup-skill"><span style="color:var(--ember)"><i class="ti ti-circle-x"></i></span> لم يتقن بعد: ${not.map(s=>s.name).join('، ')}</div>`:''}
     ${none.length?`<div class="tm-popup-skill"><span style="opacity:.5">⬜</span> لم يُقيَّم: ${none.map(s=>s.name).join('، ')}</div>`:''}
   `;
   const rect=event.currentTarget?.getBoundingClientRect?.()||{top:event.clientY,left:event.clientX};
@@ -475,8 +475,8 @@ function _tmShowSkillDetail(i,subId,secId,sid,event){
       ${v==='m'?'✅ مُتقنة':'❌ لم تُتقن بعد'}
     </div>
     <div style="display:flex;gap:8px;margin-top:10px;pointer-events:all;">
-      <button class="btn btn-green btn-xs" onclick="setEvDyn('${subId}','${secId}',${i},'m');document.getElementById('tmPopup').style.display='none';showPage('treasuremap')">✅ أتقن</button>
-      <button class="btn btn-red btn-xs" onclick="setEvDyn('${subId}','${secId}',${i},'n');document.getElementById('tmPopup').style.display='none';showPage('treasuremap')">❌ لم يتقن بعد</button>
+      <button class="btn btn-green btn-xs" onclick="setEvDyn('${subId}','${secId}',${i},'m');document.getElementById('tmPopup').style.display='none';showPage('treasuremap')"><i class="ti ti-circle-check"></i> أتقن</button>
+      <button class="btn btn-red btn-xs" onclick="setEvDyn('${subId}','${secId}',${i},'n');document.getElementById('tmPopup').style.display='none';showPage('treasuremap')"><i class="ti ti-circle-x"></i> لم يتقن بعد</button>
     </div>`;
   popup.style.pointerEvents='all';
   const rect=event.currentTarget?.getBoundingClientRect?.()||{top:event.clientY,left:event.clientX};
@@ -522,17 +522,17 @@ function _tmPrintCert(sid){
     .no-print{text-align:center;padding:10px;margin-bottom:8px}
     .pbtn{padding:9px 20px;border-radius:9px;border:none;font-family:'Tajawal',sans-serif;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#1e3a5f,#1565c0);color:white;font-size:.9em}
   </style></head><body>
-  <div class="no-print"><button class="pbtn" onclick="window.print()">🖨️ طباعة الشهادة</button></div>
+  <div class="no-print"><button class="pbtn" onclick="window.print()"><i class="ti ti-printer"></i> طباعة الشهادة</button></div>
   <div class="cert">
     <div class="school" style="display:flex;align-items:center;justify-content:center;gap:8px;"><img src="${SCHOOL_LOGO}" style="width:40px;height:40px;object-fit:contain;" />مدارس البشرى الأهلية — الصف الأول الابتدائي</div>
-    <div class="cert-title">🗺️ شهادة إتقان خريطة الكنز</div>
+    <div class="cert-title"><i class="ti ti-map-2"></i> شهادة إتقان خريطة الكنز</div>
     <div class="cert-sub">${sub.icon||'📚'} ${sub.name} — ${sec.icon||'📌'} ${sec.name}</div>
     <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:8px;">
       ${s.photo
         ?`<img src="${s.photo}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid #f59e0b;box-shadow:0 4px 12px rgba(0,0,0,.15);" />`
         :`<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#1e3a5f,#1565c0);color:white;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;border:3px solid #f59e0b;">${s.name.charAt(0)}</div>`
       }
-      <div class="student-name" style="border:none;padding:0;margin:0">⭐ ${s.name} ⭐</div>
+      <div class="student-name" style="border:none;padding:0;margin:0"><i class="ti ti-star"></i> ${s.name} ⭐</div>
     </div>
     <div class="stats">
       <div class="stat"><div class="stat-val">${m.pct}%</div><div class="stat-lbl">نسبة الإتقان</div></div>
@@ -563,14 +563,14 @@ function _tmPrintCerts(){
       return `<div style="font-size:10px;padding:2px 0;border-bottom:1px solid #f5f5f5;display:flex;gap:5px;align-items:center"><span>${v==='m'?'✅':'❌'}</span><span style="color:${v==='m'?'#1e3a5f':'#94a3b8'}">${sk}</span></div>`;
     }).join('');
     return `<div style="width:180mm;border:5px double #f59e0b;padding:10mm 12mm;margin:5mm auto;page-break-after:always;position:relative;background:linear-gradient(160deg,#fffbeb,#fff);">
-      <div style="font-size:10px;color:#64748b;text-align:center">🏫 مدارس البشرى الأهلية</div>
-      <div style="font-family:'Amiri',serif;font-size:22px;font-weight:700;color:#1e3a5f;text-align:center;margin:4px 0">🗺️ شهادة خريطة الكنز</div>
+      <div style="font-size:10px;color:#64748b;text-align:center"><i class="ti ti-building"></i> مدارس البشرى الأهلية</div>
+      <div style="font-family:'Amiri',serif;font-size:22px;font-weight:700;color:#1e3a5f;text-align:center;margin:4px 0"><i class="ti ti-map-2"></i> شهادة خريطة الكنز</div>
       <div style="display:flex;align-items:center;justify-content:center;gap:10px;border-top:2px solid #f59e0b;border-bottom:2px solid #f59e0b;padding:6px 0;margin:6px 0;">
         ${s.photo
           ?`<img src="${s.photo}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #f59e0b;" />`
           :`<div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1e3a5f,#1565c0);color:white;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;">${s.name.charAt(0)}</div>`
         }
-        <div style="font-size:18px;font-weight:900;color:#1565c0;">⭐ ${s.name}</div>
+        <div style="font-size:18px;font-weight:900;color:#1565c0;"><i class="ti ti-star"></i> ${s.name}</div>
       </div>
       <div style="display:flex;justify-content:center;gap:16px;margin-bottom:8px">
         <span style="font-weight:900;color:#059669;font-size:18px">${m.pct}%</span>
@@ -586,7 +586,7 @@ function _tmPrintCerts(){
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Amiri:wght@700&display=swap" rel="stylesheet">
     <style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Tajawal',sans-serif;direction:rtl}@media print{.np{display:none}}</style>
     </head><body>
-    <div class="np" style="padding:10px;text-align:center"><button onclick="window.print()" style="padding:9px 20px;border-radius:9px;border:none;background:linear-gradient(135deg,#1e3a5f,#1565c0);color:white;font-family:'Tajawal',sans-serif;font-weight:800;font-size:.9em;cursor:pointer">🖨️ طباعة كل الشهادات (${S.students.length})</button></div>
+    <div class="np" style="padding:10px;text-align:center"><button onclick="window.print()" style="padding:9px 20px;border-radius:9px;border:none;background:linear-gradient(135deg,#1e3a5f,#1565c0);color:white;font-family:'Tajawal',sans-serif;font-weight:800;font-size:.9em;cursor:pointer"><i class="ti ti-printer"></i> طباعة كل الشهادات (${S.students.length})</button></div>
     ${all}</body></html>`);
   w.document.close();
 }

@@ -30,15 +30,15 @@ function renderReports(){
     : (S.subjects.find(s=>s.id===_repSubId)?.name||'');
 
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">التقارير</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">التقارير</span></div>
   <div class="ph">
-    <div><div class="ph-title">📄 التقارير والمشاركة</div>
+    <div><div class="ph-title"><i class="ti ti-file-text"></i> التقارير والمشاركة</div>
     <div class="ph-sub">توليد وإرسال التقارير للأولياء والمدرسة</div></div>
   </div>
 
   <!-- Subject Filter Tabs -->
   <div style="margin-bottom:18px;">
-    <div style="font-size:0.78rem;font-weight:900;color:var(--muted2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">📚 اختر المادة لعرض تقريرها</div>
+    <div style="font-size:0.78rem;font-weight:900;color:var(--muted2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;"><i class="ti ti-books"></i> اختر المادة لعرض تقريرها</div>
     <div style="display:flex;gap:9px;flex-wrap:wrap;">
       <button class="btn ${_repSubId==='__all__'?'btn-primary':'btn-ghost'} btn-sm"
         onclick="_repSubId='__all__';showPage('reports')">
@@ -56,21 +56,21 @@ function renderReports(){
   <!-- Report Header Card -->
   <div class="rep-card" style="margin-bottom:22px;">
     <div class="rep-card-header">
-      <div class="rch-badge">🏫 تقرير رسمي</div>
+      <div class="rch-badge"><i class="ti ti-building"></i> تقرير رسمي</div>
       <h2>مدارس البشرى الأهلية</h2>
       <p>كشف متابعة الطلاب — الصف الأول الابتدائي — ${subjectLabel}</p>
       <div class="rep-meta-row">
         <div class="rep-meta-item">👩‍🏫 ${fullName()}</div>
-        <div class="rep-meta-item">📅 ${fmtDate(today())}</div>
-        <div class="rep-meta-item">👥 ${S.students.length} طالب</div>
-        <div class="rep-meta-item">⭐ متوسط ${avgPct}%</div>
+        <div class="rep-meta-item"><i class="ti ti-calendar"></i> ${fmtDate(today())}</div>
+        <div class="rep-meta-item"><i class="ti ti-users"></i> ${S.students.length} طالب</div>
+        <div class="rep-meta-item"><i class="ti ti-star"></i> متوسط ${avgPct}%</div>
       </div>
     </div>
     <div style="padding:18px 22px;display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--border);">
-      <button class="btn btn-primary" onclick="downloadClassPDF()">📄 PDF كامل</button>
+      <button class="btn btn-primary" onclick="downloadClassPDF()"><i class="ti ti-file-text"></i> PDF كامل</button>
       <button class="btn btn-green" onclick="shareClassWA()">💬 واتساب للمدرسة</button>
-      <button class="btn btn-gold" onclick="shareAllParents()">📤 إرسال للأولياء</button>
-      <button class="btn btn-ghost" onclick="copyClassReport()">📋 نسخ نصي</button>
+      <button class="btn btn-gold" onclick="shareAllParents()"><i class="ti ti-send"></i> إرسال للأولياء</button>
+      <button class="btn btn-ghost" onclick="copyClassReport()"><i class="ti ti-clipboard-check"></i> نسخ نصي</button>
     </div>
     <!-- Per-subject quick PDF buttons -->
     ${S.subjects.length>1?`
@@ -86,12 +86,12 @@ function renderReports(){
   <!-- Charts -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;">
     <div class="chart-box">
-      <h3>📊 توزيع المستويات</h3>
+      <h3><i class="ti ti-chart-bar"></i> توزيع المستويات</h3>
       <div class="chart-sub">${subjectLabel}</div>
       <div class="chart-h chart-h-220"><canvas id="repChart1"></canvas></div>
     </div>
     <div class="chart-box">
-      <h3>📈 مقارنة الطلاب</h3>
+      <h3><i class="ti ti-chart-line"></i> مقارنة الطلاب</h3>
       <div class="chart-sub">أعلى 10 طلاب</div>
       <div class="chart-h chart-h-220"><canvas id="repChart2"></canvas></div>
     </div>
@@ -100,10 +100,10 @@ function renderReports(){
   <!-- Detail Table -->
   <div class="card" style="margin-bottom:20px;">
     <div class="card-header">
-      <h3>📋 كشف المتابعة التفصيلي — ${subjectLabel}</h3>
+      <h3><i class="ti ti-clipboard-check"></i> كشف المتابعة التفصيلي — ${subjectLabel}</h3>
       <span class="badge badge-blue">${S.students.length} طالب</span>
     </div>
-    ${S.students.length===0?`<div class="empty"><div class="empty-emoji">📊</div><h3>لا توجد بيانات</h3></div>`:`
+    ${S.students.length===0?`<div class="empty"><div class="empty-emoji"><i class="ti ti-chart-bar"></i></div><h3>لا توجد بيانات</h3></div>`:`
     <div class="tbl-wrap"><table class="tbl">
       <thead>
         <tr>
@@ -154,7 +154,7 @@ function renderReports(){
           </td>
           <td>
             <div style="display:flex;gap:5px;flex-wrap:wrap;">
-              <button class="btn btn-gold btn-xs" onclick="genStudentPDF('${s.id}')">📄 PDF</button>
+              <button class="btn btn-gold btn-xs" onclick="genStudentPDF('${s.id}')"><i class="ti ti-file-text"></i> PDF</button>
               <button class="btn btn-plum btn-xs" onclick="waStudentFiltered('${s.id}')">💬</button>
             </div>
           </td>
@@ -268,7 +268,7 @@ function _downloadClassPDFWithTemplate(tpl){
     const fm=_filteredMastery(s.id);
     const fClr=fm.pct>=70?'#059669':fm.pct>=40?'#d97706':'#dc2626';
     const attStatus=(S.attendance[today()]||{})[s.id];
-    const attBadge=attStatus==='p'?'<span style="color:#059669">✅ حاضر</span>':attStatus==='a'?'<span style="color:#dc2626">❌ غائب</span>':attStatus==='e'?'<span style="color:#d97706">📋 بعذر</span>':'<span style="color:#94a3b8">—</span>';
+    const attBadge=attStatus==='p'?'<span style="color:#059669"><i class="ti ti-circle-check"></i> حاضر</span>':attStatus==='a'?'<span style="color:#dc2626"><i class="ti ti-circle-x"></i> غائب</span>':attStatus==='e'?'<span style="color:#d97706"><i class="ti ti-clipboard-check"></i> بعذر</span>':'<span style="color:#94a3b8">—</span>';
     return `<tr style="background:${i%2?'#f8faff':'#fff'}">
       <td style="text-align:center;font-weight:800;color:#1e3a5f">${i+1}</td>
       <td><strong>${s.name}</strong></td>
@@ -312,7 +312,7 @@ function _downloadClassPDFWithTemplate(tpl){
 </head>
 <body>
 <div class="no-print">
-  <button class="pbtn primary" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+  <button class="pbtn primary" onclick="window.print()"><i class="ti ti-printer"></i> طباعة / حفظ PDF</button>
   <button class="pbtn secondary" onclick="window.close()">✕ إغلاق</button>
 </div>
 <div class="header">
@@ -337,10 +337,10 @@ function _downloadClassPDFWithTemplate(tpl){
 </div>
 <div class="stats-row">
   <div class="stat-box"><div class="stat-val">${S.students.length}</div><div class="stat-lbl">إجمالي الطلاب</div></div>
-  <div class="stat-box"><div class="stat-val" style="color:#059669">${present}</div><div class="stat-lbl">✅ حاضرون اليوم</div></div>
-  <div class="stat-box"><div class="stat-val" style="color:#dc2626">${Object.values(S.attendance[today()]||{}).filter(v=>v==='a').length}</div><div class="stat-lbl">❌ غائبون</div></div>
-  <div class="stat-box"><div class="stat-val" style="color:${avgMastery>=70?'#059669':avgMastery>=40?'#d97706':'#dc2626'}">${avgMastery}%</div><div class="stat-lbl">⭐ متوسط الإتقان</div></div>
-  <div class="stat-box"><div class="stat-val" style="color:#059669">${S.students.filter(s=>studentMastery(s.id).total>=70).length}</div><div class="stat-lbl">🏆 مستوى ممتاز</div></div>
+  <div class="stat-box"><div class="stat-val" style="color:#059669">${present}</div><div class="stat-lbl"><i class="ti ti-circle-check"></i> حاضرون اليوم</div></div>
+  <div class="stat-box"><div class="stat-val" style="color:#dc2626">${Object.values(S.attendance[today()]||{}).filter(v=>v==='a').length}</div><div class="stat-lbl"><i class="ti ti-circle-x"></i> غائبون</div></div>
+  <div class="stat-box"><div class="stat-val" style="color:${avgMastery>=70?'#059669':avgMastery>=40?'#d97706':'#dc2626'}">${avgMastery}%</div><div class="stat-lbl"><i class="ti ti-star"></i> متوسط الإتقان</div></div>
+  <div class="stat-box"><div class="stat-val" style="color:#059669">${S.students.filter(s=>studentMastery(s.id).total>=70).length}</div><div class="stat-lbl"><i class="ti ti-trophy"></i> مستوى ممتاز</div></div>
   <div class="stat-box"><div class="stat-val" style="color:#dc2626">${S.students.filter(s=>studentMastery(s.id).total<40).length}</div><div class="stat-lbl">⚠️ في بداية رحلته</div></div>
 </div>
 <table>
@@ -390,21 +390,21 @@ function _downloadClassPDFWithTemplate(tpl){
 </head>
 <body>
 <div class="no-print">
-  <button class="k-btn primary" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+  <button class="k-btn primary" onclick="window.print()"><i class="ti ti-printer"></i> طباعة / حفظ PDF</button>
   <button class="k-btn secondary" onclick="window.close()">✕ إغلاق</button>
 </div>
 <div class="k-header">
-  <div><div class="k-title">🌈 تقرير الفصل — مدارس البشرى الأهلية</div><div class="k-sub">📖 ${subLabel} &nbsp;·&nbsp; 👩‍🏫 ${fullName()} &nbsp;·&nbsp; 📅 ${today()}</div></div>
+  <div><div class="k-title">🌈 تقرير الفصل — مدارس البشرى الأهلية</div><div class="k-sub"><i class="ti ti-book"></i> ${subLabel} &nbsp;·&nbsp; 👩‍🏫 ${fullName()} &nbsp;·&nbsp; 📅 ${today()}</div></div>
   <div style="font-size:2em;">🏫⭐🎉</div>
 </div>
 <div class="stats-bar">
-  <div class="stat-chip">👥 ${S.students.length} طالب</div>
-  <div class="stat-chip">✅ حاضر اليوم: ${present}</div>
-  <div class="stat-chip">📊 متوسط الإتقان: ${avgMastery}%</div>
-  <div class="stat-chip">🏆 ممتاز: ${S.students.filter(s=>_filteredMastery(s.id).pct>=70).length} طالب</div>
+  <div class="stat-chip"><i class="ti ti-users"></i> ${S.students.length} طالب</div>
+  <div class="stat-chip"><i class="ti ti-circle-check"></i> حاضر اليوم: ${present}</div>
+  <div class="stat-chip"><i class="ti ti-chart-bar"></i> متوسط الإتقان: ${avgMastery}%</div>
+  <div class="stat-chip"><i class="ti ti-trophy"></i> ممتاز: ${S.students.filter(s=>_filteredMastery(s.id).pct>=70).length} طالب</div>
 </div>
 <table>
-  <thead><tr><th>#</th><th>⭐ اسم الطال��</th>${thCols}<th>🎯 الكلي</th><th>📅 الحضور</th></tr></thead>
+  <thead><tr><th>#</th><th><i class="ti ti-star"></i> اسم الطال��</th>${thCols}<th><i class="ti ti-target"></i> الكلي</th><th><i class="ti ti-calendar"></i> الحضور</th></tr></thead>
   <tbody>${S.students.map((s,i)=>{
     const ev=S.evals[s.id]||{};
     const secCells=allSections.map(sc=>{
@@ -425,7 +425,7 @@ function _downloadClassPDFWithTemplate(tpl){
       <td style="text-align:center;font-size:1.1em;">${attBadge}</td></tr>`;
   }).join('')}</tbody>
 </table>
-<div class="footer">🏫 مدارس البشرى الأهلية &nbsp;·&nbsp; 👩‍🏫 ${fullName()} &nbsp;·&nbsp; 📅 ${today()} &nbsp;·&nbsp; ⭐ نتمنى لجميع الطلاب التوفيق والنجاح</div>
+<div class="footer"><i class="ti ti-building"></i> مدارس البشرى الأهلية &nbsp;·&nbsp; 👩‍🏫 ${fullName()} &nbsp;·&nbsp; 📅 ${today()} &nbsp;·&nbsp; ⭐ نتمنى لجميع الطلاب التوفيق والنجاح</div>
 </body></html>`;
   }
 
@@ -469,13 +469,13 @@ function _downloadClassPDFWithTemplate(tpl){
 </head>
 <body>
 <div class="no-print">
-  <button class="pb" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+  <button class="pb" onclick="window.print()"><i class="ti ti-printer"></i> طباعة / حفظ PDF</button>
   <button class="pb2" onclick="window.close()">✕ إغلاق</button>
 </div>
 <div class="hdr">
   <div class="hdr-right">
     <img src="${SCHOOL_LOGO}" class="hdr-logo" />
-    <div><div class="hdr-title">تقرير الفصل — مدارس البشرى الأهلية</div><div class="hdr-sub">📖 ${subLabel} · 📅 ${today()}</div></div>
+    <div><div class="hdr-title">تقرير الفصل — مدارس البشرى الأهلية</div><div class="hdr-sub"><i class="ti ti-book"></i> ${subLabel} · 📅 ${today()}</div></div>
   </div>
   <div class="hdr-teacher">
     ${tPhoto ? `<img src="${tPhoto}" class="t-photo" style="width:40px;height:40px;border-radius:50%;object-fit:cover;" />` : `<div class="t-photo">${tName.charAt(0)||'م'}</div>`}
@@ -483,10 +483,10 @@ function _downloadClassPDFWithTemplate(tpl){
   </div>
 </div>
 <div class="stats">
-  <div class="stat">👥 ${S.students.length} طالب</div>
-  <div class="stat">✅ حاضر: ${present}</div>
-  <div class="stat">📊 متوسط الإتقان: ${avgMastery}%</div>
-  <div class="stat">🏆 ممتاز: ${S.students.filter(s=>_filteredMastery(s.id).pct>=70).length}</div>
+  <div class="stat"><i class="ti ti-users"></i> ${S.students.length} طالب</div>
+  <div class="stat"><i class="ti ti-circle-check"></i> حاضر: ${present}</div>
+  <div class="stat"><i class="ti ti-chart-bar"></i> متوسط الإتقان: ${avgMastery}%</div>
+  <div class="stat"><i class="ti ti-trophy"></i> ممتاز: ${S.students.filter(s=>_filteredMastery(s.id).pct>=70).length}</div>
 </div>
 <table>
   <thead><tr><th>#</th><th>اسم الطالب</th>${thCols}<th>الكلي</th><th>الحضور</th></tr></thead>

@@ -109,12 +109,12 @@ function renderInsights(){
   const borderMap={ember:'rgba(239,68,68,0.22)',mint:'rgba(16,185,129,0.22)',gold:'rgba(245,158,11,0.22)',plum:'rgba(124,58,237,0.22)',sky:'rgba(21,101,192,0.22)'};
   const titleMap={ember:'var(--ember)',mint:'#059669',gold:'#b45309',plum:'var(--plum)',sky:'var(--sky)'};
   return `
-  <div class="breadcrumb">🏠 <span class="sep">›</span> <span class="active">الرؤى الذكية</span></div>
+  <div class="breadcrumb"><i class="ti ti-home"></i> <span class="sep">›</span> <span class="active">الرؤى الذكية</span></div>
   <div class="ph">
-    <div><div class="ph-title">🤖 الرؤى والتوصيات الذكية</div>
+    <div><div class="ph-title"><i class="ti ti-bulb"></i> الرؤى والتوصيات الذكية</div>
     <div class="ph-sub">تحليل تلقائي لبيانات الفصل وتوصيات مخصصة للمعلم</div></div>
     <div class="ph-actions">
-      <button class="btn btn-primary" onclick="showPage('insights')">🔄 تحديث</button>
+      <button class="btn btn-primary" onclick="showPage('insights')"><i class="ti ti-refresh"></i> تحديث</button>
     </div>
   </div>
   <div id="insightsList">
@@ -159,8 +159,8 @@ function animateInsights(){
     dir: 'rtl',
     lang: 'ar',
     icons: [
-      { src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%231e3a5f"/><text y=".9em" font-size="80" x="10">🏫</text></svg>', sizes: '192x192', type: 'image/svg+xml' },
-      { src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%231e3a5f"/><text y=".9em" font-size="80" x="10">🏫</text></svg>', sizes: '512x512', type: 'image/svg+xml' }
+      { src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%231e3a5f"/><text y=".9em" font-size="80" x="10"><i class="ti ti-building"></i></text></svg>', sizes: '192x192', type: 'image/svg+xml' },
+      { src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%231e3a5f"/><text y=".9em" font-size="80" x="10"><i class="ti ti-building"></i></text></svg>', sizes: '512x512', type: 'image/svg+xml' }
     ]
   };
   const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});

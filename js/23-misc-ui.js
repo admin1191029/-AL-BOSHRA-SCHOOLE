@@ -9,7 +9,7 @@
   // Generate floating particles
   const container = document.getElementById('wsParticles');
   if(container){
-    const colors = ['#1565c0','#42a5f5','#fbbf24','#10b981','#7c3aed','#f43f5e'];
+    const colors = ['#ffffff','#a9cdef','#6fa3da','#cfe0f5'];
     for(let i=0;i<28;i++){
       const p = document.createElement('div');
       p.className = 'ws-particle';
@@ -39,7 +39,7 @@
 // THEME COLOR CUSTOMIZER
 // ══════════════════════════════════════════════
 const THEME_COLORS = [
-  { id:'blue',   label:'أزرق',    sky:'#1565c0', sky2:'#1976d2', sky3:'#42a5f5' },
+  { id:'blue',   label:'أزرق',    sky:'#1d4e89', sky2:'#16335c', sky3:'#4a86c5' },
   { id:'teal',   label:'زمردي',   sky:'#0d7377', sky2:'#14a085', sky3:'#48d1cc' },
   { id:'purple', label:'بنفسجي',  sky:'#6d28d9', sky2:'#7c3aed', sky3:'#a78bfa' },
   { id:'rose',   label:'وردي',    sky:'#be185d', sky2:'#db2777', sky3:'#f472b6' },
@@ -62,8 +62,7 @@ function applyAccentColor(colorId, save=true){
 }
 
 function _initAccentColor(){
-  const saved = localStorage.getItem('bs_accent_color')||'blue';
-  applyAccentColor(saved, false);
+  applyAccentColor('blue', false); // لون واحد مقفول مطابق لصفحة الدخول
 }
 _initAccentColor();
 
@@ -120,11 +119,11 @@ function openStudentCards(){
     @media print{body{background:white;padding:16px;} .no-print{display:none!important;}}
   </style></head><body>
   <div class="print-header no-print">
-    <h1>🎓 بطاقات الطلاب — ${S.teacher.n1||'المعلم'}</h1>
+    <h1><i class="ti ti-school"></i> بطاقات الطلاب — ${S.teacher.n1||'المعلم'}</h1>
     <p>${S.students.length} طالب • ${new Date().toLocaleDateString('ar-EG')}</p>
   </div>
   <div style="text-align:center;margin-bottom:24px;" class="no-print">
-    <button onclick="window.print()" style="padding:12px 32px;background:#1565c0;color:white;border:none;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;">🖨️ طباعة البطاقات</button>
+    <button onclick="window.print()" style="padding:12px 32px;background:#1565c0;color:white;border:none;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;"><i class="ti ti-printer"></i> طباعة البطاقات</button>
   </div>
   <div class="cards-grid">${cards}</div>
   </body></html>`);
